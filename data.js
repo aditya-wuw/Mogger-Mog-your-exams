@@ -6,5 +6,5 @@ export const data = {
     tutorial_section : {
         header: "Just a click away !"
     },
-    footer: { text : "©Mocker all rights reserved. read ", terms : "terms and conditions" }
+    footer: { text : "© Mogger.AI all rights reserved. read ", terms : "terms and conditions" }
 }

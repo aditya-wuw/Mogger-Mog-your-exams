@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye } from "react-icons/fa";
 import { IoIosEyeOff } from "react-icons/io";
-
+import Link from "next/link";
+import SignIn_goolge, { SignIn_ } from "@/components/Login/SignUp/action";
 const Form = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -23,7 +24,7 @@ const Form = () => {
     };
     if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.includes("@")) newErrors.email = "Invalid email";
-    if (formData.password.length < 12)
+    if (formData.password.length < 6)
       newErrors.password = "Password must be at least 6 characters";
     setErrors(newErrors);
     return Object.values(newErrors).every((e) => !e);
@@ -32,7 +33,12 @@ const Form = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      console.log(formData);
+      SignIn_(formData);
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+      });
     }
   };
 
@@ -45,7 +51,7 @@ const Form = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-5 p-6 bg-white shadow-md rounded space-y-4 w-full"
+      className="max-w-md mx-5 p-6 bg-gradient-to-br from-green-800/30 to-green-200 backdrop-blur-md shadow-md rounded space-y-4 w-full text-green-800"
     >
       <h2 className="text-2xl font-bold">SignUp</h2>
 
@@ -54,7 +60,7 @@ const Form = () => {
         <input
           type="text"
           name="name"
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded bg-white"
           value={formData.name}
           onChange={handleChange}
           placeholder="john bravo"
@@ -69,7 +75,7 @@ const Form = () => {
         <input
           type="email"
           name="email"
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded bg-white"
           value={formData.email}
           onChange={handleChange}
           placeholder="johnbravo@example.com"
@@ -82,19 +88,28 @@ const Form = () => {
       <div className="relative">
         <label className="block mb-1 font-medium">Password</label>
         <input
-          type={Visi ? "text": "password"}
+          type={Visi ? "text" : "password"}
           name="password"
           placeholder="************"
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded bg-white"
           value={formData.password}
           onChange={handleChange}
         />
-        {Visi ? <FaEye className="absolute w-5 h-5 bottom-3 right-5 hover:cursor-pointer" onClick={() => setVisi(!Visi)} /> : <IoIosEyeOff  className="absolute w-5 h-5 bottom-3 right-5 hover:cursor-pointer" onClick={() => setVisi(!Visi)}/>}
-        
-        {errors.password && (
-          <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+        {Visi ? (
+          <FaEye
+            className="absolute w-5 h-5 bottom-3 right-5 hover:cursor-pointer"
+            onClick={() => setVisi(!Visi)}
+          />
+        ) : (
+          <IoIosEyeOff
+            className="absolute w-5 h-5 bottom-3 right-5 hover:cursor-pointer"
+            onClick={() => setVisi(!Visi)}
+          />
         )}
       </div>
+      {errors.password && (
+        <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+      )}
 
       <button
         type="submit"
@@ -102,10 +117,23 @@ const Form = () => {
       >
         Login
       </button>
-      <button className="w-full hover:cursor-pointer bg-green-500 hover:bg-green-400 text-white font-semibold py-2 px-4 rounded transition flex justify-center items-center">
+      <button
+        type="button"
+        className="w-full hover:cursor-pointer bg-green-500 hover:bg-green-400 text-white font-semibold py-2 px-4 rounded transition flex justify-center items-center"
+        onClick={SignIn_goolge}
+      >
         <FcGoogle className="w-5 h-5" />
         oogle
       </button>
+      <div className="flex gap-1">
+        <p>Already have an account ? </p>{" "}
+        <Link
+          href={"/Auth/login"}
+          className="text-green-800 font-bold underline hover:cursor-pointerLink"
+        >
+          login
+        </Link>
+      </div>
     </form>
   );
 };

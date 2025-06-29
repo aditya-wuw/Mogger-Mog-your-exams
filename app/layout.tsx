@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mocker AI",
+  title: "Mogger AI",
   description: "Create personalized mock tests in seconds using AI. Just upload your notes and let Mocker generate questions, answers, and timed exams — no setup needed.",
 };
 

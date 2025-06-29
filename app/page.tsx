@@ -1,14 +1,16 @@
 "use client";
+import GreenBlob from "@/components/GreenBlob";
 import NavBar from "@/components/NavBar";
 import { CreateContext } from "@/Context/ContextProvider";
 import { data } from "@/data.js";
 import { easeInOut, motion } from "motion/react";
+import Link from "next/link";
 export default function Home() {
   const { count, setcount } = CreateContext();
   return (
     <>
       <div className="relative w-full min-h-screen">
-        <div className="bg-gradient-to-r from-green-300 to-green-100 z-[-1] backdrop-blur-2xl blur-3xl rounded-full w-[50%] h-[25%] absolute top-50 md:left-50 left-20"></div>
+        <GreenBlob/>
         <div>
           <div className="flex justify-center">
             <NavBar />
@@ -39,21 +41,21 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, ease: easeInOut }}
               >
-                <button className="p-4  bg-gradient-to-br from-green-500/70 to-green-300 hover:to-green-100 backdrop-blur-md rounded-2xl w-50 text-green-900 hover:text-white text-2xl hover:from-green-500/50 transition-all hover:cursor-pointer gap-2 flex justify-center">
+                <Link href={"/GettingStarted"} className="p-4  bg-gradient-to-br from-green-500/70 to-green-300 hover:to-green-100 backdrop-blur-md rounded-2xl w-50 text-green-900 hover:text-white text-2xl hover:from-green-500/50 transition-all hover:cursor-pointer gap-2 flex justify-center">
                   Get started
-                </button>
+                </Link >
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, ease: easeInOut }}
               >
-                <button className="p-4 group bg-gradient-to-br from-green-500/70 to-green-300 hover:to-green-100 backdrop-blur-md rounded-2xl w-50 text-green-900 hover:text-white text-2xl hover:from-green-500/50 transition-all hover:cursor-pointer gap-2 flex">
+                <Link href={'/Auth/login'} className="p-4 group bg-gradient-to-br from-green-500/70 to-green-300 hover:to-green-100 backdrop-blur-md rounded-2xl w-50 text-green-900 hover:text-white text-2xl hover:from-green-500/50 transition-all hover:cursor-pointer gap-2 flex">
                   Try out
                   <span className="text-white group-hover:text-green-900 transition-colors duration-200 group">
-                    Mocker
+                    Mogger
                   </span>
-                </button>
+                </Link>
               </motion.div>
             </section>
             <motion.div
@@ -80,6 +82,7 @@ export default function Home() {
                   autoFocus
                   className="md:w-[530px] md:h-[300px] rounded-2xl w-[350px] h-[250px]"
                 ></iframe>
+                <p className="mt-2">Created by <a className="text-green-600" href="https://nullfaceddev.xyz" target="_blank">@NullFacedDev</a> with 💖 and コーヒー</p> 
               </motion.div>
             </section>
           </main>

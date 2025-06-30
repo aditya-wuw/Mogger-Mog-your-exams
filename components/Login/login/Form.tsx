@@ -32,7 +32,6 @@ const Form = () => {
  const login = async (data: object) => {
   try {
     const res = await axios.post("/api/auth/login", data);
-    console.log(res)
     if (res.data.success) {
       Router.push("/home");
     } 

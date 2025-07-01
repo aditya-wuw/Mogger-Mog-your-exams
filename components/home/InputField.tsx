@@ -2,14 +2,20 @@
 import React, { useState } from "react";
 import { IoSend } from "react-icons/io5";
 import { FaRegPlusSquare } from "react-icons/fa";
-
+import { useRouter } from "next/navigation";
+import { uid } from 'uid';
 
 const InputField = () => {
-
+    const Router = useRouter();
     const [input,setinput] = useState<string>("");
     const handleClick = async () => {
+        const payload = {
+          id:uid(),
+          contents:[{questions : "What is your name"},{questions : "What are you gooner ? "}]
+        }
         console.log(input)
         setinput("")      
+        Router.push(`/home/t/${payload.id}/${payload.contents}`);
     }
 
   return (
@@ -25,7 +31,7 @@ const InputField = () => {
         />
         <div className="flex gap-2">
           <FaRegPlusSquare className="plus_icon w-5 h-5" />
-          <button disabled={ input.length < 1} onClick={handleClick}><IoSend className={`send_icon w-5 h-5 ${input.length < 1 ? "text-black" : "text-green-600"} `}/></button>  
+          <button disabled={ input.length < 6} onClick={handleClick}><IoSend className={`send_icon cursor-pointer w-5 h-5 ${input.length < 6 ? "text-black hover:cursor-not-allowed" : "text-green-600"} `}/></button>  
         </div>
       </div>
     </div>

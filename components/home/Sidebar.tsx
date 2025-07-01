@@ -9,7 +9,7 @@ const Sidebar = () => {
   const { isSidebar, setsidebar } = CreateContext();
   const sidebarItems: Array<SidebarTypes> = [
     { item: "Profile dashboard", link: "/Profile" },
-    { item: "Performance report", link: "/Performance" },
+    { item: "Performance reports", link: "/Performance" },
     { item: "Give test based on previous notes", link: "/Give" },
     { item: "History", link: "/History" },
   ];

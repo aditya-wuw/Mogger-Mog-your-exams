@@ -8,3 +8,8 @@ export type SidebarTypes = {
   item: string;
   link: string;
 };
+
+export type testObject = {
+  question:string
+  options: Array<string>
+}

@@ -6,7 +6,6 @@ export async function POST(req: Request) {
     const supabase = supabaseServerSide();
     try {
         const { email, password } = await req.json();
-        console.log(email, password)
         const { data, error } = await supabase.from('users').select('*').eq("email", email).single();
 
         if (error) {

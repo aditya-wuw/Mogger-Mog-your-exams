@@ -1,21 +1,27 @@
 "use client";
-
 import ProfileContainer from "@/components/home/profile/ProfileContainer";
+import Timer from "@/components/home/Timer";
 import Mogger from "@/components/Mogger";
+import { CreateContext } from "@/Context/ContextProvider";
 import { data } from "@/data";
-import { TestObject2 } from "@/utils/other/testdata";
-import { useParams } from "next/navigation";
+import { testObject } from "@/Types/others/types";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft,FaArrowRight } from "react-icons/fa6";
 
 const page = () => {
   const test_id = useParams();
+  const router = useRouter()
   const [Answer,setAnswer] = useState<Array<string>>([])
   const [count,setCount] = useState(0);
-  const [TestObject,setTestObject] = useState(TestObject2);
+  const [TestObject,setTestObject] = useState<Array<testObject>>([{
+    question:"",
+    options:[]
+  }]);
+  const {questions,setquestions} = CreateContext();
 
   useEffect(() => {
-
+    setTestObject( questions ) ;
   }, []);
 
   function HandleBackNForth(direct:string) {
@@ -26,14 +32,25 @@ const page = () => {
       setCount(Math.min(TestObject.length-1,count+1));
     }
   }
+
   function HandleAnswer(ans:string,i:number) {
     let Ans:Array<string> = [...Answer];
     Ans[i] = ans;
     setAnswer(Ans);
   }
+
   function handlesubmit() {
     console.log(Answer);
   }
+
+  function handleMogging() {
+    const prompt:boolean = confirm("Are you sure you want to stop mogging ?");
+    if(prompt){
+      setquestions([])
+      router.push('/home')
+    }
+  }
+ if(questions.length === 0) return <>loading</>
   return (
     <div className="relative min-h-screen">
       <nav className="p-3  mb-5 px-10 flex justify-between items-center">
@@ -66,16 +83,20 @@ const page = () => {
             </div>
           </section>
         </div>
-        <div className="w-full bg-green-400 md:h-120 p-2  rounded-md">
-          <nav className="flex justify-between mx-3">
+        <div className="w-full relative select-none bg-green-400 md:min-h-120 p-2 rounded-md mb-20">
+          <nav className="flex justify-between mx-3 items-center">
             <h1 className="text-xl text-white">Check questions</h1>
-            <div className="timer"> timer</div>
-
+            <div className="flex gap-2 items-center ">
+              <h1 className="md:text-2xl text-green-900">Time Left</h1>
+              <Timer duration={20*60}/>
+            </div>
           </nav>
-
-          <div className="questions_index p-3">
-            {TestObject.map((_,index)=>(<span key={index} className="p-3 m-1 bg-green-600 cursor-pointer" onClick={()=>setCount(index)}>{index+1}</span>))}
+          <div className="questions_index p-2 grid md:grid-cols-12 md:grid-rows-6 grid-cols-5 grid-rows-5 mt-2  mb-12">
+            {TestObject.map((_,index)=>(<span key={index} className="p-3 m-1 bg-green-600 cursor-pointer hover:bg-green-500 transition-bg duration-300 ease-in-out text-center" onClick={()=>setCount(index)}>{index+1}</span>))}
           </div>
+          <footer className="absolute bottom-0 right-5 mb-2">
+            <button className="p-3 bg-red-500 text-white rounded-xl cursor-pointer hover:bg-red-600 mt-10" onClick={handleMogging}>End Mogging</button>
+          </footer>
         </div>
       </main>
       <footer className="absolute bottom-0 p-2 bg-green-200 w-full justify-center flex">

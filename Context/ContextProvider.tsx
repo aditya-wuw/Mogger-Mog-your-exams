@@ -1,4 +1,5 @@
 "use client";
+import { resulttype } from "@/Types/others/types";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 const Context = createContext<null | any>(null);
@@ -14,7 +15,7 @@ export const ContextProvider = ({
   const ProfileIconRef = useRef<HTMLDivElement>(null);
   const MainContainerRef = useRef<HTMLElement>(null);
   const [questions, setquestions] = useState([]);
-  
+  const [result,setresult] = useState<resulttype>();
   const value = {
     count,
     setcount,
@@ -26,6 +27,7 @@ export const ContextProvider = ({
     MainContainerRef,
     questions,
     setquestions,
+    result,setresult,
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

@@ -27,7 +27,7 @@ const InputField = () => {
         questions:data.questions_key,
         answers:data.answer_key
       } 
-      console.log(savedata); //created the save feature just add user info to identify the user's activity
+      //created the save feature just add user info to identify the user's activity
       const res2 = await axios.post("/api/generatetest/save",savedata);
       // console.log(res2.data.message); 
       Router.push(`/home/t/${id}`);

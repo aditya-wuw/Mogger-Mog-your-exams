@@ -10,12 +10,19 @@ export type SidebarTypes = {
 };
 
 export type testObject = {
-  question:string
+  question: string
   options: Array<string>
 }
 export type testQuestionSaveObject = {
-   id:string,
-   title:string,
-   questions:testObject,
-   answers:Array<string>
+  id: string,
+  title: string,
+  questions: testObject,
+  answers: Array<string>
 }
+
+export type valided_answers = { q_index: number, given_answer: boolean, correct_answer: string} 
+
+export type resulttype = {
+  qustions_details: testQuestionSaveObject
+  Validated_answers: Array<valided_answers>
+  };

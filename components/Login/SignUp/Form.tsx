@@ -30,10 +30,11 @@ const Form = () => {
     return Object.values(newErrors).every((e) => !e);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit =  async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      SignIn_(formData);
+      const error:string = await SignIn_(formData);
+      setErrors(prev =>({...prev, name :error}))
       setFormData({
         name: "",
         email: "",
@@ -115,7 +116,7 @@ const Form = () => {
         type="submit"
         className="w-full hover:cursor-pointer bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded transition"
       >
-        Login
+        SignUp
       </button>
       <button
         type="button"

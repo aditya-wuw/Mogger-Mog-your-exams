@@ -13,3 +13,9 @@ export type testObject = {
   question:string
   options: Array<string>
 }
+export type testQuestionSaveObject = {
+   id:string,
+   title:string,
+   questions:testObject,
+   answers:Array<string>
+}

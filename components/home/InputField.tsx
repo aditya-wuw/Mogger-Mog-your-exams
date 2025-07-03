@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { uid } from "uid";
 import axios from "axios";
 import { CreateContext } from "@/Context/ContextProvider";
+import { testQuestionSaveObject } from "@/Types/others/types";
 
 const InputField = () => {
   const Router = useRouter();
@@ -17,14 +18,18 @@ const InputField = () => {
     const id = uid();
     try {
       const res = await axios.post("/api/generatetest/gen",{prompt : input});
-      const data = JSON.parse(
-        res.data.message
-        .replace(/```json|```/g, "")
-        .replace(/(\w+):/g, '"$1":')
-        .replace(/,\s*}/g, "}")
-        .replace(/,\s*]/g, "]")
-      );
-      setquestions(data);
+      //end loading state
+      const data = JSON.parse(res.data.message);
+      setquestions(data.questions_key);
+      const savedata:testQuestionSaveObject = {
+        id:id,
+        title:input,
+        questions:data.questions_key,
+        answers:data.answer_key
+      } 
+      console.log(savedata); //created the save feature just add user info to identify the user's activity
+      const res2 = await axios.post("/api/generatetest/save",savedata);
+      // console.log(res2.data.message); 
       Router.push(`/home/t/${id}`);
     } catch (error) {
       console.log(error);

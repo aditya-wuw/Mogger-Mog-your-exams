@@ -5,6 +5,7 @@ import Mogger from "@/components/Mogger";
 import { CreateContext } from "@/Context/ContextProvider";
 import { data } from "@/data";
 import { testObject } from "@/Types/others/types";
+import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft,FaArrowRight } from "react-icons/fa6";
@@ -39,8 +40,9 @@ const page = () => {
     setAnswer(Ans);
   }
 
-  function handlesubmit() {
-    console.log(Answer);
+  async function handlesubmit () {
+    const res = await axios.post('/api/validate',{id: test_id.id, submitted_answers : Answer});
+    console.log(res.data.message); //data is ready to be shipped to /submit for detailed overview of the mock test results 
   }
 
   function handleMogging() {

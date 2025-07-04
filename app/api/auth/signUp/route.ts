@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import bcrypt from "bcryptjs"
 import { supabaseServerSide } from "@/utils/SupabaseDB/serverside/supabase";
 import { cred } from "@/Types/server_side/types";
+import { CreateSession } from "../session/action";
 
 
 export async function POST(req: Request) {
@@ -22,14 +23,19 @@ export async function POST(req: Request) {
                 return NextResponse.json({ success: false, message: "somthing went wrong while sending data" }, { status: 500 })
             }
             const token = crypto.randomBytes(64).toString('hex');
-            const response = NextResponse.json({ success: true },{status:200});
+            const response = NextResponse.json({ success: true }, { status: 200 });
             response.cookies.set('session_token', token, {
                 httpOnly: true,
                 secure: true,
-                sameSite:"lax",
+                sameSite: "lax",
                 path: "/",
                 maxAge: 60 * 60 * 24
             });
+            const creds = {
+                email: email,
+                token: token
+            }
+            await CreateSession(creds);
             return response;
         }
 

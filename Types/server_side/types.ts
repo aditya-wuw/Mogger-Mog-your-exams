@@ -10,3 +10,8 @@ export type validation_ = {
     given_answer : boolean,
     correct_answer : string
 }
+
+export type sessiontypes = {
+    Token : string
+    user_id : number
+}

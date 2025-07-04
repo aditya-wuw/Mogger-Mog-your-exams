@@ -2,6 +2,7 @@ import { supabaseServerSide } from "@/utils/SupabaseDB/serverside/supabase";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import crypto from "crypto"
+import { CreateSession } from "../session/action";
 export async function POST(req: Request) {
     const supabase = supabaseServerSide();
     try {
@@ -27,6 +28,11 @@ export async function POST(req: Request) {
                 path: "/",
                 maxAge: 60 * 60 * 24
             });
+            const creds = { 
+                email:email,
+                token:token
+             }
+            await CreateSession(creds);
             return response;
         }
         else {

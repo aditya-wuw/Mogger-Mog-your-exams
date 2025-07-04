@@ -45,7 +45,7 @@ const page = () => {
       const res = await axios.post('/api/validate',{id: test_id.id, submitted_answers : Answer});
       // console.log(res.data.message); //data is ready to be shipped to /submit for detailed overview of the mock test results 
       setresult(res.data.message);
-      router.push(`/home/result/${test_id}`);
+      router.push(`/home/result/${test_id.id}`);
     } catch (error) {
       router.push('/error')
     }

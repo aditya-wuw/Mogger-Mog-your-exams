@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -9,7 +10,7 @@ import { FaCopy } from "react-icons/fa";
 import Link from "next/link";
 const Profile = () => {
   const Router = useRouter();
-  const { OpenProfile,setOpenProfile,ProfileIconRef } = CreateContext();
+  const { OpenProfile,setOpenProfile,ProfileIconRef,user_details } = CreateContext();
   const Profileref = useRef<HTMLDivElement>(null);
   async function handleSignOut() {
     const res = await axios.post("/api/auth/Logout");
@@ -49,9 +50,10 @@ const Profile = () => {
     return (
       <div ref={Profileref} className="absolute z-10 top-13 right-0 w-50 bg-green-200 rounded-xl p-1 ">
         <section className="p-1 w-full justify-center flex-col flex">
+          <p className="mx-2">{user_details?.users?.username}</p>
           <div className="flex items-center mx-2 ">
-            <FaCopy className="hover:text-green-700 cursor-pointer" onClick={()=>handleCopy("usernamedsadasdasdsadghjsadhjgasas")}/>
-            <p className="username select-text overflow-hidden text-ellipsis p-2 w-[90%]">@{"usernamedsadasdasdsadghjsadhjgasas"}</p>
+            <FaCopy className="hover:text-green-700 cursor-pointer" onClick={()=>handleCopy(user_details?.users?.email)}/>
+            <p className="username select-text overflow-hidden text-ellipsis p-2 w-[90%]">@{user_details?.users?.email}+{user_details?.user_id}</p>
           </div>
           <div>
             {Options.map((i, index) => (

@@ -12,9 +12,9 @@ const Page = () => {
       <Sidebar/>
       <main className="w-full h-full mx-4 " >
         <Mainbodynav />
-        <section  className="mainContaine  h-[90vh] relative" onClick={()=>setsidebar(true)}>
-          <InputField/>
+        <section  className="mainContaine h-[90vh] relative" onClick={()=>setsidebar(true)}>
         </section>
+        <InputField/>
       </main>
     </div>
   );

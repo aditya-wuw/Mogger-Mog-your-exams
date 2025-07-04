@@ -20,9 +20,17 @@ export type testQuestionSaveObject = {
   answers: Array<string>
 }
 
-export type valided_answers = { q_index: number, given_answer: boolean, correct_answer: string} 
+export type valided_answers = { q_index: number, given_answer: boolean, correct_answer: string }
 
 export type resulttype = {
   qustions_details: testQuestionSaveObject
   Validated_answers: Array<valided_answers>
-  };
+};
+
+export type users_details_ = {
+  user_id: number,
+  users: {
+    username: string,
+    email: string
+  }
+}

@@ -12,6 +12,7 @@ const InputField = () => {
   const Router = useRouter();
   const [input, setinput] = useState<string>("");
   const { setquestions } = CreateContext();
+
   const handleClick = async () => {
     setinput("");
     //enter loading state
@@ -28,8 +29,7 @@ const InputField = () => {
         answers:data.answer_key
       } 
       //created the save feature just add user info to identify the user's activity
-      const res2 = await axios.post("/api/generatetest/save",savedata);
-      // console.log(res2.data.message); 
+      const res2 = await axios.post("/api/generatetest/save",savedata); 
       Router.push(`/home/t/${id}`);
     } catch (error) {
       console.log(error);
@@ -37,7 +37,7 @@ const InputField = () => {
   };
 
   return (
-    <div className="flex justify-center items-center ">
+    <div className="flex justify-center items-center relative ">
       <h1 className="fixed select-none top-[40%] text-3xl md:text-6xl font-bold  z-[-10] text-center mx-10">
         Ready to{" "}
         <span className="px-6 p-1 bg-green-700 text-white rounded-xl">Mog</span>{" "}

@@ -4,13 +4,13 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-    const { id, submitted_answers } = await req.json();
+    const { id, userid ,submitted_answers } = await req.json();
     const cookie = await cookies();
     if (!cookie.get("session_token")) return NextResponse.json({ success: false, message: "Unauthorized! login to perform action" }, { status: 404 });
     else {
         try {
             const supabase = supabaseServerSide();
-            const { data } = await supabase.from('history').select('*').eq('id', id).single(); //for now just doing with the uid of the test for quick build but in final verson it should be with user email to uniquely identify each record
+            const { data } = await supabase.from('history').select('*').eq('id', id).eq('user_id',userid).single(); 
             const validated: Array<validation_> = submitted_answers.map((i: string, index: number) => {
                 return (data.answers[index] === i) ? {
                     q_index: index,

@@ -1,146 +1,21 @@
 "use client";
 import Mainbodynav from "@/components/home/BodyNav";
 import Sidebar from "@/components/home/Sidebar";
-import NavBar from "@/components/NavBar";
+import Loader from "@/components/Loader";
 import { CreateContext } from "@/Context/ContextProvider";
+import { res_details, stringArray } from "@/data";
 import { testObject, valided_answers } from "@/Types/others/types";
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect } from "react";
+import { MdDelete } from "react-icons/md";
+import { FaSave } from "react-icons/fa";
 const page = () => {
-  // Example test data for res_details structure
-  // const res_details = {
-  //   qustions_details: {
-  //     id: "afb79efa348",
-  //     title: "generate me 10 questions",
-  //     created_at: "2025-07-03T15:53:55.564875+00:00",
-  //     answers: [
-  //       "Makoto Yuki",
-  //       "Theurgy",
-  //       "Akihiko Sanada",
-  //       "Iwatodai Dorm",
-  //       "Tartarus",
-  //       "Rewind function",
-  //       "Elizabeth",
-  //       "Climbing stairs",
-  //       "Mortality and the acceptance of death",
-  //       "Mitsuru Kirijo",
-  //     ],
-  //     questions: [
-  //       {
-  //         question:
-  //           "1) What is the default name given to the male protagonist of Persona 3 Reloaded?",
-  //         options: [
-  //           "Makoto Yuki",
-  //           "Minato Arisato",
-  //           "Yu Narukami",
-  //           "Ren Amamiya",
-  //         ],
-  //       },
-  //       {
-  //         question:
-  //           "2) What new combat mechanic was introduced in Persona 3 Reloaded that allows for powerful ultimate attacks?",
-  //         options: [
-  //           "Theurgy",
-  //           "All-Out Attack",
-  //           "Persona Fusion",
-  //           "Shuffle Time",
-  //         ],
-  //       },
-  //       {
-  //         question:
-  //           "3) Which of the following male characters received expanded storylines focusing on their daily lives in Persona 3 Reloaded?",
-  //         options: [
-  //           "Akihiko Sanada",
-  //           "Junpei Iori",
-  //           "Shinjiro Aragaki",
-  //           "Ken Amada",
-  //         ],
-  //       },
-  //       {
-  //         question:
-  //           "4) What is the primary hub location for the Specialized Extracurricular Execution Squad (SEES) in Persona 3 Reloaded?",
-  //         options: [
-  //           "Iwatodai Dorm",
-  //           "Paulownia Mall",
-  //           "Gekkoukan High",
-  //           "Tartarus",
-  //         ],
-  //       },
-  //       {
-  //         question:
-  //           "5) What is the name of the colossal tower that appears during the Dark Hour in Persona 3 Reloaded?",
-  //         options: ["Tartarus", "Mementos", "Yabbashah Block", "Arqa Block"],
-  //       },
-  //       {
-  //         question:
-  //           "6) What quality-of-life feature was added to Persona 3 Reloaded to revisit previous dialogue choices and battles?",
-  //         options: [
-  //           "Auto-battle",
-  //           "Fast travel",
-  //           "Skill inheritance",
-  //           "Rewind function",
-  //         ],
-  //       },
-  //       {
-  //         question:
-  //           "7) What is the name of the Velvet Room attendant who assists the protagonist in Persona 3 Reloaded?",
-  //         options: ["Elizabeth", "Margaret", "Caroline", "Justine"],
-  //       },
-  //       {
-  //         question:
-  //           "8) What is the primary method of exploring and ascending Tartarus in Persona 3 Reloaded?",
-  //         options: [
-  //           "Elevator",
-  //           "Climbing stairs",
-  //           "Escalator",
-  //           "Teleportation",
-  //         ],
-  //       },
-  //       {
-  //         question:
-  //           "9) What is the central philosophical theme prominently explored throughout the story of Persona 3 Reloaded?",
-  //         options: [
-  //           "Mortality and the acceptance of death",
-  //           "Friendship and teamwork",
-  //           "Power and responsibility",
-  //           "Hope and despair",
-  //         ],
-  //       },
-  //       {
-  //         question:
-  //           "10) Which member of SEES uses a katana as their primary weapon in Persona 3 Reloaded?",
-  //         options: [
-  //           "Mitsuru Kirijo",
-  //           "Akihiko Sanada",
-  //           "Junpei Iori",
-  //           "Koromaru",
-  //         ],
-  //       },
-  //     ],
-  //   },
-  //   Validated_answers: [
-  //     { q_index: 0, given_answer: true, correct_answer: "Makoto Yuki" },
-  //     { q_index: 1, given_answer: true, correct_answer: "Theurgy" },
-  //     { q_index: 2, given_answer: false, correct_answer: "Akihiko Sanada" },
-  //     { q_index: 3, given_answer: false, correct_answer: "Iwatodai Dorm" },
-  //     { q_index: 4, given_answer: false, correct_answer: "Tartarus" },
-  //     { q_index: 5, given_answer: false, correct_answer: "Rewind function" },
-  //     { q_index: 6, given_answer: false, correct_answer: "Elizabeth" },
-  //     { q_index: 7, given_answer: false, correct_answer: "Climbing stairs" },
-  //     {
-  //       q_index: 8,
-  //       given_answer: false,
-  //       correct_answer: "Mortality and the acceptance of death",
-  //     },
-  //     { q_index: 9, given_answer: false, correct_answer: "Mitsuru Kirijo" },
-  //   ],
-  // };
-
-  const { result, setresult } = CreateContext();
-
-  useEffect(() => {
-    // setresult(res_details);
-  }, []);
+ 
+  const { result, setresult, setsidebar,Answer,setAnswer } = CreateContext();
+  
+  // useEffect(() => {
+  //   setAnswer(stringArray);
+  //   setresult(res_details);
+  // }, []);
 
   const correct = result?.Validated_answers.filter(
     (ans: valided_answers) => ans.given_answer === true
@@ -149,32 +24,37 @@ const page = () => {
     (ans: valided_answers) => ans.given_answer === false
   ).length;
   const total = result?.Validated_answers.length;
-
+  if(!result) return <div className="flex justify-center items-center w-full h-screen"><Loader/></div>
   return (
     <>
       <nav className="absolute w-[98%] top-0 left-0 flex ml-[1%] md:px-2 px-3">
         <Mainbodynav />
       </nav>
-      <main className="flex">
+      <main className="flex ">
         <Sidebar />
-        <div className="mt-20 px-2 w-full">
-          <section className="result_bord bg-green-500 rounded-2xl p-2 mb-3">
+        <div className="mt-18 px-2 w-full md:h-[90vh] md:overflow-y-scroll scroll-smooth scroll-me-1" onClick={()=>setsidebar(true)}>
+          <section className="result_bord select-none bg-green-500 rounded-2xl p-2 mb-3 md:w-[30%] mx-auto text-white">
             <div className="score_card">
               <div>you got {correct}correct </div>
               <div>you got {wrong} wrong </div>
               <div>out of {total}</div>
             </div>
           </section>
-          <p>Here is the Mock test details </p>
-          <section>
+          <p className="text-xl md:text-2xl font-bold md:mx-[10%] mx-2">Answer Review</p>
+          <section className="mx-2 md:mx-[10%] bg-green-200 p-5 mb-2 rounded-2xl text-green-900">
             {result?.qustions_details?.questions.map((i:testObject,index:number)=>(<div key={index} className="questions-x">
-              <h1 className="questions my-2">
+              <h1 className="questions my-2 md:text-[19px] font-bold">
                 {i.question}
               </h1>
-               {i.options.map((i,optIdx)=>(<div key={optIdx} className="options pl-5"> <input type="radio" readOnly checked={i===result?.Validated_answers[index].correct_answer} name={`option-${index}`}  /> {i}</div>))}
-     
-            </div>))}
-            
+               {i.options.map((i,optIdx)=>(<div key={optIdx} className="options pl-5"> <input className="accent-green-500 " type="radio" readOnly checked={i===result?.Validated_answers[index].correct_answer} name={`option-${index}`}/> {i} {i===result?.Validated_answers[index].correct_answer && <span>✅</span>}</div>))}
+               <div className={`p-2 w-fit rounded ${result?.Validated_answers[index].given_answer ? "bg-green-500 text-green-950":"bg-red-500 text-white"}`}> 
+                Given answers: {Answer[index]}</div>
+            </div>
+          ))}
+          </section>
+          <section className="flex justify-end md:mx-[10%] mx-2 gap-2 hover:gap-5 transition-gap ease-in-out duration-150 mb-10 text-white">
+            <button className="flex gap-2 justify-center items-center bg-red-500 p-3 rounded-2xl hover:scale-120 cursor-pointer hover:bg-red-700 transition-all duration-200 ease-in-out"><MdDelete className="w-5 h-5"/>delete</button>
+            <button className="flex gap-2 justify-center items-center bg-green-500 p-3 rounded-2xl hover:scale-120 cursor-pointer hover:bg-green-700 transition-all duration-200 ease-in-out"><FaSave className="w-5 h-5"/> Save questions</button>
           </section>
         </div>
       </main>

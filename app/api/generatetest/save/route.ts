@@ -3,7 +3,6 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(req:Request) {
-    //make sure to add user details later
     const savedata = await req.json();
     const cookie = await cookies();
     if(!cookie.get("session_token"))return NextResponse.json({success:false, message:"Unauthorized! login to perform action"},{status:404});

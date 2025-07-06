@@ -7,37 +7,39 @@ import { uid } from "uid";
 import axios from "axios";
 import { CreateContext } from "@/Context/ContextProvider";
 import { testQuestionSaveObject } from "@/Types/others/types";
+import Loader from "../Loader";
 
 const InputField = () => {
   const Router = useRouter();
   const [input, setinput] = useState<string>("");
-  const { setquestions } = CreateContext();
+  const { setquestions,loader,setloader,user_details } = CreateContext();
 
   const handleClick = async () => {
     setinput("");
-    //enter loading state
+    setloader(true);
     const id = uid();
     try {
       const res = await axios.post("/api/generatetest/gen",{prompt : input});
-      //end loading state
       const data = JSON.parse(res.data.message);
       setquestions(data.questions_key);
       const savedata:testQuestionSaveObject = {
         id:id,
+        user_id:user_details.user_id,
         title:input,
         questions:data.questions_key,
         answers:data.answer_key
       } 
-      //created the save feature just add user info to identify the user's activity
       const res2 = await axios.post("/api/generatetest/save",savedata); 
+      setloader(false);
       Router.push(`/home/t/${id}`);
     } catch (error) {
       console.log(error);
     }
   };
 
+  if(loader) return <div className="absolute top-[50%] left-[50%]"><Loader/></div>
   return (
-    <div className="flex justify-center items-center relative ">
+    <div className="flex justify-center items-center relative">
       <h1 className="fixed select-none top-[40%] text-3xl md:text-6xl font-bold  z-[-10] text-center mx-10">
         Ready to{" "}
         <span className="px-6 p-1 bg-green-700 text-white rounded-xl">Mog</span>{" "}

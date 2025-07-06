@@ -13,13 +13,12 @@ import { FaArrowLeft,FaArrowRight } from "react-icons/fa6";
 const page = () => {
   const test_id = useParams();
   const router = useRouter()
-  const [Answer,setAnswer] = useState<Array<string>>([])
   const [count,setCount] = useState(0);
   const [TestObject,setTestObject] = useState<Array<testObject>>([{
     question:"",
     options:[]
   }]);
-  const {questions,setquestions,setresult} = CreateContext();
+  const {questions,setquestions,setresult,Answer,setAnswer,user_details} = CreateContext();
 
   useEffect(() => {
     setTestObject( questions ) ;
@@ -42,8 +41,7 @@ const page = () => {
 
   async function handlesubmit () {
     try {
-      const res = await axios.post('/api/validate',{id: test_id.id, submitted_answers : Answer});
-      // console.log(res.data.message); //data is ready to be shipped to /submit for detailed overview of the mock test results 
+      const res = await axios.post('/api/validate',{id: test_id.id,userid: user_details.user_id,submitted_answers : Answer});
       setresult(res.data.message);
       router.push(`/home/result/${test_id.id}`);
     } catch (error) {

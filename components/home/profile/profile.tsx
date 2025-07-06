@@ -10,9 +10,10 @@ import { FaCopy } from "react-icons/fa";
 import Link from "next/link";
 const Profile = () => {
   const Router = useRouter();
-  const { OpenProfile,setOpenProfile,ProfileIconRef,user_details } = CreateContext();
+  const { OpenProfile,setOpenProfile,ProfileIconRef,user_details,GetUser,setloader } = CreateContext();
   const Profileref = useRef<HTMLDivElement>(null);
   async function handleSignOut() {
+    setloader(true)
     const res = await axios.post("/api/auth/Logout");
     if (res.data.success) {
       Router.push("/");
@@ -22,6 +23,7 @@ const Profile = () => {
   }
 
    useEffect(() => {
+    GetUser();
   function handleClick(e: MouseEvent) {
     if (
       Profileref.current &&

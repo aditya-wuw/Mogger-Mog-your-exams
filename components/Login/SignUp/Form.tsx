@@ -1,11 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye } from "react-icons/fa";
 import { IoIosEyeOff } from "react-icons/io";
 import Link from "next/link";
 import SignIn_goolge, { SignIn_ } from "@/components/Login/SignUp/action";
+import { CreateContext } from "@/Context/ContextProvider";
+import Loader from "@/components/Loader";
 const Form = () => {
+  const {GetUser,loader,setloader} = CreateContext();
+  useEffect(()=>{setloader(false)},[])
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -33,8 +37,12 @@ const Form = () => {
   const handleSubmit =  async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
+      setloader(true);
       const error:string = await SignIn_(formData);
-      setErrors(prev =>({...prev, name :error}))
+      if(error) {
+        setErrors(prev =>({...prev, name :error}))
+        setloader(false);
+      }
       setFormData({
         name: "",
         email: "",
@@ -48,7 +56,7 @@ const Form = () => {
   };
 
   const [Visi, setVisi] = useState(false);
-
+  if(loader) return <div><Loader/></div>
   return (
     <form
       onSubmit={handleSubmit}

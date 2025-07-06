@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     try {
         const hasedpass = await bcrypt.hash(password, 10);
         const credentials: cred = { username: name, email: email, password: hasedpass, method: "Email" }
-        const { data } = await supabase.from('users').select('email').eq('email', email)
+        const { data } = await supabase.from('users').select('email').eq('email', email).single();
         if (data) {
             return NextResponse.json({ success: false, message: "account already exists" }, { status: 200 });
         }

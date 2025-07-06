@@ -18,16 +18,13 @@ export const ContextProvider = ({
   const [questions, setquestions] = useState([]);
   const [result,setresult] = useState<resulttype>();
   const [user_details,setUser] = useState<users_details_>();
-
+  const [loader,setloader] = useState(false);
+  const [Answer,setAnswer] = useState<Array<string>>([])
   async function GetUser() {
     const res = await axios.get('/api/auth/session');
     setUser(res.data.message);
   }
-  useEffect(()=>{
-    GetUser()
-  },[]);
-
-
+  
   const value = {
     count,
     setcount,
@@ -40,7 +37,8 @@ export const ContextProvider = ({
     questions,
     setquestions,
     result,setresult,
-    user_details
+    user_details,
+    loader,setloader,GetUser,Answer,setAnswer
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

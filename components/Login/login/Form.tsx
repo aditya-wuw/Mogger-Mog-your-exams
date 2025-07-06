@@ -1,14 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye } from "react-icons/fa";
 import { IoIosEyeOff } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { CreateContext } from "@/Context/ContextProvider";
+import Loader from "@/components/Loader";
 
 const Form = () => {
   const Router = useRouter();
+  const {loader,setloader} = CreateContext();
+  useEffect(()=>{setloader(false)},[]);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -30,6 +35,7 @@ const Form = () => {
   };
 
  const login = async (data: object) => {
+  setloader(true);
   try {
     const res = await axios.post("/api/auth/login", data);
     if (res.data.success) {
@@ -48,20 +54,18 @@ const Form = () => {
   }
 };
 
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
       login(formData);
     }
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const [Visi, setVisi] = useState(false);
 
+  if(loader) return <div><Loader/></div>
   return (
     <form
       onSubmit={handleSubmit}

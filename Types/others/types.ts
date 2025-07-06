@@ -15,6 +15,7 @@ export type testObject = {
 }
 export type testQuestionSaveObject = {
   id: string,
+  user_id:number,
   title: string,
   questions: testObject,
   answers: Array<string>

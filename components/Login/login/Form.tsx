@@ -8,8 +8,10 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { CreateContext } from "@/Context/ContextProvider";
 import Loader from "@/components/Loader";
+import { SignIn_goolge } from "../SignUp/action";
 
 const Form = () => {
+  const [Visi, setVisi] = useState(false);
   const Router = useRouter();
   const {loader,setloader} = CreateContext();
   useEffect(()=>{setloader(false)},[]);
@@ -63,8 +65,7 @@ const Form = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const [Visi, setVisi] = useState(false);
-
+  
   if(loader) return <div><Loader/></div>
   return (
     <form
@@ -120,7 +121,7 @@ const Form = () => {
       >
         Login
       </button>
-      <button className="w-full hover:cursor-pointer bg-green-500 hover:bg-green-400 text-white font-semibold py-2 px-4 rounded transition flex justify-center items-center">
+      <button onClick={SignIn_goolge} className="w-full hover:cursor-pointer bg-green-500 hover:bg-green-400 text-white font-semibold py-2 px-4 rounded transition flex justify-center items-center">
         <FcGoogle className="w-5 h-5" />
         oogle
       </button>

@@ -4,11 +4,11 @@ import { FcGoogle } from "react-icons/fc";
 import { FaEye } from "react-icons/fa";
 import { IoIosEyeOff } from "react-icons/io";
 import Link from "next/link";
-import SignIn_goolge, { SignIn_ } from "@/components/Login/SignUp/action";
+import  { SignIn_goolge, SignIn_ } from "@/components/Login/SignUp/action";
 import { CreateContext } from "@/Context/ContextProvider";
 import Loader from "@/components/Loader";
 const Form = () => {
-  const {GetUser,loader,setloader} = CreateContext();
+  const {loader,setloader} = CreateContext();
   useEffect(()=>{setloader(false)},[])
   const [formData, setFormData] = useState({
     name: "",
@@ -54,7 +54,15 @@ const Form = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  
+  const handleGoogle = async() => {
+    setloader(true);
+    const error = await SignIn_goolge();
+    if(error) {
+        setErrors(prev =>({...prev, name :error}))
+        setloader(false);
+      }
+  }
   const [Visi, setVisi] = useState(false);
   if(loader) return <div><Loader/></div>
   return (
@@ -129,7 +137,7 @@ const Form = () => {
       <button
         type="button"
         className="w-full hover:cursor-pointer bg-green-500 hover:bg-green-400 text-white font-semibold py-2 px-4 rounded transition flex justify-center items-center"
-        onClick={SignIn_goolge}
+        onClick={handleGoogle}
       >
         <FcGoogle className="w-5 h-5" />
         oogle

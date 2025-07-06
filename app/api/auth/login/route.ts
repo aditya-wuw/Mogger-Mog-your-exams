@@ -26,6 +26,7 @@ export async function POST(req: Request) {
                 httpOnly: true,
                 secure: true,
                 path: "/",
+                sameSite: "lax",
                 maxAge: 60 * 60 * 24
             });
             const creds = { 

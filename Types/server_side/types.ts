@@ -15,3 +15,10 @@ export type sessiontypes = {
     Token : string
     user_id : number
 }
+
+export type google_cred = {
+    username : string,
+    email: string,
+    method: string,
+    profile_pic:string
+}

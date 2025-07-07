@@ -12,7 +12,8 @@ import Loader from "../Loader";
 const InputField = () => {
   const Router = useRouter();
   const [input, setinput] = useState<string>("");
-  const { setquestions,loader,setloader,user_details } = CreateContext();
+  const [error,seterror] = useState("");
+  const { setquestions,loader,setloader,user_details,GetUser} = CreateContext();
 
   const handleClick = async () => {
     setinput("");
@@ -29,9 +30,17 @@ const InputField = () => {
         questions:data.questions_key,
         answers:data.answer_key
       } 
-      const res2 = await axios.post("/api/generatetest/save",savedata); 
-      setloader(false);
-      Router.push(`/home/t/${id}`);
+      const res2 = await axios.post("/api/generatetest/save",savedata);
+      if(res2.data.success === false) {
+        setloader(false);
+        seterror(res2.data.message)
+      }
+      else {
+        setloader(false);
+        Router.push(`/home/t/${id}`);
+         GetUser();
+      }
+
     } catch (error) {
       console.log(error);
     }
@@ -52,6 +61,7 @@ const InputField = () => {
           placeholder="What you want to prepare for to mog the exam 🤫🧏 bye bye ..."
           className="input_text w-[70vw] md:w-150 p-2 outline-none text-green-900"
           onChange={(e) => setinput(e.target.value)}
+          onKeyDown={(e)=>{if(e.key === "Enter"){ handleClick()}}}
         />
         <div className="flex gap-2">
           <FaRegPlusSquare className="plus_icon w-5 h-5" />

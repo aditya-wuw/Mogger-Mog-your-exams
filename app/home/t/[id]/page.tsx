@@ -1,6 +1,7 @@
 "use client";
 import ProfileContainer from "@/components/home/profile/ProfileContainer";
 import Timer from "@/components/home/Timer";
+import Loader from "@/components/Loader";
 import Mogger from "@/components/Mogger";
 import { CreateContext } from "@/Context/ContextProvider";
 import { data } from "@/data";
@@ -18,11 +19,24 @@ const page = () => {
     question:"",
     options:[]
   }]);
-  const {questions,setquestions,setresult,Answer,setAnswer,user_details} = CreateContext();
+
+  const {questions,setquestions,setresult,Answer,setAnswer,user_details,loader,setloader,GetUser} = CreateContext();
 
   useEffect(() => {
-    setTestObject( questions ) ;
-  }, []);
+    console.log(TestObject)
+    setTestObject(questions);
+    GetUser()
+    fetchQuestions();
+  }, [user_details?.user_id]);
+
+  useEffect(()=>{ console.log(Answer);},[Answer])
+
+  async function fetchQuestions () {
+    if(user_details?.user_id !== undefined) {
+      const res = await axios.get(`/api/getQuestions?id=${test_id.id}&user_id=${user_details?.user_id}`);
+      setTestObject(res.data.message.questions);
+    }
+    }
 
   function HandleBackNForth(direct:string) {
     if(direct==="Left"){
@@ -42,23 +56,27 @@ const page = () => {
   async function handlesubmit () {
     try {
       const res = await axios.post('/api/validate',{id: test_id.id,userid: user_details.user_id,submitted_answers : Answer});
-      setresult(res.data.message);
-      router.push(`/home/result/${test_id.id}`);
+      if(res.data.success){
+        localStorage.removeItem('endtime');
+        setresult(res.data.message);
+        router.push(`/home/result/${test_id.id}`);
+      }
     } catch (error) {
       router.push('/error')
     }
-    
-    
   }
 
   function handleMogging() {
     const prompt:boolean = confirm("Are you sure you want to stop mogging ?");
     if(prompt){
-      setquestions([])
+      setquestions([]);
+      localStorage.removeItem('endtime');
       router.push('/home')
     }
   }
- if(questions.length === 0) return <>loading</>
+
+  if(TestObject.length === 0) return <div className="w-full h-screen flex justify-center items-center"><Loader/></div>
+  else if (loader) return <div className="w-full h-screen flex justify-center items-center"><Loader/></div>
   return (
     <div className="relative min-h-screen">
       <nav className="p-3  mb-5 px-10 flex justify-between items-center">
@@ -73,9 +91,9 @@ const page = () => {
             Answer the following questions
           </h1>
           <section className="questions relative overflow-hidden break-words h-[89%] rounded-md border border-green-900">
-            <h1 className="text-2xl mb-5 bg-green-200 p-2">{TestObject[count].question}</h1>
+            <h1 className="text-2xl mb-5 bg-green-200 p-2">{TestObject[count]?.question}</h1>
             <div>
-              {TestObject[count].options.map((i:string, index:number) => (
+              {TestObject[count]?.options.map((i:string, index:number) => (
                 <div key={index} className="text-xl m-5 ">
                   <input type="radio" value={i} onChange={(e)=>HandleAnswer(e.target.value,count)} name={`qustion-${count}`} checked={Answer[count]=== i } className="cursor-pointer"/> <span className="select-none w-full">{i}</span>
                 </div>
@@ -93,17 +111,17 @@ const page = () => {
         </div>
         <div className="w-full relative select-none bg-green-400 md:min-h-120 p-2 rounded-md mb-20">
           <nav className="flex justify-between mx-3 items-center">
-            <h1 className="text-xl text-white">Check questions</h1>
+            <h1 className="md:text-xl text-sm text-white">Check questions</h1>
             <div className="flex gap-2 items-center ">
-              <h1 className="md:text-2xl text-green-900">Time Left</h1>
-              <Timer duration={20*60}/>
+              <h1 className="md:text-2xl text-sm text-green-900">Time Left</h1>
+              <Timer duration={5*60}/>
             </div>
           </nav>
           <div className="questions_index p-2 grid md:grid-cols-12 md:grid-rows-6 grid-cols-5 grid-rows-5 mt-2  mb-12">
             {TestObject.map((_,index)=>(<span key={index} className="p-3 m-1 bg-green-600 cursor-pointer hover:bg-green-500 transition-bg duration-300 ease-in-out text-center" onClick={()=>setCount(index)}>{index+1}</span>))}
           </div>
           <footer className="absolute bottom-0 right-5 mb-2">
-            <button className="p-3 bg-red-500 text-white rounded-xl cursor-pointer hover:bg-red-600 mt-10" onClick={handleMogging}>End Mogging</button>
+            <button className="p-3 bg-red-500 text-white rounded-xl cursor-pointer hover:bg-red-600 mt-10" onClick={()=>{setloader(true);handleMogging()}}>End Mogging</button>
           </footer>
         </div>
       </main>

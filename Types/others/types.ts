@@ -32,6 +32,7 @@ export type users_details_ = {
   user_id: number,
   users: {
     username: string,
-    email: string
+    email: string,
+    profile_pic: string,
   }
 }

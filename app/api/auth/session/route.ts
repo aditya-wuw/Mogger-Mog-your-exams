@@ -8,7 +8,7 @@ export async function GET(request:Request) {
     else{
         try {
             const supbase = supabaseServerSide();
-            const {data, error } = await supbase.from('sessions').select('user_id, users ( username, email)').eq('Token',token.value).single();
+            const {data, error } = await supbase.from('sessions').select('user_id, users ( username, email, profile_pic)').eq('Token',token.value).single();
             if(error){
                 console.log(error)
                 return NextResponse.json({success:false,message:"something went wrong"},{status:500});

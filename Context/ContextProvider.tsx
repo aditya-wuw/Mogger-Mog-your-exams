@@ -16,15 +16,18 @@ export const ContextProvider = ({
   const ProfileIconRef = useRef<HTMLDivElement>(null);
   const MainContainerRef = useRef<HTMLElement>(null);
   const [questions, setquestions] = useState([]);
-  const [result,setresult] = useState<resulttype>();
-  const [user_details,setUser] = useState<users_details_>();
-  const [loader,setloader] = useState(false);
-  const [Answer,setAnswer] = useState<Array<string>>([])
+  const [result, setresult] = useState<resulttype>();
+  const [user_details, setUser] = useState<users_details_>();
+  const [loader, setloader] = useState(false);
+  const [Answer, setAnswer] = useState<Array<string>>([]);
+  const [profile, setprofile] = useState<string | null>(null);
+  const [TimerUser, setTimer] = useState<number>(0);
+  const [TimerSlider,SetTimerSlider] = useState(false);
   async function GetUser() {
-    const res = await axios.get('/api/auth/session');
+    const res = await axios.get("/api/auth/session");
     setUser(res.data.message);
   }
-  
+
   const value = {
     count,
     setcount,
@@ -36,9 +39,18 @@ export const ContextProvider = ({
     MainContainerRef,
     questions,
     setquestions,
-    result,setresult,
+    result,
+    setresult,
     user_details,
-    loader,setloader,GetUser,Answer,setAnswer
+    loader,
+    setloader,
+    GetUser,
+    Answer,
+    setAnswer,
+    profile,
+    setprofile,
+    TimerUser,setTimer,
+    TimerSlider,SetTimerSlider
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

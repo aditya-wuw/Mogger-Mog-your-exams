@@ -19,17 +19,17 @@ const page = () => {
     question:"",
     options:[]
   }]);
-
-  const {questions,setquestions,setresult,Answer,setAnswer,user_details,loader,setloader,GetUser} = CreateContext();
+  const {questions,setquestions,setresult,Answer,setAnswer,user_details,loader,setloader,GetUser,TimerUser,setTimer} = CreateContext();
 
   useEffect(() => {
-    console.log(TestObject)
+    setTimer(Number(sessionStorage.getItem('duration')));
     setTestObject(questions);
     GetUser()
-    fetchQuestions();
-  }, [user_details?.user_id]);
+  }, []);
 
-  useEffect(()=>{ console.log(Answer);},[Answer])
+  useEffect(()=>{
+     fetchQuestions();
+  },[user_details?.user_id])
 
   async function fetchQuestions () {
     if(user_details?.user_id !== undefined) {
@@ -58,6 +58,7 @@ const page = () => {
       const res = await axios.post('/api/validate',{id: test_id.id,userid: user_details.user_id,submitted_answers : Answer});
       if(res.data.success){
         localStorage.removeItem('endtime');
+        sessionStorage.removeItem('duration');
         setresult(res.data.message);
         router.push(`/home/result/${test_id.id}`);
       }
@@ -65,15 +66,21 @@ const page = () => {
       router.push('/error')
     }
   }
-
-  function handleMogging() {
+  
+  async function handleMogging() {
     const prompt:boolean = confirm("Are you sure you want to stop mogging ?");
     if(prompt){
-      setquestions([]);
-      localStorage.removeItem('endtime');
-      router.push('/home')
+      const prompt:boolean = confirm("The questions will be deleted");
+      if(prompt){
+        setquestions([]);
+        await axios.delete(`/api/delete?id=${test_id.id}&user_id=${user_details?.user_id}`)
+        localStorage.removeItem('endtime');
+        sessionStorage.removeItem('duration');
+        router.push('/home')
+      }
     }
   }
+
 
   if(TestObject.length === 0) return <div className="w-full h-screen flex justify-center items-center"><Loader/></div>
   else if (loader) return <div className="w-full h-screen flex justify-center items-center"><Loader/></div>
@@ -114,7 +121,7 @@ const page = () => {
             <h1 className="md:text-xl text-sm text-white">Check questions</h1>
             <div className="flex gap-2 items-center ">
               <h1 className="md:text-2xl text-sm text-green-900">Time Left</h1>
-              <Timer duration={5*60}/>
+              <Timer duration={TimerUser}/>
             </div>
           </nav>
           <div className="questions_index p-2 grid md:grid-cols-12 md:grid-rows-6 grid-cols-5 grid-rows-5 mt-2  mb-12">

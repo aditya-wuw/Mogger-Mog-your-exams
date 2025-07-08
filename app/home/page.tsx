@@ -7,7 +7,7 @@ import { CreateContext } from "@/Context/ContextProvider";
 import React, { useEffect } from "react";
 
 const Page = () => {
-  const {setsidebar,loader,setloader} = CreateContext();
+  const {setsidebar,loader,setloader,SetTimerSlider} = CreateContext();
   useEffect(()=>{setloader(false)},[])
   // if(loader) return <div className="w-full h-screen flex justify-center items-center"><Loader/></div>
   return (
@@ -15,7 +15,7 @@ const Page = () => {
       <Sidebar/>
       <main className="w-full h-full mx-4 " >
         <Mainbodynav />
-        <section  className="mainContaine h-[90vh] relative" onClick={()=>setsidebar(true)}>
+        <section  className="mainContaine h-[90vh] relative" onClick={()=>{setsidebar(true),SetTimerSlider(false)}}>
         </section>
         <InputField/>
       </main>

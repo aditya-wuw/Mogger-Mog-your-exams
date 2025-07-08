@@ -1,41 +1,55 @@
-"use client"
-import React, { useEffect, useState } from 'react'
-import Loader from '../Loader';
+"use client";
+import React, { useEffect, useState } from "react";
+import Loader from "../Loader";
 
-const Timer = ({duration}:{duration:number}) => {
-  const [timeleft,setTimer] = useState<number>(duration);
-  useEffect(()=>{
-      let endtime:number = Number(localStorage.getItem('endtime'));
-      if(!endtime){
-          endtime = Date.now()+ (duration*1000);
-          localStorage.setItem('endtime',endtime.toString());
-      }
-      const interval = setInterval(() => {
-        const remaining:number = endtime - Date.now();   
-        setTimer(remaining > 0 ? remaining : 0);
+const Timer = ({ duration }: { duration: number }) => {
+  const [timeleft, setTimeleft] = useState<number>(duration * 1000); 
 
-        if(remaining<=0) {
-            // alert("Submited");
-            localStorage.removeItem('endtime');
-            clearInterval(interval);
-        }    
+  useEffect(() => {
+    setTimeleft(duration * 1000);
+  }, [duration]);
 
-    }, 1000);
-    return ()=>{
-        clearInterval(interval);
+  useEffect(() => {
+    let endtime = Number(localStorage.getItem("endtime"));
+    if (!endtime || duration * 1000 !== (endtime - Date.now())) {
+      endtime = Date.now() + duration * 1000;
+      localStorage.setItem("endtime", endtime.toString());
     }
-  },[duration,setTimer]);
 
-   const hours:number = Math.floor(timeleft/(3600000));
-   const minuite:number = Math.floor((timeleft%3600000)/60000);
-   const seconds:number = Math.floor((timeleft%60000)/1000);
+    const interval = setInterval(() => {
+      const remaining = endtime - Date.now();
+      setTimeleft(remaining > 0 ? remaining : 0);
 
-  if(timeleft === duration) return <div className='scale-50'><Loader/></div>
+      if (remaining <= 0) {
+        localStorage.removeItem("endtime");
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [duration]);
+
+  const hours = Math.floor(timeleft / 3600000);
+  const minutes = Math.floor((timeleft % 3600000) / 60000);
+  const seconds = Math.floor((timeleft % 60000) / 1000);
+
+  if (timeleft === duration * 1000) return <div className="scale-50"><Loader /></div>;
+
   return (
-    <div className={`p-2 text-2xl text-white transtion-bg duration-500 ease-in-out ${ timeleft < (duration*0.1*1000) ? "bg-red-500"  : timeleft < (duration*0.5*1000) ? "bg-yellow-400 text-yellow-950" : "bg-green-700" } rounded-2xl`}>
-       {String(hours).padStart(2,"0")}:{String(minuite).padStart(2,"0")}:{String(seconds).padStart(2,"0")}
+    <div
+      className={`p-2 text-2xl text-white transition duration-500 ease-in-out ${
+        timeleft < duration * 0.1 * 1000
+          ? "bg-red-500"
+          : timeleft < duration * 0.5 * 1000
+          ? "bg-yellow-400 text-yellow-950"
+          : "bg-green-700"
+      } rounded-2xl`}
+    >
+      {String(hours).padStart(2, "0")}:
+      {String(minutes).padStart(2, "0")}:
+      {String(seconds).padStart(2, "0")}
     </div>
-  )
-}
+  );
+};
 
-export default Timer
+export default Timer;

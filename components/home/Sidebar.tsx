@@ -7,11 +7,12 @@ import { SidebarTypes } from "@/Types/others/types";
 
 const Sidebar = () => {
   const { isSidebar, setsidebar } = CreateContext();
+
   const sidebarItems: Array<SidebarTypes> = [
-    { item: "Profile dashboard", link: "home/Profile" },
-    { item: "Performance reports", link: "home/Performance" },
-    { item: "Give test based on previous notes", link: "home/Give" },
-    { item: "History", link: "home/History" },
+    { item: "Profile dashboard", link: "/home/Profile" },
+    { item: "Performance reports", link: "/home/Performance" },
+    { item: "Give test based on previous notes", link: "/home/PrevNotes" },
+    { item: "History", link: "/home/history" },
   ];
 
   return (

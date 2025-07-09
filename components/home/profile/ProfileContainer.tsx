@@ -1,10 +1,15 @@
 import { CreateContext } from "@/Context/ContextProvider";
-import React from "react";
+import React, { useEffect } from "react";
 import { FaRegUser } from "react-icons/fa";
 
 
 const ProfileContainer = () => {
-  const { ProfileIconRef, profile} = CreateContext();
+  const { ProfileIconRef, profile,setprofile} = CreateContext();
+  
+  // useEffect(()=>{
+  //   setprofile(localStorage.getItem('pfp'))
+  // },[profile])
+  
   return (
     <div
       ref={ProfileIconRef}

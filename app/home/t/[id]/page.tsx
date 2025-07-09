@@ -78,7 +78,13 @@ const page = () => {
         sessionStorage.removeItem('duration');
         router.push('/home')
       }
+      else{
+        setloader(false)
+      }
     }
+    else{
+        setloader(false)
+      }
   }
 
 

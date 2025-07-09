@@ -15,7 +15,9 @@ const InputField = () => {
   const Router = useRouter();
   const [input, setinput] = useState<string>("");
   const [error, seterror] = useState("");
-  const {TimerSlider,SetTimerSlider} = CreateContext();
+  
+  const {TimerSlider,SetTimerSlider,setTimer} = CreateContext();
+
   const {
     setquestions,
     loader,
@@ -24,7 +26,9 @@ const InputField = () => {
     GetUser,
     TimerUser
   } = CreateContext();
-  useEffect(()=>{SetTimerSlider(false)},[])
+
+  useEffect(()=>{SetTimerSlider(false),setTimer(1800);},[])
+
   const handleClick = async () => {
     setinput("");
     setloader(true);
@@ -74,7 +78,7 @@ const InputField = () => {
           value={input}
           placeholder="What you want to prepare for to mog the exam 🤫🧏 bye bye ..."
           className="input_text w-[60vw] md:w-150 p-2 outline-none text-green-900"
-          // onClick={()=>SetTimerSlider(false)}
+          onClick={()=>SetTimerSlider(false)} 
           onChange={(e) => setinput(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -84,7 +88,7 @@ const InputField = () => {
         />
         <div className="relative">
           <MdTimer onClick={()=>SetTimerSlider(!TimerSlider)} className="w-5 h-5 cursor-pointer"/>
-          {TimerSlider && <div className="absolute md:left-[-30] left-[-70] bottom-8"><TimerField /></div> }
+          <div className={`${TimerSlider ? "block" : "hidden"} absolute md:left-[-30] left-[-70] bottom-8`}><TimerField /></div>
         </div>
         
         <div className="flex gap-2">

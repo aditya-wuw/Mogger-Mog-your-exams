@@ -9,6 +9,7 @@ import axios from "axios";
 import { CreateContext } from "@/Context/ContextProvider";
 import Loader from "@/components/Loader";
 import { SignIn_goolge } from "../SignUp/action";
+import Mogger from "@/components/Mogger";
 
 const Form = () => {
   const [Visi, setVisi] = useState(false);
@@ -72,8 +73,8 @@ const Form = () => {
       onSubmit={handleSubmit}
       className="max-w-md mx-5 p-6 bg-gradient-to-br from-green-800/30 to-green-200 backdrop-blur-md shadow-md rounded space-y-4 w-full text-green-800"
     >
-      <h2 className="text-2xl font-bold">Login</h2>
-
+      <Mogger/>
+      <h2 className="text-2xl font-bold mt-3 ml-3">Login</h2>
       <div>
         <label className="block mb-1 font-medium">Email</label>
         <input
@@ -121,7 +122,7 @@ const Form = () => {
       >
         Login
       </button>
-      <button onClick={SignIn_goolge} className="w-full hover:cursor-pointer bg-green-500 hover:bg-green-400 text-white font-semibold py-2 px-4 rounded transition flex justify-center items-center">
+      <button type="button" onClick={SignIn_goolge} className="w-full hover:cursor-pointer bg-green-500 hover:bg-green-400 text-white font-semibold py-2 px-4 rounded transition flex justify-center items-center">
         <FcGoogle className="w-5 h-5" />
         oogle
       </button>

@@ -36,3 +36,8 @@ export type users_details_ = {
     profile_pic: string,
   }
 }
+
+export type history = {
+  id:string,
+  title:string
+}

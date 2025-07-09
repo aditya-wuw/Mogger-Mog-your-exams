@@ -66,7 +66,7 @@ const page = () => {
               </h1>
                {i.options.map((i,optIdx)=>(<div key={optIdx} className="options pl-5"> <input className="accent-green-500 " type="radio" readOnly checked={i===result?.Validated_answers[index]?.correct_answer} name={`option-${index}`}/> {i} {i===result?.Validated_answers[index]?.correct_answer && <span>✅</span>}</div>))}
                <div className={`p-2 w-fit rounded ${result?.Validated_answers[index]?.given_answer ? "bg-green-500 text-green-950":"bg-red-500 text-white"}`}> 
-                Given answers: {Answer[index]}</div>
+                Given answer: {Answer[index]}</div>
             </div>
           ))}
           </section>

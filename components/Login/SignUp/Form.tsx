@@ -7,6 +7,7 @@ import Link from "next/link";
 import  { SignIn_goolge, SignIn_ } from "@/components/Login/SignUp/action";
 import { CreateContext } from "@/Context/ContextProvider";
 import Loader from "@/components/Loader";
+import Mogger from "@/components/Mogger";
 const Form = () => {
   const {loader,setloader} = CreateContext();
   useEffect(()=>{setloader(false)},[])
@@ -57,11 +58,7 @@ const Form = () => {
   
   const handleGoogle = async() => {
     setloader(true);
-    const error = await SignIn_goolge();
-    if(error) {
-        setErrors(prev =>({...prev, name :error}))
-        setloader(false);
-      }
+    await SignIn_goolge();
   }
   const [Visi, setVisi] = useState(false);
   if(loader) return <div><Loader/></div>
@@ -70,7 +67,8 @@ const Form = () => {
       onSubmit={handleSubmit}
       className="max-w-md mx-5 p-6 bg-gradient-to-br from-green-800/30 to-green-200 backdrop-blur-md shadow-md rounded space-y-4 w-full text-green-800"
     >
-      <h2 className="text-2xl font-bold">SignUp</h2>
+      <Mogger/>
+      <h2 className="text-2xl font-bold mt-3 ml-2">SignUp</h2>
 
       <div>
         <label className="block mb-1 font-medium">Name</label>

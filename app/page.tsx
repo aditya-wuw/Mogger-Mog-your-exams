@@ -1,12 +1,24 @@
 "use client";
 import GreenBlob from "@/components/GreenBlob";
 import NavBar from "@/components/NavBar";
-import { CreateContext } from "@/Context/ContextProvider";
 import { data } from "@/data.js";
+import axios from "axios";
 import { easeInOut, motion } from "motion/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 export default function Home() {
-  const { count, setcount } = CreateContext();
+  const Router = useRouter();
+  useEffect(()=>{
+     const session = async () => {
+      const res = await axios.get('/api/auth/session');
+      if(res.data.success) {
+        Router.push('/home');
+      }
+    }
+    session();
+  },[])
   return (
     <>
       <div className="relative w-full min-h-screen">

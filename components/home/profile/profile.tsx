@@ -17,7 +17,7 @@ const Profile = () => {
     setloader(true)
     const res = await axios.post("/api/auth/Logout");
     if (res.data.success) {
-      localStorage.removeItem('pfp')
+      localStorage.removeItem('pfp');
       Router.push("/");
     } else {
       Router.push("/error");
@@ -41,14 +41,18 @@ const Profile = () => {
   };
   }, []);
 
-  useEffect(()=>{setprofile(user_details?.users?.profile_pic)},[user_details?.users])
+  useEffect(()=>{
+  if ( user_details?.users?.profile_pic) {
+    setprofile(user_details.users.profile_pic);
+  }
+  },[user_details?.users])
 
   const handleCopy = async (data:string ) => {
     navigator.clipboard.writeText(data)
   }
 
   const Options: Array<OptionType> = [
-    { item: "User Profile", link: "/home/User", icon: <IoPersonCircle /> },
+    { item: "User Profile", link: "/home/Profile", icon: <IoPersonCircle /> },
     { item: "Settings", link: "/home/Settings", icon: <IoMdSettings /> },
   ];
 

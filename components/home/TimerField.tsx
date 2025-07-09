@@ -9,13 +9,11 @@ const TimerField = () => {
   const [customMinute, setCustomMinute] = useState<number>(0);
   const [customHour, setCustomHour] = useState<number>(0);
   const { TimerUser, setTimer } = CreateContext();
-
   useEffect(() => {
     if (TimerUser === 0) {
       setTimer(1800);
     }
   }, []);
-  
   useEffect(() => {
     if (mode === "minute") {
       setTimer(minute * 60);
@@ -27,7 +25,7 @@ const TimerField = () => {
   }, [mode, minute, hour, customMinute, customHour, setTimer]);
 
   return (
-    <div className="flex flex-col gap-4 bg-green-300 p-3 rounded-2xl justify-center text-center">
+    <div className="flex flex-col gap-4 bg-green-600 p-3 rounded-2xl justify-center text-center">
       <h1 className="text-xl font-semibold">Set Timer</h1>
       <select
         value={mode}
@@ -85,12 +83,11 @@ const TimerField = () => {
       )}
       <p className="text-sm text-gray-700">
         ⏱️ Timer set to:
-        <strong>
+        <strong className="text-white">
           {TimerUser === 0
             ? "00h: 30m"
             : `${formatTime(TimerUser).split(":").slice(0, 2).join("h: ")}m`}
         </strong>
-        {/* <strong>`${formatTime(TimerUser).split(':').slice(0,2).join("h: ")}m`</strong>  */}
       </p>
     </div>
   );

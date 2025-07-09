@@ -23,6 +23,7 @@ export const ContextProvider = ({
   const [profile, setprofile] = useState<string | null>(null);
   const [TimerUser, setTimer] = useState<number>(0);
   const [TimerSlider,SetTimerSlider] = useState(false);
+  const [feedbackform,setFeedbackForm] = useState(false);
   async function GetUser() {
     const res = await axios.get("/api/auth/session");
     setUser(res.data.message);
@@ -50,7 +51,7 @@ export const ContextProvider = ({
     profile,
     setprofile,
     TimerUser,setTimer,
-    TimerSlider,SetTimerSlider
+    TimerSlider,SetTimerSlider,feedbackform,setFeedbackForm
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

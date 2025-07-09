@@ -71,7 +71,7 @@ const Page = () => {
               no history found
             </div>
           ) : (
-            <div className="md:h-[43vw] h-full bg-green-300 overflow-y-scroll">
+            <div className="md:h-[43vw] h-full overflow-y-scroll">
               {historyData.map((i, index) => (
                 <div
                   key={i.id}

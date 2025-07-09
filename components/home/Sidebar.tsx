@@ -9,10 +9,11 @@ const Sidebar = () => {
   const { isSidebar, setsidebar } = CreateContext();
 
   const sidebarItems: Array<SidebarTypes> = [
-    { item: "Profile dashboard", link: "/home/Profile" },
-    { item: "Performance reports", link: "/home/Performance" },
-    { item: "Give test based on previous notes", link: "/home/PrevNotes" },
+    { item: "Home", link: "/home" },
     { item: "History", link: "/home/history" },
+    { item: "Profile dashboard ❌", link: "/home/Profile" },
+    { item: "Performance reports ❌", link: "/home/Performance" },
+    { item: "test on previous notes ❌", link: "/home/PrevNotes" },
   ];
 
   return (
@@ -42,7 +43,7 @@ const Sidebar = () => {
               {sidebarItems.map((i, index) => (
                 <Link
                   href={i.link}
-                  className="hover:bg-white rounded-2xl cursor-pointer px-2 p-2"
+                  className="hover:bg-white rounded-2xl cursor-pointer px-2 p-2 text-start"
                   key={index}
                 >
                   {i.item}

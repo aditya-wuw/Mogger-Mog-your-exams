@@ -37,6 +37,7 @@ const Form = () => {
     return Object.values(newErrors).every((e) => !e);
   };
 
+ // eslint-disable-next-line @typescript-eslint/no-explicit-any
  const login = async (data: object) => {
   setloader(true);
   try {
@@ -44,8 +45,6 @@ const Form = () => {
     if (res.data.success) {
       Router.push("/home");
     } 
-  
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error : any) {
     if (error.status === 300) {
       setErrors({email:error.response.data.message , password:""});
@@ -130,7 +129,7 @@ const Form = () => {
         oogle
       </button>
       <div className="flex gap-1">
-        <p>don't have an account ? </p>
+        <p>don&apos;t have an account ? </p>
         <Link
           href={"/Auth/SignUp"}
           className="text-green-800 font-bold underline hover:cursor-pointerLink"

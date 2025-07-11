@@ -62,7 +62,8 @@ const InputField = () => {
   if (loader)
     return (
       <div className="absolute top-[50%] left-[50%]">
-        <Loader /> {error} //use tost to show the error message later 
+        {/* use tost to show the error message later  */}
+        <Loader /> {error} 
       </div>
     );
   return (

@@ -42,7 +42,7 @@ const Page = () => {
       );
       setTestObject(res.data.message.questions);
     }
-  }, []);
+  }, [test_id.id,user_details?.user_id]);
 
   function HandleBackNForth(direct: string) {
     if (direct === "Left") {
@@ -78,7 +78,7 @@ const Page = () => {
     setTimer(Number(sessionStorage.getItem("duration")));
     setTestObject(questions);
     GetUser();
-  }, [setTimer, setTestObject,GetUser]);
+  }, [setTimer, setTestObject,GetUser,questions]);
 
   useEffect(() => {
     fetchQuestions();

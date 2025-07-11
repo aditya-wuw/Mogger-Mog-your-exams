@@ -6,23 +6,24 @@ import axios from "axios";
 import { easeInOut, motion } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 
 export default function Home() {
   const Router = useRouter();
-
-  const session = useCallback(async () => {
-    const res = await axios.get("/api/auth/session");
-    if (res.data.success) {
-      Router.push("/home");
+  useEffect(()=>{
+     const session = async () => {
+      const res = await axios.get('/api/auth/session');
+      if(res.data.success) {
+        Router.push('/home');
+      }
     }
-  }, []);
+    session();
+  },[Router]);
   
-  useEffect(() => {session}, [session]);
   return (
     <>
       <div className="relative w-full min-h-screen">
-        <GreenBlob />
+        <GreenBlob/>
         <div>
           <div className="flex justify-center">
             <NavBar />
@@ -53,22 +54,16 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, ease: easeInOut }}
               >
-                <Link
-                  href={"/GettingStarted"}
-                  className="p-4  bg-gradient-to-br from-green-500/70 to-green-300 hover:to-green-100 backdrop-blur-md rounded-2xl w-50 text-green-900 hover:text-white text-2xl hover:from-green-500/50 transition-all hover:cursor-pointer gap-2 flex justify-center"
-                >
+                <Link href={"/GettingStarted"} className="p-4  bg-gradient-to-br from-green-500/70 to-green-300 hover:to-green-100 backdrop-blur-md rounded-2xl w-50 text-green-900 hover:text-white text-2xl hover:from-green-500/50 transition-all hover:cursor-pointer gap-2 flex justify-center">
                   Get started
-                </Link>
+                </Link >
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, ease: easeInOut }}
               >
-                <Link
-                  href={"/Auth/login"}
-                  className="p-4 group bg-gradient-to-br from-green-500/70 to-green-300 hover:to-green-100 backdrop-blur-md rounded-2xl w-50 text-green-900 hover:text-white text-2xl hover:from-green-500/50 transition-all hover:cursor-pointer gap-2 flex"
-                >
+                <Link href={'/Auth/login'} className="p-4 group bg-gradient-to-br from-green-500/70 to-green-300 hover:to-green-100 backdrop-blur-md rounded-2xl w-50 text-green-900 hover:text-white text-2xl hover:from-green-500/50 transition-all hover:cursor-pointer gap-2 flex">
                   Try out
                   <span className="text-white group-hover:text-green-900 transition-colors duration-200 group">
                     Mogger
@@ -86,8 +81,8 @@ export default function Home() {
             <section className="min-h-[49.3vh] md:flex gap-10">
               <div></div>
               <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0,y:50 }}
+                animate={{ opacity: 1, y:0 }}
                 transition={{ duration: 2 }}
                 className="bg-gradient-to-bl  h-76 mt-10 mb-10 md:mb-0 backdrop-blur-md from-green-200 text-green-900 md:w-140 to-transparent rounded-2xl p-2"
               >
@@ -100,17 +95,7 @@ export default function Home() {
                   autoFocus
                   className="md:w-[530px] md:h-[300px] rounded-2xl w-[350px] h-[250px]"
                 ></iframe>
-                <p className="mt-2">
-                  Created by{" "}
-                  <a
-                    className="text-green-600"
-                    href="https://nullfaceddev.xyz"
-                    target="_blank"
-                  >
-                    @NullFacedDev
-                  </a>{" "}
-                  with 💖 and コーヒー
-                </p>
+                <p className="mt-2">Created by <a className="text-green-600" href="https://nullfaceddev.xyz" target="_blank">@NullFacedDev</a> with 💖 and コーヒー</p> 
               </motion.div>
             </section>
           </main>

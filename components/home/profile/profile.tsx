@@ -47,7 +47,7 @@ const Profile = () => {
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
-  }, [ProfileIconRef,setOpenProfile]);
+  }, [ProfileIconRef,setOpenProfile,GetUser]);
 
   useEffect(() => {
     if (user_details?.users?.profile_pic) {

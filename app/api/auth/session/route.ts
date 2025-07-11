@@ -1,7 +1,8 @@
 import { supabaseServerSide } from "@/utils/SupabaseDB/serverside/supabase";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-export async function GET(_request:Request) {
+
+export async function GET() {
     const cookie = await cookies();
     const token = cookie.get('session_token')
     if(!token?.value) return NextResponse.json({success:false,message:"unAuthorized"},{status:200});

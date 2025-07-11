@@ -38,7 +38,6 @@ const Page = () => {
     const res = await axios.get(`/api/history?id=${id}`);
     if (res.data.success === true) {
       setHistoryData(res.data.message);
-      setloader(false);
     }
   },[])
   
@@ -49,8 +48,9 @@ const Page = () => {
   useEffect(() => {
     if (user_details?.user_id !== undefined) {
       getHistory(user_details.user_id);
+      setloader(false);
     }
-  }, [user_details?.user_id,getHistory]);
+  }, [user_details?.user_id,getHistory,setloader]);
   
 
   if (loader)

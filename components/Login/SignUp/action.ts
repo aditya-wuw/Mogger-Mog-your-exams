@@ -18,8 +18,6 @@ export const SignIn_goolge = async () => {
     const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(
         REDIRECT_URI
     )}&response_type=code&scope=${encodeURIComponent(SCOPE)}&access_type=offline&prompt=consent`;
-    console.log(GOOGLE_CLIENT_ID);
-    console.log(REDIRECT_URI);
-    window.location.href = googleAuthUrl
+    window.location.href = googleAuthUrl;
 }
 

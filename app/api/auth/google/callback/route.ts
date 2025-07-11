@@ -8,10 +8,13 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const code = searchParams.get("code");
     const supabase = supabaseServerSide();
+    const err = searchParams.get("error");
+    if(err === "access_denied") return NextResponse.redirect(`${process.env.NEXT_PUBLIC_baseURL}/auth_/login`);
+
     if (!code) {
         return NextResponse.json({ success: false, message: "No code provided" }, { status: 400 });
     }
-
+    
     const tokenRes = await fetch("https://oauth2.googleapis.com/token", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -41,7 +44,7 @@ export async function GET(request: Request) {
 
     const { error } = await supabase.from('users').insert(creds)
     if (error) {
-        return NextResponse.redirect(process.env.NEXT_PUBLIC_baseURL + "Auth/login?error=Somthing_went_wrong");
+        return NextResponse.redirect(`${process.env.NEXT_PUBLIC_baseURL}/auth_/login?error=failed`);
     }
     else {
         return await session(userData);

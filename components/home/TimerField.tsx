@@ -14,7 +14,7 @@ const TimerField = () => {
     if (TimerUser === 0) {
       setTimer(1800);
     }
-  }, [setTimer]);
+  }, [setTimer,TimerUser]);
 
   useEffect(() => {
     if (mode === "minute") {

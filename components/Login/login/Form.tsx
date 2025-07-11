@@ -37,15 +37,16 @@ const Form = () => {
     return Object.values(newErrors).every((e) => !e);
   };
 
- // eslint-disable-next-line @typescript-eslint/no-explicit-any
- const login = async (data: object) => {
-  setloader(true);
-  try {
-    const res = await axios.post("/api/auth/login", data);
-    if (res.data.success) {
-      Router.push("/home");
+  
+  const login = async (data: object) => {
+    setloader(true);
+    try {
+      const res = await axios.post("/api/auth/login", data);
+      if (res.data.success) {
+        Router.push("/home");
+      } 
     } 
-  } catch (error : any) {
+    catch ( /* eslint-disable-line @typescript-eslint/no-explicit-any */ error : any ) {
     if (error.status === 300) {
       setErrors({email:error.response.data.message , password:""});
     } 

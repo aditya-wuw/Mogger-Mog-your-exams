@@ -132,7 +132,7 @@ const Form = () => {
       <div className="flex gap-1">
         <p>don&apos;t have an account ? </p>
         <Link
-          href={"/Auth/SignUp"}
+          href={"/auth_/SignUp"}
           className="text-green-800 font-bold underline hover:cursor-pointerLink"
         >
           SignUp

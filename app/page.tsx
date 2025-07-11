@@ -63,7 +63,7 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, ease: easeInOut }}
               >
-                <Link href={'/Auth/login'} className="p-4 group bg-gradient-to-br from-green-500/70 to-green-300 hover:to-green-100 backdrop-blur-md rounded-2xl w-50 text-green-900 hover:text-white text-2xl hover:from-green-500/50 transition-all hover:cursor-pointer gap-2 flex">
+                <Link href={'/auth_/login'} className="p-4 group bg-gradient-to-br from-green-500/70 to-green-300 hover:to-green-100 backdrop-blur-md rounded-2xl w-50 text-green-900 hover:text-white text-2xl hover:from-green-500/50 transition-all hover:cursor-pointer gap-2 flex">
                   Try out
                   <span className="text-white group-hover:text-green-900 transition-colors duration-200 group">
                     Mogger

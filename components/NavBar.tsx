@@ -9,8 +9,8 @@ const NavBar = () => {
           <span className='text-2xl font-bold drop-shadow-2xl select-none'>Mogger.AI</span>
         </div>
         <div className='flex gap-2'>
-          <Link href={'/Auth/login'} className='p-2 bg-green-500 rounded-2xl hover:cursor-pointer hover:bg-green-700'>Login</Link>
-          <Link href={'/Auth/SignUp'} className='p-2 bg-green-500 rounded-2xl hover:cursor-pointer hover:bg-green-700'>Sign Up</Link>
+          <Link href={'/auth_/login'} className='p-2 bg-green-500 rounded-2xl hover:cursor-pointer hover:bg-green-700'>Login</Link>
+          <Link href={'/auth_/SignUp'} className='p-2 bg-green-500 rounded-2xl hover:cursor-pointer hover:bg-green-700'>Sign Up</Link>
         </div>
     </div>
   )

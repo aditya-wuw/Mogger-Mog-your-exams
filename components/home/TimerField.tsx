@@ -9,11 +9,13 @@ const TimerField = () => {
   const [customMinute, setCustomMinute] = useState<number>(0);
   const [customHour, setCustomHour] = useState<number>(0);
   const { TimerUser, setTimer } = CreateContext();
+  
   useEffect(() => {
     if (TimerUser === 0) {
       setTimer(1800);
     }
-  }, []);
+  }, [setTimer]);
+
   useEffect(() => {
     if (mode === "minute") {
       setTimer(minute * 60);

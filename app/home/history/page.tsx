@@ -7,7 +7,7 @@ import { CreateContext } from "@/Context/ContextProvider";
 import { history } from "@/Types/others/types";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 const Page = () => {
   const { user_details, setloader, TimerUser, loader } = CreateContext();
@@ -34,23 +34,24 @@ const Page = () => {
     }
   }
 
-  async function getHistory(id: number) {
+  const getHistory = useCallback(async (id: number) => {
     const res = await axios.get(`/api/history?id=${id}`);
     if (res.data.success === true) {
       setHistoryData(res.data.message);
       setloader(false);
     }
-  }
-
+  },[])
+  
   useEffect(() => {
     setloader(true);
-  }, []);
+  }, [setloader]);
 
   useEffect(() => {
     if (user_details?.user_id !== undefined) {
       getHistory(user_details.user_id);
     }
-  }, [user_details?.user_id]);
+  }, [user_details?.user_id,getHistory]);
+  
 
   if (loader)
     return (

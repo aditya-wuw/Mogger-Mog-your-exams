@@ -3,7 +3,6 @@ import Mainbodynav from "@/components/home/BodyNav";
 import Sidebar from "@/components/home/Sidebar";
 import Loader from "@/components/Loader";
 import { CreateContext } from "@/Context/ContextProvider";
-import { res_details, stringArray } from "@/data";
 import { testObject, valided_answers } from "@/Types/others/types";
 import React, { useEffect } from "react";
 import { MdDelete } from "react-icons/md";
@@ -13,14 +12,13 @@ import { useParams } from "next/navigation";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const test_id = useParams();
-  const { result, setresult, setsidebar,Answer,setAnswer,user_details } = CreateContext();
+  const { result,setsidebar,Answer,user_details } = CreateContext();
   const Router = useRouter();
 
   useEffect(() => {
-    // setAnswer(stringArray);
-    // setresult(res_details);
+    
   }, [user_details?.user_id]);
   
   async function handledelete() {
@@ -80,4 +78,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

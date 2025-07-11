@@ -7,7 +7,7 @@ import Profile from "./profile/profile";
 import Mogger from "../Mogger";
 import ProfileContainer from "./profile/ProfileContainer";
 const Mainbodynav = () => {
-  const { isSidebar, setsidebar, setOpenProfile, OpenProfile,ProfileIconRef} =
+  const { isSidebar, setsidebar, setOpenProfile, OpenProfile} =
     CreateContext();
 
   const handleProfile = () => {

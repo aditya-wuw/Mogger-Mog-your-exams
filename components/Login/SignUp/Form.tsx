@@ -10,7 +10,7 @@ import Loader from "@/components/Loader";
 import Mogger from "@/components/Mogger";
 const Form = () => {
   const {loader,setloader} = CreateContext();
-  useEffect(()=>{setloader(false)},[])
+  useEffect(()=>{setloader(false)},[setloader])
   const [formData, setFormData] = useState({
     name: "",
     email: "",

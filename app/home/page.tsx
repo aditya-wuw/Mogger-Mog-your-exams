@@ -10,14 +10,14 @@ import React, { useEffect } from "react";
 
 const Page = () => {
   const {setsidebar,loader,setloader,SetTimerSlider,feedbackform} = CreateContext();
-  useEffect(()=>{setloader(false)},[])
+  useEffect(()=>{setloader(false)},[setloader])
   if(loader) return <div className="w-full h-screen flex justify-center items-center"><Loader/></div>
   return (
     <div className="w-[100%] h-full flex">
       <Sidebar/>
       <main className="w-full h-full mx-4 " >
         <Mainbodynav />
-        <section  className="mainContaine md:h-[90vh] h-[86vh] relative" onClick={()=>{setsidebar(true),SetTimerSlider(false)}}>
+        <section  className="mainContaine md:h-[90vh] h-[86vh] relative" onClick={()=>{setsidebar(true);SetTimerSlider(false);}}>
           {feedbackform && <div className="flex justify-center items-center relative md:top-[-10%] top-[2%] z-10"><Feedbackform/></div>}
         </section>
         <InputField/>

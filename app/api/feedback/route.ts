@@ -7,7 +7,6 @@ export async function POST(request: Request) {
         const cookie = await cookies();
         if (cookie.get('session_token')) {
             const insertdata = await request.json();
-            console.log(insertdata);
             const supabase = supabaseServerSide();
             const { error } = await supabase.from('feedback').insert(insertdata);
             if (error) {

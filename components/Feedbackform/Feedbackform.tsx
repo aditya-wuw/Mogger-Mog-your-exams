@@ -13,7 +13,6 @@ const Feedbackform = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (feedback.trim() && user_details.user_id) {
-      console.log("Submitted Feedback:", feedback, user_details?.user_id);
       await axios.post("/api/feedback", {
         user_id: user_details?.user_id,
         feedback: feedback,

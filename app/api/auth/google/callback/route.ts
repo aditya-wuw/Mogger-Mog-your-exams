@@ -30,7 +30,7 @@ export async function GET(request: Request) {
     const userData = await userRes.json();
     const { data } = await supabase.from('users').select('email').eq('email', userData.email).single();
     if (data) {
-        return await session(userData);
+        return await session(userData.email);
     }
     const creds: google_cred = {
         username: userData.name,
@@ -48,7 +48,7 @@ export async function GET(request: Request) {
     }
 }
 
-async function session(userData: any) {
+async function session(userData:string) {
     const token = crypto.randomBytes(64).toString('hex');
     const week: number = Number(process.env.NEXT_PUBLIC_AGE);
     const response = NextResponse.redirect(process.env.NEXT_PUBLIC_baseURL + "/home");
@@ -59,6 +59,6 @@ async function session(userData: any) {
         sameSite: "lax",
         maxAge: 60 * 60 * 24 * week
     });
-    await CreateSession({ email: userData.email, token: token })
+    await CreateSession({ email: userData, token: token })
     return response;
 }

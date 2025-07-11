@@ -15,7 +15,7 @@ const Form = () => {
   const [Visi, setVisi] = useState(false);
   const Router = useRouter();
   const {loader,setloader} = CreateContext();
-  useEffect(()=>{setloader(false)},[]);
+  useEffect(()=>{setloader(false)},[setloader]);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -44,15 +44,17 @@ const Form = () => {
     if (res.data.success) {
       Router.push("/home");
     } 
-  } catch (err: any) {
-    if (err.status === 300) {
-      setErrors({email:err.response.data.message , password:""});
+  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error : any) {
+    if (error.status === 300) {
+      setErrors({email:error.response.data.message , password:""});
     } 
-    else if(err.response){
-      setErrors({email:err.response.data.message , password:""});
+    else if(error.response){
+      setErrors({email:error.response.data.message , password:""});
     }
     else {
-      console.error(err);
+      console.error(error);
     }
   }
 };
@@ -63,6 +65,7 @@ const Form = () => {
       login(formData);
     }
   };
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -127,7 +130,7 @@ const Form = () => {
         oogle
       </button>
       <div className="flex gap-1">
-        <p>don't have an account ? </p>{" "}
+        <p>don't have an account ? </p>
         <Link
           href={"/Auth/SignUp"}
           className="text-green-800 font-bold underline hover:cursor-pointerLink"

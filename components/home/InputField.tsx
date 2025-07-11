@@ -27,7 +27,7 @@ const InputField = () => {
     TimerUser
   } = CreateContext();
 
-  useEffect(()=>{SetTimerSlider(false),setTimer(1800);},[])
+  useEffect(()=>{SetTimerSlider(false); setTimer(1800);},[SetTimerSlider,setTimer])
 
   const handleClick = async () => {
     setinput("");
@@ -62,7 +62,7 @@ const InputField = () => {
   if (loader)
     return (
       <div className="absolute top-[50%] left-[50%]">
-        <Loader />
+        <Loader /> {error} //use tost to show the error message later 
       </div>
     );
   return (

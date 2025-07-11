@@ -1,15 +1,11 @@
 import { CreateContext } from "@/Context/ContextProvider";
-import React, { useEffect } from "react";
+import Image from "next/image";
+import React from "react";
 import { FaRegUser } from "react-icons/fa";
 
 
 const ProfileContainer = () => {
-  const { ProfileIconRef, profile,setprofile} = CreateContext();
-  
-  // useEffect(()=>{
-  //   setprofile(localStorage.getItem('pfp'))
-  // },[profile])
-  
+  const { ProfileIconRef, profile} = CreateContext();  
   return (
     <div
       ref={ProfileIconRef}
@@ -18,12 +14,12 @@ const ProfileContainer = () => {
       {!profile ? (
         <FaRegUser />
       ) : (
-        <img
+        <Image
           src={profile}
           alt="pfp.png"
           className="w-full object-cover"
-          height={30}
-          width={30}
+          height={200}
+          width={200}
         />
       )}
     </div>

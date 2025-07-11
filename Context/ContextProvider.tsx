@@ -1,7 +1,7 @@
 "use client";
 import { resulttype, users_details_ } from "@/Types/others/types";
 import axios from "axios";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 
 const Context = createContext<null | any>(null);
 
@@ -24,11 +24,12 @@ export const ContextProvider = ({
   const [TimerUser, setTimer] = useState<number>(0);
   const [TimerSlider,SetTimerSlider] = useState(false);
   const [feedbackform,setFeedbackForm] = useState(false);
-  async function GetUser() {
+
+  const GetUser = useCallback(async(): Promise<void>=>{
     const res = await axios.get("/api/auth/session");
     setUser(res.data.message);
-  }
-
+  },[]);
+ 
   const value = {
     count,
     setcount,

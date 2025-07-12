@@ -18,7 +18,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`fixed select-none md:relative overflow-hidden z-10 top-0 left-0 h-screen bg-green-800/20 transition-all duration-500 ease-in-out backdrop-blur-md px-3
+      className={`fixed select-none lg:relative overflow-hidden z-10 top-0 left-0 h-screen bg-green-800/20 transition-all duration-500 ease-in-out backdrop-blur-md px-3
         ${!isSidebar ? "translate-x-0 w-[80%] md:w-[30%]" : "-translate-x-full w-0"}`}
     >
       <main>

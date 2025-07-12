@@ -47,7 +47,7 @@ export async function GET(request: Request) {
         return NextResponse.redirect(`${process.env.NEXT_PUBLIC_baseURL}/auth_/login?error=failed`);
     }
     else {
-        return await session(userData);
+        return await session(userData.email);
     }
 }
 

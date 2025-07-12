@@ -1,7 +1,7 @@
 import { CreateContext } from "@/Context/ContextProvider";
 import axios from "axios";
 import React, { useState } from "react";
-import { easeInOut, motion } from "motion/react";
+import { easeIn, easeInOut, motion } from "motion/react";
 import { MdDone } from "react-icons/md";
 import { IoArrowBack } from "react-icons/io5";
 
@@ -25,24 +25,27 @@ const Feedbackform = () => {
   };
   return (
     <motion.div
-      className="max-w-md mx-auto mt-10 p-6 bg-green-300/30 backdrop-blur-2xl shadow-lg rounded-lg md:w-100 w-[90vw]"
       initial={{ y: -150, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: easeInOut }}
+      transition={{ duration: 0.3, ease: easeInOut }}
     >
       {submitted ? (
-        <p className="text-green-950 font-medium">
+        <motion.p className="text-green-950 font-medium p-3 bg-green-300/30 rounded-2xl"
+         initial={{ y: 0, opacity: 1}}
+         animate={{ y: -150, opacity: 0 }}
+         transition={{ duration: 3, ease: easeIn }}
+        >
           Thank you for your feedback! Keep Mogging 😎
-        </p>
+        </motion.p>
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10 p-3 bg-green-300/30 backdrop-blur-2xl shadow-lg rounded-lg md:w-100 w-[90vw]">
           <h2 className="text-2xl font-semibold mb-4">Submit Your Feedback</h2>
           <textarea
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
             rows={5}
             placeholder="Write your feedback here..."
-            className="w-full p-3 bg-white border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full p-3 bg-white border rounded-md resize-none focus:outline-none border-none"
             required
           />
           <div className="flex gap-1">

@@ -24,15 +24,14 @@ const Page = () => {
   const {
     questions,
     setquestions,
-    setresult,
     Answer,
-    setAnswer,
+    HandleAnswer,
     user_details,
     loader,
     setloader,
     GetUser,
     TimerUser,
-    setTimer,
+    setTimer, handlesubmit
   } = CreateContext();
 
   const fetchQuestions = useCallback(async () => {
@@ -52,28 +51,6 @@ const Page = () => {
     }
   }
 
-  function HandleAnswer(ans: string, i: number) {
-    const Ans: Array<string> = [...Answer];
-    Ans[i] = ans;
-    setAnswer(Ans);
-  }
-
-  async function handlesubmit() {
-    const res = await axios.post("/api/validate", {
-      id: test_id.id,
-      userid: user_details.user_id,
-      submitted_answers: Answer,
-    });
-    if (res.data.success) {
-      localStorage.removeItem("endtime");
-      sessionStorage.removeItem("duration");
-      setresult(res.data.message);
-      router.push(`/home/result/${test_id.id}`);
-    } else {
-      router.push("/error");
-    }
-  }
-  
   useEffect(() => {
     setTimer(Number(sessionStorage.getItem("duration")));
     setTestObject(questions);
@@ -82,7 +59,7 @@ const Page = () => {
 
   useEffect(() => {
     fetchQuestions();
-  }, [user_details?.user_id,fetchQuestions]);
+  }, [fetchQuestions]);
 
   async function handleMogging() {
     const prompt: boolean = confirm("Are you sure you want to stop mogging ?");
@@ -118,14 +95,14 @@ const Page = () => {
     );
   return (
     <div className="relative min-h-screen">
-      <nav className="p-3  mb-5 px-10 flex justify-between items-center">
+      <nav className="p-3  mb-5 px-3 flex justify-between items-center">
         <Mogger />
         <div>
           <ProfileContainer />
         </div>
       </nav>
-      <main className="mx-3 md:flex-row flex flex-col gap-2">
-        <div className="md:w-[120%] md:h-120   p-2  select-none">
+      <main className="mx-3 lg:flex-row flex flex-col gap-2">
+        <div className="lg:w-[100%] md:h-120   p-2  select-none">
           <h1 className="md:text-5xl text-3xl mb-3 select-none ">
             Answer the following questions
           </h1>
@@ -161,7 +138,7 @@ const Page = () => {
                 <button
                   disabled={Answer.length === 0}
                   className={` bg-green-700 p-3 text-white hover:bg-green-400 ${Answer.length === 0 ? "cursor-not-allowed" : "cursor-pointer"}`}
-                  onClick={handlesubmit}
+                  onClick={()=>handlesubmit(test_id.id)}
                 >
                   Submit
                 </button>

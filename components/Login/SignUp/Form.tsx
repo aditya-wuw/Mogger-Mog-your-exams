@@ -8,8 +8,9 @@ import  { SignIn_goolge, SignIn_ } from "@/components/Login/SignUp/action";
 import { CreateContext } from "@/Context/ContextProvider";
 import Loader from "@/components/Loader";
 import Mogger from "@/components/Mogger";
+
 const Form = () => {
-  const {loader,setloader} = CreateContext();
+  const {loader,setloader,GetUser} = CreateContext();
   useEffect(()=>{setloader(false)},[setloader])
   const [formData, setFormData] = useState({
     name: "",

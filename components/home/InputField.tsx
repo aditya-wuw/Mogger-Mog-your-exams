@@ -10,13 +10,15 @@ import { testQuestionSaveObject } from "@/Types/others/types";
 import Loader from "../Loader";
 import TimerField from "./TimerField";
 import { MdTimer } from "react-icons/md";
+import Uploadfile from "./Uploadfile";
 
 const InputField = () => {
   const Router = useRouter();
   const [input, setinput] = useState<string>("");
   const [error, seterror] = useState("");
   
-  const {TimerSlider,SetTimerSlider,setTimer} = CreateContext();
+
+  const {TimerSlider,SetTimerSlider,setTimer,uploader, setuploader} = CreateContext();
 
   const {
     setquestions,
@@ -79,26 +81,26 @@ const InputField = () => {
           value={input}
           placeholder="What you want to prepare for to mog the exam 🤫🧏 bye bye ..."
           className="input_text w-[60vw] md:w-150 p-2 outline-none text-green-900"
-          onClick={()=>SetTimerSlider(false)} 
+          onClick={()=>{SetTimerSlider(false);setuploader(false);}} 
           onChange={(e) => setinput(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               handleClick();
             }
           }}
-        />
-        <div className="relative">
-          <MdTimer onClick={()=>SetTimerSlider(!TimerSlider)} className="w-5 h-5 cursor-pointer"/>
-          <div className={`${TimerSlider ? "block" : "hidden"} absolute md:left-[-30] left-[-70] bottom-8`}><TimerField /></div>
-        </div>
-        
+        />  
         <div className="flex gap-2">
-          <FaRegPlusSquare className="plus_icon w-5 h-5" />
-          <button disabled={input.length < 6} onClick={handleClick}>
-            <IoSend
-              className={`send_icon cursor-pointer w-5 h-5 ${input.length < 6 ? "text-black hover:cursor-not-allowed" : "text-green-600"} `}
-            />
-          </button>
+        <div className="relative">
+          <MdTimer onClick={()=>{SetTimerSlider(!TimerSlider);setuploader(false)}} className="w-5 h-5 cursor-pointer"/>
+          <div className={`${TimerSlider ? "block" : "hidden"} absolute md:left-[-50] left-[-70] bottom-8 w-40`}><TimerField /></div>
+        </div>
+        <div className="relative">
+          <FaRegPlusSquare className="upload_file w-5 h-5 cursor-pointer" onClick={()=>{setuploader(!uploader);SetTimerSlider(false)}}/>
+          <div className={`${uploader ? "block" : "hidden"} absolute md:left-[-80] left-[-90] bottom-8 w-40`}><Uploadfile /></div>
+        </div>
+        <button disabled={input.length < 6} onClick={handleClick}>
+          <IoSend className={`send_icon cursor-pointer w-5 h-5 ${input.length < 6 ? "text-black hover:cursor-not-allowed" : "text-green-600"} `}/>
+        </button>
         </div>
       </div>
     </div>

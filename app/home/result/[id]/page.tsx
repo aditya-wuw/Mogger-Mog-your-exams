@@ -10,15 +10,15 @@ import { IoMdArrowBack } from "react-icons/io";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 
 const Page = () => {
   const test_id = useParams();
-  const { result,setsidebar,Answer,user_details } = CreateContext();
-  const Router = useRouter();
-
+  const { result,setsidebar,Answer,user_details,Router } = CreateContext();
   useEffect(() => {
-    
+    if(!result) {
+      alert("result not available")
+      Router.push('/home');
+    }
   }, [user_details?.user_id]);
   
   async function handledelete() {
@@ -37,7 +37,7 @@ const Page = () => {
   const wrong = result?.Validated_answers.filter(
     (ans: valided_answers) => ans?.given_answer === false
   ).length;
-  const total = result?.Validated_answers.length;
+  const total = result?.qustions_details?.questions.length;
 
 
   if(!result) return <div className="flex justify-center items-center w-full h-screen"><Loader/></div>
@@ -50,10 +50,14 @@ const Page = () => {
         <Sidebar />
         <div className="mt-18 px-2 w-full md:h-[90vh] md:overflow-y-scroll scroll-smooth scroll-me-1" onClick={()=>setsidebar(true)}>
           <section className="result_bord select-none bg-green-500 rounded-2xl p-2 mb-3 md:w-[30%] mx-auto text-white">
-            <div className="score_card">
-              <div>you got {correct}correct </div>
-              <div>you got {wrong} wrong </div>
+            <div className="score_card p-2">
+              <div className="text-center font-bold">
+                {correct > total*0.9 ? "You are on a roll ! keep it up 🎉": correct > total/2 ? "it's ai8 mate batter luck next time 😎":"You need to do better bozo 😔"}
+              </div>
+              <div>you got {correct} correct ✅</div>
+              <div>you got {wrong} wrong ❌</div>
               <div>out of {total}</div>
+              <div className="text-center">⚠️ warning the answer report&apos;ll not be saved</div>
             </div>
           </section>
           <p className="text-xl md:text-2xl font-bold md:mx-[10%] mx-2">Answer Review</p>
@@ -64,7 +68,7 @@ const Page = () => {
               </h1>
                {i.options.map((i,optIdx)=>(<div key={optIdx} className="options pl-5"> <input className="accent-green-500 " type="radio" readOnly checked={i===result?.Validated_answers[index]?.correct_answer} name={`option-${index}`}/> {i} {i===result?.Validated_answers[index]?.correct_answer && <span>✅</span>}</div>))}
                <div className={`p-2 w-fit rounded ${result?.Validated_answers[index]?.given_answer ? "bg-green-500 text-green-950":"bg-red-500 text-white"}`}> 
-                Given answer: {Answer[index]}</div>
+                Given answer: {Answer[index] ? Answer[index] :"not answered"}</div>
             </div>
           ))}
           </section>

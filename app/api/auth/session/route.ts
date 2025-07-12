@@ -12,7 +12,7 @@ export async function GET() {
             const {data, error } = await supbase.from('sessions').select('user_id, users ( username, email, profile_pic)').eq('Token',token.value).single();
             if(error){
                 console.log(error)
-                return NextResponse.json({success:false,message:"something went wrong"},{status:500});
+                return NextResponse.json({success:false,message:"unAuthorized! no session found"},{status:500});
             }
             if(!data) return NextResponse.json({success:false,message:"unAuthorized! no session found"},{status:404});
             else{

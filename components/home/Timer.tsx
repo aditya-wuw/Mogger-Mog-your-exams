@@ -1,10 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Loader from "../Loader";
+import { CreateContext } from "@/Context/ContextProvider";
+import { useParams } from "next/navigation";
 
-const Timer = ({ duration }: { duration: number }) => {
+const Timer = ({ duration}: { duration: number}) => {
   const [timeleft, setTimeleft] = useState<number>(duration * 1000); 
-
+  const test_id = useParams();
+  const {handlesubmit} = CreateContext();
+  
   useEffect(() => {
     setTimeleft(duration * 1000);
   }, [duration]);
@@ -21,6 +25,7 @@ const Timer = ({ duration }: { duration: number }) => {
       setTimeleft(remaining > 0 ? remaining : 0);
 
       if (remaining <= 0) {
+        handlesubmit(test_id.id);
         localStorage.removeItem("endtime");
         clearInterval(interval);
       }

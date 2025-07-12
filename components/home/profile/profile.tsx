@@ -53,7 +53,7 @@ const Profile = () => {
     if (user_details?.users?.profile_pic) {
       setprofile(user_details.users.profile_pic);
     }
-  }, [user_details?.users,setprofile,GetUser]);
+  }, [user_details?.users?.profile_pic,setprofile,GetUser]);
 
   const handleCopy = async (data: string) => {
     navigator.clipboard.writeText(data);

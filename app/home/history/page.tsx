@@ -8,9 +8,10 @@ import { history } from "@/Types/others/types";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
+import { MdDelete } from "react-icons/md";
 
 const Page = () => {
-  const { user_details, setloader, TimerUser, loader } = CreateContext();
+  const { user_details, setloader, TimerUser, loader, setsidebar } = CreateContext();
   const [historyData, setHistoryData] = useState<Array<history>>([]);
   const [retakeMap, setRetakeMap] = useState<Record<string, boolean>>({});
 
@@ -38,19 +39,20 @@ const Page = () => {
     const res = await axios.get(`/api/history?id=${id}`);
     if (res.data.success === true) {
       setHistoryData(res.data.message);
+      setloader(false);
     }
   },[])
   
   useEffect(() => {
     setloader(true);
-  }, [setloader]);
+    setsidebar(true);
+  }, [setloader,user_details?.user_id,setsidebar]);
 
   useEffect(() => {
     if (user_details?.user_id !== undefined) {
-      getHistory(user_details.user_id);
-      setloader(false);
+      getHistory(user_details?.user_id);
     }
-  }, [user_details?.user_id,getHistory,setloader]);
+  }, [user_details?.user_id,getHistory]);
   
 
   if (loader)
@@ -72,27 +74,27 @@ const Page = () => {
               no history found
             </div>
           ) : (
-            <div className="md:h-[43vw] h-full overflow-y-scroll">
+            <div className="md:h-[43vw]  h-screen overflow-y-scroll">
               {historyData.map((i, index) => (
                 <div
                   key={i.id}
                   className="flex w-full justify-between md:px-10 px-2 mt-5 items-center"
                 >
-                  <div className="flex gap-2">
-                    <span>{index + 1}</span>
-                    <span className="w-40 md:w-fit text-nowrap truncate font-bold">
+                  <div className="flex gap-2 md:w-[70%] mr-1">
+                    <span>{index + 1})</span>
+                    <span className="w-40 md:w-[100vw] text-nowrap truncate font-bold">
                       {i.title}
                     </span>
                   </div>
                   <div className="flex gap-2">
                     {retakeMap[i.id] ? (
                       <div className="relative w-full ">
-                        <div className="absolute w-50 md:left-[-100px] left-[-128px] top-[-5] bg-green-600 rounded-2xl p-3">
+                        <div className="absolute w-50 md:left-[-100px] left-[-150px] top-[-5] bg-green-400 rounded-2xl p-3">
                           <TimerField />
                           <div className="flex gap-2 mt-2 mx-auto">
                             <button
                               type="button"
-                              className="p-2 rounded bg-green-500 cursor-pointer hover:bg-green-500/50"
+                              className="p-2 rounded bg-green-700 cursor-pointer hover:bg-green-500/90 text-white"
                               onClick={() => handleTest(i.id)}
                             >
                               Retake test
@@ -113,7 +115,7 @@ const Page = () => {
                       </div>
                     ) : (
                       <button
-                        className="p-2 rounded bg-green-500 cursor-pointer hover:bg-green-500/50"
+                        className="p-2 rounded bg-green-400 cursor-pointer hover:bg-green-500/50"
                         onClick={() => {
                           setRetakeMap((prev) => ({
                             ...prev,
@@ -127,10 +129,10 @@ const Page = () => {
 
                     <button
                       type="button"
-                      className="p-2 rounded bg-red-500"
+                      className="p-2 rounded text-red-500 cursor-pointer hover:text-red-500/80"
                       onClick={() => handleDelete(i.id)}
                     >
-                      delete
+                      <MdDelete className="w-7 h-7"/>
                     </button>
                   </div>
                 </div>

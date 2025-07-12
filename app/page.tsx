@@ -84,7 +84,7 @@ export default function Home() {
                 initial={{ opacity: 0,y:50 }}
                 animate={{ opacity: 1, y:0 }}
                 transition={{ duration: 2 }}
-                className="bg-gradient-to-bl  h-76 mt-10 mb-10 md:mb-0 backdrop-blur-md from-green-200 text-green-900 md:w-140 to-transparent rounded-2xl p-2"
+                className="bg-gradient-to-bl  h-76 mt-10 mb-10 md:mb-0 backdrop-blur-md from-green-200 text-green-900 md:w-140 to-transparent rounded-2xl p-2 mx-2"
               >
                 <iframe
                   src="https://www.youtube.com/embed/5AFF24YSdBk"
@@ -93,7 +93,7 @@ export default function Home() {
                   allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   autoFocus
-                  className="md:w-[530px] md:h-[300px] rounded-2xl w-[350px] h-[250px]"
+                  className="md:w-[530px] md:h-[300px] rounded-2xl w-[300px] h-[250px]"
                 ></iframe>
                 <p className="mt-2">Created by <a className="text-green-600" href="https://nullfaceddev.xyz" target="_blank">@NullFacedDev</a> with 💖 and コーヒー</p> 
               </motion.div>

@@ -27,7 +27,7 @@ const TimerField = () => {
   }, [mode, minute, hour, customMinute, customHour, setTimer]);
 
   return (
-    <div className="flex flex-col gap-4 bg-green-600 p-3 rounded-2xl justify-center text-center">
+    <div className="flex flex-col gap-4 bg-green-400 p-3 rounded-2xl justify-center text-center select-none">
       <h1 className="text-xl font-semibold">Set Timer</h1>
       <select
         value={mode}

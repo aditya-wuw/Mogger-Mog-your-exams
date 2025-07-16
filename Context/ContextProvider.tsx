@@ -34,7 +34,10 @@ export const ContextProvider = ({
   const [feedbackform, setFeedbackForm] = useState(false);
   const [userLoaded, setUserLoaded] = useState(false);
   const [uploader, setuploader] = useState(false);
+  const [loadermessage, SETloadermessAGE] = useState("");
+  const [file, setselectedfile] = useState([]);
 
+  
   const GetUser = useCallback(async (): Promise<void> => {
     if (userLoaded) return;
     setUserLoaded(true);
@@ -94,6 +97,10 @@ export const ContextProvider = ({
     HandleAnswer,
     uploader,
     setuploader,
+    file,
+    setselectedfile,
+    loadermessage,
+    SETloadermessAGE,
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

@@ -4,7 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaEye } from "react-icons/fa";
 import { IoIosEyeOff } from "react-icons/io";
 import Link from "next/link";
-import  { SignIn_goolge, SignIn_ } from "@/components/Login/SignUp/action";
+import  { SignIn_goolge, SignIn_ } from "@/components/Login/action";
 import { CreateContext } from "@/Context/ContextProvider";
 import Loader from "@/components/Loader";
 import Mogger from "@/components/Mogger";

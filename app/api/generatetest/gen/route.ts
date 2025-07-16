@@ -10,12 +10,28 @@ export async function POST(req: Request) {
         }
         else {
             const { prompt } = await req.json();
-            const instrustion: string = `return an array of objects avoid using markdown code block and follow this example - [
-  {"question": "1) What is the name of the protagonist in Persona 3 Reloaded?", "options": ["Makoto Yuki", "Yu Narukami", "Ren Amamiya", "Tatsuya Suou"]},
-  {"question": "2) What new combat mechanic was introduced in Persona 3 Reloaded?", "options": ["Theurgy", "Baton Pass", "Technical", "Showtime"]},
-  {"question": "3) Which of the following characters had new 'Link Episodes' added in Persona 3 Reloaded?", "options": ["Akihiko Sanada", "Yukari Takeba", "Mitsuru Kirijo", "Aigis"]},
-  {"question": "4) What is the primary hub location for SEES in Persona 3 Reloaded?", "options": ["Iwatodai Dorm", "Yasogami High", "Leblanc", "Shujin Academy"]},
-  {"question": "5) What is the name of the tower that appears during the Dark Hour in Persona 3 Reloaded?", "options": ["Tartarus", "Mementos", "TV World", "Abyss of Time"]}] and so on based on the users prompt in the quoats, strictly stick to only 4 options, make sure to only return the said format from the example, if the user dosen't send a specific prompt then simply generate 20 questions on general knowledge, if the user specified a topic but didn't mention the amount of questions then generate qustions in the range of 10 to 20, exclude the example questions don't return the example questions if the user didn't mention any perticuler topic or given any perticular passage and make sure all the questions are unique based on the user's prompt, here is the usera's prompt : ${prompt} ,also make sure to suffle the options properly,also generate a answer key for the questions and now we must have two sperate arrays one the question key and another the answer. Now wrap the both the keys in an object for example { "questions_key" : the question array, "answer_key" : the array of only the answers which is a string for example ["answer1","answer2"] } and return the final out put`
+            const instrustion: string = `Return a JavaScript object containing two arrays: questions_key and answer_key.
+1. questions_key should be an array of question objects formatted like this:
+[
+  {
+    "question": "1) Sample question?",
+    "options": ["Option A", "Option B", "Option C", "Option D"]
+  },
+  ...
+]
+2. answer_key should be a simple array of correct answers (strings), matching the order of the questions.
+Requirements:
+- Always return exactly one object in this format: { "questions_key": [...], "answer_key": [...] }.
+- Each question must have **4 shuffled options**.
+- All questions must be **unique and based on the user's prompt**.
+- If the user provides no prompt or a generic prompt, generate 20 general knowledge questions (exclude the example questions).
+- If the user specifies a topic but not a quantity, generate between 10 to 20 questions.
+- Do **not** use markdown or code blocks.
+- Do **not** include the example questions in the actual output.
+- Maintain proper numbering for each question.
+- Ensure the correct answer is included in the options and appears in the answer_key.
+User Prompt: ${prompt}
+`
             const res = await Gemini(instrustion);
             return NextResponse.json({ success: true, message: res }, { status: 201 });
         }

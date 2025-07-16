@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { CreateContext } from "@/Context/ContextProvider";
 import Loader from "@/components/Loader";
-import { SignIn_goolge } from "../SignUp/action";
+import { SignIn_goolge } from "../action";
 import Mogger from "@/components/Mogger";
 
 const Form = () => {

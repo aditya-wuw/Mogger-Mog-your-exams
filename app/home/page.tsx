@@ -9,10 +9,10 @@ import { CreateContext } from "@/Context/ContextProvider";
 import React, { useEffect } from "react";
 
 const Page = () => {
-  const {setsidebar,loader,setloader,SetTimerSlider,feedbackform,setuploader} = CreateContext();
-  useEffect(()=>{setloader(false);setsidebar(true);},[setloader,setsidebar])
+  const {setsidebar,loader,setloader,SetTimerSlider,feedbackform,setuploader,loadermessage,SETloadermessAGE} = CreateContext();
+  useEffect(()=>{setloader(false);setsidebar(true);SETloadermessAGE("")},[setloader,setsidebar])
   
-  if(loader) return <div className="w-full h-screen flex justify-center items-center"><Loader/></div>
+  if(loader) return <div className="w-full h-screen flex justify-center items-center"><Loader message={loadermessage}/></div>
   return (
     <div className="w-[100%] h-full flex">
       <Sidebar/>

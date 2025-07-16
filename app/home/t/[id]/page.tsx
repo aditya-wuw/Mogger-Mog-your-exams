@@ -41,7 +41,7 @@ const Page = () => {
       );
       setTestObject(res.data.message.questions);
     }
-  }, [test_id.id,user_details?.user_id]);
+  }, [test_id.id]);
 
   function HandleBackNForth(direct: string) {
     if (direct === "Left") {

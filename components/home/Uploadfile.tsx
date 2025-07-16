@@ -7,7 +7,7 @@ const Uploadfile = () => {
   const {setselectedfile} = CreateContext();
   const handlechange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files) return setselectedfile((file:Array<Object>) =>[...file,...files]);
+    if (files) return setselectedfile((file:Array<object>) =>[...file,...files]);
   }
   return (
     <div className="w-fit p-3 bg-green-400 rounded-xl text-white">

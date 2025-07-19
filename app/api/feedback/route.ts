@@ -1,4 +1,4 @@
-import { supabaseServerSide } from "@/utils/SupabaseDB/serverside/supabase";
+import { supabaseServer } from "@/utils/SupabaseDB/supabase";
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
@@ -7,8 +7,7 @@ export async function POST(request: Request) {
         const cookie = await cookies();
         if (cookie.get('session_token')) {
             const insertdata = await request.json();
-            const supabase = supabaseServerSide();
-            const { error } = await supabase.from('feedback').insert(insertdata);
+            const { error } = await supabaseServer.from('feedback').insert(insertdata);
             if (error) {
                 return NextResponse.json({ success: false, message: "somthing went wrong while sending" }, { status: 404 })
             }

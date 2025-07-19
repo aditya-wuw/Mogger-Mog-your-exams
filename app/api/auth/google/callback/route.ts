@@ -1,13 +1,12 @@
 import { google_cred } from "@/Types/server_side/types";
-import { supabaseServerSide } from "@/utils/SupabaseDB/serverside/supabase";
 import { NextResponse } from "next/server";
 import { CreateSession } from "../../session/action";
 import crypto from 'crypto'
+import { supabaseServer } from "@/utils/SupabaseDB/supabase";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
-    const code = searchParams.get("code");
-    const supabase = supabaseServerSide();
+    const code = searchParams.get("code")
     const err = searchParams.get("error");
     if(err === "access_denied") return NextResponse.redirect(`${process.env.NEXT_PUBLIC_baseURL}/auth_/login`);
 
@@ -31,7 +30,7 @@ export async function GET(request: Request) {
         headers: { Authorization: `Bearer ${tokenData.access_token}` },
     });
     const userData = await userRes.json();
-    const { data } = await supabase.from('users').select('email').eq('email', userData.email).single();
+    const { data } = await supabaseServer.from('users').select('email').eq('email', userData.email).single();
     if (data) {
         return await session(userData.email);
     }
@@ -42,7 +41,7 @@ export async function GET(request: Request) {
         profile_pic: userData.picture
     }
 
-    const { error } = await supabase.from('users').insert(creds)
+    const { error } = await supabaseServer.from('users').insert(creds)
     if (error) {
         return NextResponse.redirect(`${process.env.NEXT_PUBLIC_baseURL}/auth_/login?error=failed`);
     }

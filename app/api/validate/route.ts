@@ -1,5 +1,5 @@
 import { validation_ } from "@/Types/server_side/types";
-import { supabaseServerSide } from "@/utils/SupabaseDB/serverside/supabase";
+import { supabaseServer } from "@/utils/SupabaseDB/supabase";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -9,8 +9,7 @@ export async function POST(req: Request) {
     if (!cookie.get("session_token")) return NextResponse.json({ success: false, message: "Unauthorized! login to perform action" }, { status: 404 });
     else {
         try {
-            const supabase = supabaseServerSide();
-            const { data } = await supabase.from('history').select('*').eq('id', id).eq('user_id',userid).single(); 
+            const { data } = await supabaseServer.from('history').select('*').eq('id', id).eq('user_id',userid).single(); 
             const validated: Array<validation_> = submitted_answers.map((i: string, index: number) => {
                 return (data.answers[index] === i) ? {
                     q_index: index,

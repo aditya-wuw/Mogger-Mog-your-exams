@@ -22,3 +22,9 @@ export type google_cred = {
     method: string,
     profile_pic:string
 }
+
+export type uploads_notes = {
+    user_id: number,
+    file_name:string,
+    path : string
+} 

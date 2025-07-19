@@ -1,13 +1,12 @@
-import { supabaseServerSide } from "@/utils/SupabaseDB/serverside/supabase";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import crypto from "crypto"
 import { CreateSession } from "../session/action";
+import { supabaseServer } from "@/utils/SupabaseDB/supabase";
 export async function POST(req: Request) {
-    const supabase = supabaseServerSide();
     try {
         const { email, password } = await req.json();
-        const { data, error } = await supabase.from('users').select('*').eq("email", email).single();
+        const { data, error } = await supabaseServer.from('users').select('*').eq("email", email).single();
 
         if (error) {
             console.log(error)

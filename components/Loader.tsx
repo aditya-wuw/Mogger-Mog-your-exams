@@ -19,7 +19,7 @@ const Loader = ({ message }: { message?: string }) => {
       />
       {Message && Message?.length > 0 ? (
         <motion.h1
-          className={`text-black text-xl absolute bottom-[-50] `}
+          className={`text-black text-xl absolute bottom-[-55] `}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 3, ease: easeInOut }}

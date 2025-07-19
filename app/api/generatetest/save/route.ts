@@ -1,4 +1,4 @@
-import { supabaseServerSide } from "@/utils/SupabaseDB/serverside/supabase";
+import { supabaseServer } from "@/utils/SupabaseDB/supabase";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -8,8 +8,7 @@ export async function POST(req:Request) {
     if(!cookie.get("session_token"))return NextResponse.json({success:false, message:"Unauthorized! login to perform action"},{status:404});
     else{
         try {
-            const supabase = supabaseServerSide();
-            const {error} = await supabase.from('history').insert(savedata);
+            const {error} = await supabaseServer.from('history').insert(savedata);
             if(error){
                 console.log(error)
                 return NextResponse.json({success:false, message:"can't save data"},{status:404});

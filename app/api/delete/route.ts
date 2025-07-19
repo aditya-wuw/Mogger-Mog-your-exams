@@ -1,4 +1,4 @@
-import { supabaseServerSide } from "@/utils/SupabaseDB/serverside/supabase";
+import { supabaseServer } from "@/utils/SupabaseDB/supabase";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -12,9 +12,8 @@ export async function DELETE(request:Request) {
             const { searchParams } = new URL(request.url);
             const id:string|null = searchParams.get('id');
             const user_id:string|null = searchParams.get('user_id');
-            const supabase = supabaseServerSide();
 
-            const { error } = await supabase.from('history').delete().eq('id',id).eq('user_id',user_id).single();
+            const { error } = await supabaseServer.from('history').delete().eq('id',id).eq('user_id',user_id).single();
             if(error){
                 return NextResponse.json({success:false,message:"failed to delete item"},{status:300});
             }

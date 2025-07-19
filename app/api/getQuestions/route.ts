@@ -1,4 +1,4 @@
-import { supabaseServerSide } from "@/utils/SupabaseDB/serverside/supabase";
+import { supabaseServer } from "@/utils/SupabaseDB/supabase";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -8,10 +8,8 @@ export async function GET(request:Request) {
         const id:string|null = searchParams.get('id');
         const user_id:number|null = Number(searchParams.get('user_id'));
         const cookie = await cookies();
-        const supabase = supabaseServerSide();
-        
         if(cookie.get("session_token")) {
-            const { data } = await supabase.from('history').select('questions').eq('id',id).eq('user_id',user_id).single();
+            const { data } = await supabaseServer.from('history').select('questions').eq('id',id).eq('user_id',user_id).single();
             if(data) {
                 return NextResponse.json({success:true,message:data},{status:200})
             }

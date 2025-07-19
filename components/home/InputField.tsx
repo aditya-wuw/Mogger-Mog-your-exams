@@ -17,7 +17,7 @@ const InputField = () => {
   const [input, setinput] = useState<string>("");
   const [error, seterror] = useState<string>();
   const textarea = useRef<HTMLTextAreaElement | null>(null);
-  const { TimerSlider, SetTimerSlider, setTimer, uploader, setuploader, file } =
+  const { TimerSlider, SetTimerSlider, setTimer, uploader, setuploader, file, setselectedfile } =
     CreateContext();
 
   const {
@@ -65,18 +65,22 @@ const InputField = () => {
       console.log(error);
     }
   };
-
+  const handledelete = async (index:number) =>{
+    const del = file.filter((_:string,i:number) => i !== index );
+    setselectedfile(del);
+    await axios.delete('/api/auth/uploads/del',{data : { user_id: user_details?.user_id,file_name:file[index].name}})
+  }
   return (
     <div className="flex justify-center items-center relative">
       <div>{error} </div>
-      <h1 className="fixed select-none top-[40%] text-3xl md:text-6xl font-bold  z-[-10] text-center mx-10">
+      <h1 className="fixed select-none top-[40%] text-3xl md:text-4xl font-bold  z-[-10] text-center mx-10">
         Ready to{" "}
         <span className="px-6 p-1 bg-green-700 text-white rounded-xl">Mog</span>{" "}
         your exam ?
       </h1>
       <div className="text_input fixed top-[50%] md:mt-8 mt-5 bg-green-200 p-4 rounded-xl flex flex-col items-center gap-2 z-[5]">
         <div className="flex gap-3 justify-start w-full">
-          {file.map((i: { name: string }, index: number) => (
+          {file.map((i:File, index: number) => (
             <div
               key={index}
               className="bg-green-500 p-2 rounded-2xl text-white flex"
@@ -85,7 +89,7 @@ const InputField = () => {
                 <FaFilePdf />
                 <h1 className="max-w-35  truncate">{i?.name}</h1>
               </div>
-              <button>
+              <button onClick={()=>handledelete(index)}>
                 <CiSquareRemove className="text-red-600 cursor-pointer" />
               </button>
             </div>
@@ -132,7 +136,7 @@ const InputField = () => {
               }}
             />
             <div
-              className={`${uploader ? "block" : "hidden"} absolute md:left-[-80] left-[-90] bottom-8 w-40`}
+              className={`${uploader ? "block" : "hidden"} absolute left-[-100] bottom-8 w-40`}
             >
               <Uploadfile />
             </div>

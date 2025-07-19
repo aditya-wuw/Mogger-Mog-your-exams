@@ -11,9 +11,9 @@ const Sidebar = () => {
   const sidebarItems: Array<SidebarTypes> = [
     { item: "Home", link: "/home" },
     { item: "History", link: "/home/history" },
-    { item: "Profile dashboard ❌", link: "/home/Profile" },
-    { item: "Performance reports ❌", link: "/home/Performance" },
-    { item: "test on previous notes ❌", link: "/home/PrevNotes" },
+    { item: "Profile", link: "/home/Profile" },
+    { item: "Performance", link: "/home/Performance" },
+    { item: "Notes", link: "/home/PrevNotes" },
   ];
 
   return (

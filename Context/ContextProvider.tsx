@@ -35,7 +35,7 @@ export const ContextProvider = ({
   const [userLoaded, setUserLoaded] = useState(false);
   const [uploader, setuploader] = useState(false);
   const [loadermessage, SETloadermessAGE] = useState("");
-  const [file, setselectedfile] = useState([]);
+  const [file, setselectedfile] = useState<Array<File>>([]);
 
   
   const GetUser = useCallback(async (): Promise<void> => {

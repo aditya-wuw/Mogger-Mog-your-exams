@@ -1,0 +1,38 @@
+import { uploads_notes } from "@/Types/server_side/types";
+import { supabaseServer } from "@/utils/SupabaseDB/supabase";
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
+
+export async function POST(req: Request) {
+    try {
+        const cookie = await cookies();
+        if (!cookie.get('session_token')) {
+            return NextResponse.json({ error: "unauthorized" }, { status: 500 })
+        }
+        const data = await req.formData();
+        const file: File = data.get('Files') as File;
+        const userid: string = data.get('userid') as string;
+        const upload:uploads_notes = {
+            user_id: parseInt(userid),
+            file_name:file.name,
+            path: `${userid}/${Date.now()}-${file.name}`
+        }
+        try {
+            await supabaseServer.from("notes_path").insert(upload);
+        } catch (error) {
+            return NextResponse.json({ error: "Somthing went wrong while saving data" }, { status: 500 })
+        }
+        try {
+            await supabaseServer.storage.from('notes').update(upload.path, file, {
+                cacheControl: '3600',
+                upsert: false
+            })
+        } catch (error) {
+            return NextResponse.json({ error: "Somthing went wrong while uplaoding" }, { status: 500 })
+        }
+        return NextResponse.json({ success: true, message: "uploaded" }, { status: 200 })
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ error: "failed to upload" }, { status: 500 })
+    }
+}

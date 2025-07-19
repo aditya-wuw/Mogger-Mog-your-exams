@@ -1,4 +1,5 @@
-import { supabaseServerSide } from "@/utils/SupabaseDB/serverside/supabase";
+
+import { supabaseServer } from "@/utils/SupabaseDB/supabase";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -8,8 +9,7 @@ export async function GET() {
     if(!token?.value) return NextResponse.json({success:false,message:"unAuthorized"},{status:200});
     else{
         try {
-            const supbase = supabaseServerSide();
-            const {data, error } = await supbase.from('sessions').select('user_id, users ( username, email, profile_pic)').eq('Token',token.value).single();
+            const {data, error } = await supabaseServer.from('sessions').select('user_id, users ( username, email, profile_pic)').eq('Token',token.value).single();
             if(error){
                 console.log(error)
                 return NextResponse.json({success:false,message:"unAuthorized! no session found"},{status:500});

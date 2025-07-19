@@ -20,6 +20,7 @@ export async function POST(req: Request) {
         try {
             await supabaseServer.from("notes_path").insert(upload);
         } catch (error) {
+            console.log(error)
             return NextResponse.json({ error: "Somthing went wrong while saving data" }, { status: 500 })
         }
         try {
@@ -28,6 +29,7 @@ export async function POST(req: Request) {
                 upsert: false
             })
         } catch (error) {
+            console.log(error)
             return NextResponse.json({ error: "Somthing went wrong while uplaoding" }, { status: 500 })
         }
         return NextResponse.json({ success: true, message: "uploaded" }, { status: 200 })

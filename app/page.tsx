@@ -48,6 +48,7 @@ export default function Home() {
                 <h1>{data.Hero.des}</h1>
               </motion.div>
             </section>
+              <p className="text-2xl mt-10">{data.tutorial_section.header}</p>
             <section className="md:mt-0 mt-10 md:flex md:flex-row flex flex-col gap-2">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -76,25 +77,14 @@ export default function Home() {
               animate={{ opacity: 1 }}
               transition={{ duration: 2 }}
             >
-              <p className="text-2xl mt-10">{data.tutorial_section.header}</p>
             </motion.div>
-            <section className="min-h-[49.3vh] md:flex gap-10">
-              <div></div>
+            <section className="min-h-[20vh] md:flex gap-10">
               <motion.div
                 initial={{ opacity: 0,y:50 }}
                 animate={{ opacity: 1, y:0 }}
                 transition={{ duration: 2 }}
-                className="bg-gradient-to-bl  h-76 mt-10 mb-10 md:mb-0 backdrop-blur-md from-green-200 text-green-900 md:w-140 to-transparent rounded-2xl p-2 mx-2"
+                className="bg-gradient-to-bl  h-76/2 mt-10 mb-10 md:mb-0 backdrop-blur-md from-green-200 text-green-900 md:w-140 to-transparent rounded-2xl p-2 mx-2"
               >
-                <iframe
-                  src="https://www.youtube.com/embed/5AFF24YSdBk"
-                  title="YouTube video"
-                  frameBorder="0"
-                  allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  autoFocus
-                  className="md:w-[530px] md:h-[300px] rounded-2xl w-[300px] h-[250px]"
-                ></iframe>
                 <p className="mt-2">Created by <a className="text-green-600" href="https://nullfaceddev.xyz" target="_blank">@NullFacedDev</a> with 💖 and コーヒー</p> 
               </motion.div>
             </section>

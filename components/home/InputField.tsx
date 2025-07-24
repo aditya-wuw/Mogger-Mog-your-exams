@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { IoSend } from "react-icons/io5";
 import { FaRegPlusSquare } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { uid } from "uid";
 import axios from "axios";
 import { CreateContext } from "@/Context/ContextProvider";
-import { testQuestionSaveObject } from "@/Types/others/types";
+import { flag, testQuestionSaveObject } from "@/Types/others/types";
 import TimerField from "./TimerField";
 import { MdTimer } from "react-icons/md";
 import Uploadfile from "./Uploadfile";
@@ -17,7 +17,7 @@ const InputField = () => {
   const [input, setinput] = useState<string>("");
   const [error, seterror] = useState<string>();
   const textarea = useRef<HTMLTextAreaElement | null>(null);
-  const { TimerSlider, SetTimerSlider, setTimer, uploader, setuploader, file, setselectedfile } =
+  const { TimerSlider, SetTimerSlider, setTimer, uploader, setuploader, file, setselectedfile, filepath} =
     CreateContext();
 
   const {
@@ -29,11 +29,22 @@ const InputField = () => {
     TimerUser,
   } = CreateContext();
 
+  const delete_cache = useCallback(async () =>{
+    if(user_details){
+      const res = await axios.delete(`/api/auth/uploads/del_cache?user_id=${user_details.user_id}`);
+      if(!res.data.success){
+        console.log("failed to clear upload cache")
+      }
+    }
+  },[user_details]);
+
   useEffect(() => {
     SetTimerSlider(false);
     setTimer(1800);
+    setloader(false);
     seterror("");
-  }, [SetTimerSlider, setTimer, seterror]);
+    delete_cache();
+  }, [SetTimerSlider, setTimer, seterror,setloader,delete_cache]);
 
   const handleClick = async () => {
     setinput("");
@@ -41,7 +52,20 @@ const InputField = () => {
     const id = uid();
     try {
       SETloadermessAGE("generating Mock test, might take a while ...")
-      const res = await axios.post("/api/generatetest/gen", { prompt: input });
+      const res = await axios.post("/api/generatetest/gen", { prompt: input, filepath : filepath  });
+
+      const usedflag:flag = {
+        user_id : user_details.user_id,
+        path : filepath.split('notes/')[1].replaceAll('%20',' '),
+        value : true
+      }
+      
+      const result = await axios.put('api/auth/uploads/used',usedflag)
+      if(!result.data.success){
+        console.log(result.data.error);
+        return
+      }
+
       const data = JSON.parse(res.data.message);
       setquestions(data.questions_key);
       const savedata: testQuestionSaveObject = {
@@ -51,6 +75,7 @@ const InputField = () => {
         questions: data.questions_key,
         answers: data.answer_key,
       };
+
       const res2 = await axios.post("/api/generatetest/save", savedata);
       if (res2.data.success === false) {
         setloader(false);
@@ -58,13 +83,13 @@ const InputField = () => {
       } else {
         sessionStorage.setItem("duration", TimerUser);
         Router.push(`/home/t/${id}`);
-        setloader(false);
         GetUser();
       }
     } catch (error) {
       console.log(error);
     }
-  };
+  }
+
   const handledelete = async (index:number) =>{
     const del = file.filter((_:string,i:number) => i !== index );
     setselectedfile(del);
@@ -79,15 +104,15 @@ const InputField = () => {
         your exam ?
       </h1>
       <div className="text_input fixed top-[50%] md:mt-8 mt-5 bg-green-200 p-4 rounded-xl flex flex-col items-center gap-2 z-[5]">
-        <div className="flex gap-3 justify-start w-full">
+        <div className="grid place-items-center gap-2 justify-center w-fit grid-cols-3">
           {file.map((i:File, index: number) => (
             <div
               key={index}
-              className="bg-green-500 p-2 rounded-2xl text-white flex"
+              className="bg-green-500 p-2 rounded-2xl text-white flex w-fit"
             >
               <div>
                 <FaFilePdf />
-                <h1 className="max-w-35  truncate">{i?.name}</h1>
+                <h1 className="max-w-15 md:max-w-30 lg:max-w-35 truncate">{i?.name}</h1>
               </div>
               <button onClick={()=>handledelete(index)}>
                 <CiSquareRemove className="text-red-600 cursor-pointer" />
@@ -122,7 +147,7 @@ const InputField = () => {
               className="w-5 h-5 cursor-pointer"
             />
             <div
-              className={`${TimerSlider ? "block" : "hidden"} absolute md:left-[-50] left-[-70] bottom-8 w-40`}
+              className={`${TimerSlider ? "block" : "hidden"} absolute md:left-[-50] left-[-90] bottom-8 w-50`}
             >
               <TimerField />
             </div>

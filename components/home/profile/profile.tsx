@@ -61,7 +61,7 @@ const Profile = () => {
 
   const Options: Array<OptionType> = [
     { item: "User Profile", link: "/home/Profile", icon: <IoPersonCircle /> },
-    { item: "Settings", link: "/home/Settings", icon: <IoMdSettings /> },
+    { item: "Settings", link: `/home/Settings/${user_details?.user_id}`, icon: <IoMdSettings /> },
   ];
 
   if (OpenProfile)

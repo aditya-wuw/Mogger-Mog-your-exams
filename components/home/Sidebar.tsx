@@ -10,10 +10,10 @@ const Sidebar = () => {
 
   const sidebarItems: Array<SidebarTypes> = [
     { item: "Home", link: "/home" },
+    { item: "Chat Mode", link: "/home/Chat" },
     { item: "History", link: "/home/history" },
-    { item: "Profile", link: "/home/Profile" },
     { item: "Performance", link: "/home/Performance" },
-    { item: "Notes", link: "/home/PrevNotes" },
+    { item: "Uploaded Notes", link: "/home/PrevNotes" },
   ];
 
   return (

@@ -27,7 +27,6 @@ const Page = () => {
       if (TimerUser === 0) {
         sessionStorage.setItem("duration", "1800");
         router.push(`/home/t/${id}`);
-        console.log("zero");
       } else {
         sessionStorage.setItem("duration", TimerUser);
         router.push(`/home/t/${id}`);
@@ -89,7 +88,7 @@ const Page = () => {
                   <div className="flex gap-2">
                     {retakeMap[i.id] ? (
                       <div className="relative w-full ">
-                        <div className="absolute w-50 md:left-[-100px] left-[-150px] top-[-5] bg-green-400 rounded-2xl p-3">
+                        <div className="absolute w-60 md:left-[-170px] left-[-190px] top-[-5] bg-green-400 rounded-2xl p-3">
                           <TimerField />
                           <div className="flex gap-2 mt-2 mx-auto">
                             <button

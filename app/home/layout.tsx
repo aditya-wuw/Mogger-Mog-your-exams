@@ -7,5 +7,7 @@ export default async function ProtectedLayout({ children }: { children: React.Re
   if (!session) {
     redirect('/');
   }
-  return <>{children}</>;
+  return <>
+  {children}
+  </>;
 }

@@ -15,7 +15,7 @@ export type testObject = {
 }
 export type testQuestionSaveObject = {
   id: string,
-  user_id:number,
+  user_id: number,
   title: string,
   questions: testObject,
   answers: Array<string>
@@ -38,7 +38,17 @@ export type users_details_ = {
 }
 
 export type history = {
-  id:string,
-  title:string
+  id: string,
+  title: string
 }
 
+export type Toaster = {
+  message: string,
+  type_of: string
+}
+
+export type flag = {
+  user_id: string,
+  path: string,
+  value: boolean
+}

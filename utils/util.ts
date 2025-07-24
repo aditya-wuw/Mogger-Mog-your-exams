@@ -7,3 +7,5 @@ export function formatTime(totalSeconds: number): string {
 
   return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
+
+

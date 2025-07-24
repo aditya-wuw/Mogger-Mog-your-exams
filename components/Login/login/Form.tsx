@@ -44,12 +44,16 @@ const Form = () => {
       const res = await axios.post("/api/auth/login", data);
       if (res.data.success) {
         Router.push("/home");
-      } 
+      }
     } 
     catch ( /* eslint-disable-line @typescript-eslint/no-explicit-any */ error : any ) {
     if (error.status === 300) {
       setErrors({email:error.response.data.message , password:""});
     } 
+    else if(error.status === 500) {
+      Router.push("/auth_/login");
+      //set a toast error message no internet connection or server time out
+    }
     else if(error.response){
       setErrors({email:error.response.data.message , password:""});
     }
@@ -76,6 +80,7 @@ const Form = () => {
       onSubmit={handleSubmit}
       className="max-w-md mx-5 p-6 bg-gradient-to-br from-green-800/30 to-green-200 backdrop-blur-md shadow-md rounded space-y-4 w-full text-green-800"
     >
+      
       <Mogger/>
       <h2 className="text-2xl font-bold mt-3 ml-3">Login</h2>
       <div>

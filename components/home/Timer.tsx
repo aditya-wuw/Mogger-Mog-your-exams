@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Loader from "../Loader";
 import { CreateContext } from "@/Context/ContextProvider";
 import { useParams } from "next/navigation";
@@ -7,11 +7,13 @@ import { useParams } from "next/navigation";
 const Timer = ({ duration}: { duration: number}) => {
   const [timeleft, setTimeleft] = useState<number>(duration * 1000); 
   const test_id = useParams();
-  const {handlesubmit} = CreateContext();
-  
+  const {handlesubmit,Answer} = CreateContext();
+  const Answerref = useRef(Answer);
   useEffect(() => {
     setTimeleft(duration * 1000);
   }, [duration]);
+
+  useEffect(()=>{Answerref.current = Answer},[Answer])
 
   useEffect(() => {
     let endtime = Number(localStorage.getItem("endtime"));
@@ -23,9 +25,10 @@ const Timer = ({ duration}: { duration: number}) => {
     const interval = setInterval(() => {
       const remaining = endtime - Date.now();
       setTimeleft(remaining > 0 ? remaining : 0);
-
       if (remaining <= 0) {
-        handlesubmit(test_id.id);
+        setTimeout(()=>{
+          handlesubmit(test_id.id,Answerref.current);
+        },1000)
         localStorage.removeItem("endtime");
         clearInterval(interval);
       }

@@ -13,10 +13,11 @@ import axios from "axios";
 
 const Page = () => {
   const test_id = useParams();
-  const { result,setsidebar,Answer,user_details,Router } = CreateContext();
+  const { result,setsidebar,Answer,user_details,Router,setAnswer } = CreateContext();
   useEffect(() => {
     if(!result) {
       alert("result not available")
+      setAnswer([]);
       Router.push('/home');
     }
   }, [user_details?.user_id]);
@@ -26,6 +27,7 @@ const Page = () => {
     if(Prompt){
       const res  = await axios.delete(`/api/delete?id=${test_id.id}&user_id=${user_details?.user_id}`)
       if(res.data.success){
+        setAnswer([]);
         Router.push('/home')
       }
     }
@@ -52,7 +54,7 @@ const Page = () => {
           <section className="result_bord select-none bg-green-500 rounded-2xl p-2 mb-3 md:w-[30%] mx-auto text-white">
             <div className="score_card p-2">
               <div className="text-center font-bold">
-                {correct > total*0.9 ? "You are on a roll ! keep it up 🎉": correct > total/2 ? "it's ai8 mate batter luck next time 😎":"You need to do better bozo 😔"}
+                {correct > total*0.7 ? "You are on a roll ! keep it up 🎉": correct > total/2 ? "it's ai8 mate batter luck next time 😎":"You need to do better bozo 😔"}
               </div>
               <div>you got {correct} correct ✅</div>
               <div>you got {wrong} wrong ❌</div>

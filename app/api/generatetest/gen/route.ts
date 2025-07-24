@@ -9,7 +9,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ success: false, message: "unauthorized ! Please login" }, { status: 304 });
         }
         else {
-            const { prompt } = await req.json();
+            const { prompt, filepath } = await req.json();
             const instrustion: string = `Return a JavaScript object containing two arrays: questions_key and answer_key.
 1. questions_key should be an array of question objects formatted like this:
 [
@@ -32,7 +32,7 @@ Requirements:
 - Ensure the correct answer is included in the options and appears in the answer_key.
 User Prompt: ${prompt}
 `
-            const res = await Gemini(instrustion);
+            const res = await Gemini(instrustion,filepath);
             return NextResponse.json({ success: true, message: res }, { status: 201 });
         }
     } catch (error) {

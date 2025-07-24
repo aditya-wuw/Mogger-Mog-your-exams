@@ -6,6 +6,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -36,8 +37,10 @@ export const ContextProvider = ({
   const [uploader, setuploader] = useState(false);
   const [loadermessage, SETloadermessAGE] = useState("");
   const [file, setselectedfile] = useState<Array<File>>([]);
+  const [ToastMount, setToastMount] = useState(false);
+  const [filepath, setfilepath] = useState("");
+  const [ToastMessage, setToastMessage] = useState("");
 
-  
   const GetUser = useCallback(async (): Promise<void> => {
     if (userLoaded) return;
     setUserLoaded(true);
@@ -50,11 +53,14 @@ export const ContextProvider = ({
     Ans[i] = ans;
     setAnswer(Ans);
   }
-  async function handlesubmit(test_id: string) {
+
+  async function handlesubmit(test_id: string, Ans: Array<String>) {
+    localStorage.removeItem("endtime");
+    sessionStorage.removeItem("duration");
     const res = await axios.post("/api/validate", {
       id: test_id,
       userid: user_details?.user_id,
-      submitted_answers: Answer,
+      submitted_answers: Ans,
     });
     if (res.data.success) {
       localStorage.removeItem("endtime");
@@ -65,6 +71,7 @@ export const ContextProvider = ({
       Router.push("/error");
     }
   }
+
   const value = {
     count,
     setcount,
@@ -101,6 +108,11 @@ export const ContextProvider = ({
     setselectedfile,
     loadermessage,
     SETloadermessAGE,
+    ToastMount,
+    setToastMount,
+    filepath,
+    setfilepath,
+    ToastMessage,setToastMessage
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

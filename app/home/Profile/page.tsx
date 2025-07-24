@@ -1,13 +1,59 @@
-import Link from 'next/link'
-import React from 'react'
+"use client";
+import Mainbodynav from "@/components/home/BodyNav";
+import Sidebar from "@/components/home/Sidebar";
+import { CreateContext } from "@/Context/ContextProvider";
+import { FaRegUser, FaEdit } from "react-icons/fa";
+import Image from "next/image";
+import React from "react";
 
 const page = () => {
+  const { user_details, Router } = CreateContext();
+  function handleEdit() {
+    Router.push(`/home/Settings/${user_details?.user_id}`);
+  }
   return (
-    <div className='m-5'>
-      will be available soon 
-      <Link href={'/home'} className='p-2 bg-green-500 rounded-2xl ml-2'>Go back</Link >
-    </div>
-  )
-}
+    <div className="w-[100%] h-full flex">
+      <Sidebar />
+      <main className="w-full mx-5">
+        <Mainbodynav />
+        <div className="Profile_container mt-10">
+          <section className="profile">
+            <div className="flex items-center gap-5">
+              {user_details?.users?.profile_pic ? (
+                <div className="rounded-full w-15 h-15 overflow-hidden">
+                  <Image
+                    src={user_details?.users?.profile_pic}
+                    alt="Profile.png"
+                    width={100}
+                    height={100}
+                    className="object-cover w-full"
+                  />
+                </div>
+              ) : (
+                <div className="bg-green-200 rounded-full p-5 w-fit">
+                  <FaRegUser className="w-5 h-5" />
+                </div>
+              )}
+              <span>
+                <h1>{user_details?.users?.username}</h1>
+                <h1>{user_details?.users?.email}</h1>
+              </span>
+              <div className="flex items-start h-12">
+                <FaEdit
+                  className="w-6 h-6 cursor-pointer"
+                  onClick={handleEdit}
+                />
+              </div>
+            </div>
+          </section>
+          <section className="performance ">
 
-export default page
+          </section>
+          
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default page;

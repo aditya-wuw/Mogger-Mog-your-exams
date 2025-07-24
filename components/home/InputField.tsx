@@ -52,18 +52,22 @@ const InputField = () => {
     const id = uid();
     try {
       SETloadermessAGE("generating Mock test, might take a while ...")
-      const res = await axios.post("/api/generatetest/gen", { prompt: input, filepath : filepath  });
-
-      const usedflag:flag = {
-        user_id : user_details.user_id,
-        path : filepath.split('notes/')[1].replaceAll('%20',' '),
-        value : true
+      let res
+      if(filepath){
+        res = await axios.post("/api/generatetest/gen", { prompt: input, filepath : filepath  });
+        const usedflag:flag = {
+          user_id : user_details.user_id,
+          path : filepath.split('notes/')[1].replaceAll('%20',' '),
+          value : true
+        } 
+        const result = await axios.put('api/auth/uploads/used',usedflag)
+        if(!result.data.success){
+          console.log(result.data.error);
+          return
+        }
       }
-      
-      const result = await axios.put('api/auth/uploads/used',usedflag)
-      if(!result.data.success){
-        console.log(result.data.error);
-        return
+      else{
+        res = await axios.post("/api/generatetest/gen", { prompt: input });
       }
 
       const data = JSON.parse(res.data.message);

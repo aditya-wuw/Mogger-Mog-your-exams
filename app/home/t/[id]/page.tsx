@@ -44,7 +44,7 @@
         setTestObject(res.data.message.questions);
         setloader(false)
       }
-    }, [test_id.id,user_details?.user_id]);
+    }, [test_id.id,user_details?.user_id,setloader]);
 
     function HandleBackNForth(direct: string) {
       if (direct === "Left") {
@@ -58,7 +58,7 @@
       if(user_details && user_details?.user_id){
         fetchQuestions();
       }
-    }, [user_details?.user_id])
+    }, [user_details,fetchQuestions])
 
     useEffect(() => {
       setTimer(Number(sessionStorage.getItem("duration")));

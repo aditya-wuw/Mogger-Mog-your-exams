@@ -7,7 +7,7 @@ const Loader = ({ message }: { message?: string }) => {
     setTimeout(() => {
       setmessage(message);
     }, 3000);
-  }, []);
+  }, [message]);
 
   return (
     <div className="flex justify-center text-center flex-col items-center gap-5 relative w-full">

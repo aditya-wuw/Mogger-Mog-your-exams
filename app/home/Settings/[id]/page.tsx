@@ -10,10 +10,12 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import Mainbodynav from "@/components/home/BodyNav";
 import ProfileContainer from "@/components/home/profile/ProfileContainer";
 import { TbArrowBack } from "react-icons/tb";
-const page = () => {
+
+const Page = () => {
   const param = useParams();
   const { Router, setloader } = CreateContext();
-  async function handleclick(id: object) {
+  
+  async function handleclick() {
     const c = confirm("Are you sure you want to delete this account ?");
     if (c) {
       setloader(true);
@@ -35,7 +37,7 @@ const page = () => {
       <Sidebar />
       <main className="w-full mx-5">
         <Mainbodynav />
-        <h1 className="mt-5">The functions are still is not available right now, please wait untill it's added</h1>
+        <h1 className="mt-5">The functions are still is not available right now, please wait untill it&apos;s added</h1>
         <section>
           <div className="flex gap-3  w-fit p-3 rounded bg-green-200 items-center mt-2 cursor-pointer" onClick={handleUserpage}>
             <TbArrowBack className="w-5 h-5"/>
@@ -61,7 +63,7 @@ const page = () => {
         <section className="flex items-center gap-2 mt-3 bg-red-300 w-fit p-3 rounded">
           <ProfileContainer/>
           <h1>delete account</h1>
-          <button onClick={() => handleclick(param)}>
+          <button onClick={() => handleclick()}>
             <MdDelete className="text-red-500 w-5 h-5 cursor-pointer" />
           </button>
         </section>
@@ -70,4 +72,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

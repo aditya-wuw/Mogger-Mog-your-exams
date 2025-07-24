@@ -35,7 +35,7 @@ const Timer = ({ duration}: { duration: number}) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [duration]);
+  }, [duration,handlesubmit,test_id.id]);
 
   const hours = Math.floor(timeleft / 3600000);
   const minutes = Math.floor((timeleft % 3600000) / 60000);

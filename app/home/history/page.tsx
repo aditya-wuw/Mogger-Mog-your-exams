@@ -45,7 +45,7 @@ const Page = () => {
   useEffect(() => {
     setloader(true);
     setsidebar(true);
-  }, [setloader,user_details?.user_id,setsidebar]);
+  }, [setloader,user_details?.user_id,setsidebar,setloader]);
 
   useEffect(() => {
     if (user_details?.user_id !== undefined) {

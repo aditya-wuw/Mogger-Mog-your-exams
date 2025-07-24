@@ -31,8 +31,15 @@ Requirements:
 - Maintain proper numbering for each question.
 - Ensure the correct answer is included in the options and appears in the answer_key.
 User Prompt: ${prompt}
-`
-            const res = await Gemini(instrustion,filepath);
+`            
+            let res;
+            if (!filepath) {
+                 res = await Gemini(instrustion,'');
+
+            } else {
+                 res = await Gemini(instrustion, filepath);
+                
+            }
             return NextResponse.json({ success: true, message: res }, { status: 201 });
         }
     } catch (error) {

@@ -11,7 +11,7 @@ import React, { useEffect } from "react";
 
 const Page = () => {
   const {setsidebar,loader,setloader,SetTimerSlider,feedbackform,setuploader,loadermessage,SETloadermessAGE,ToastMount,ToastMessage,setselectedfile} = CreateContext();
-  useEffect(()=>{setloader(false);setsidebar(true);SETloadermessAGE(""),setselectedfile([])},[setloader,setsidebar,setselectedfile])
+  useEffect(()=>{setloader(false);setsidebar(true);SETloadermessAGE("");setselectedfile([])},[setloader,setsidebar,setselectedfile,SETloadermessAGE])
   
   if(loader) return <div className="w-full h-screen flex justify-center items-center"><Loader message={loadermessage}/></div>
   return (

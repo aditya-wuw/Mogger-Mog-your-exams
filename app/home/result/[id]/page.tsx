@@ -20,7 +20,7 @@ const Page = () => {
       setAnswer([]);
       Router.push('/home');
     }
-  }, [user_details?.user_id]);
+  }, [user_details?.user_id,Router,result,setAnswer]);
   
   async function handledelete() {
     const Prompt:boolean = confirm("you want to delele the questions ?");

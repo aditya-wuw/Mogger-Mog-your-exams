@@ -13,14 +13,6 @@ export async function POST(req: Request) {
         const file: File = data.get('Files') as File;
         const userid: string = data.get('userid') as string;
 
-        const { data: upload_limit } = await supabaseServer.from('notes_path').select('*').eq('user_id', userid);
-
-        if(upload_limit){
-            if(upload_limit.length === 3){
-                return NextResponse.json({ success: true, message: `upload limit reacehd` }, { status: 429 });
-            }
-        }
-
         const { data: prexisting_file } = await supabaseServer.from('notes_path').select('*').eq('file_name', file.name).single();
         if (prexisting_file) return NextResponse.json({ success: true, message: `https://qxfvaamdxsuiqolfuaqc.supabase.co/storage/v1/object/public/notes/${prexisting_file.path}` }, { status: 200 });
         if (!prexisting_file) {

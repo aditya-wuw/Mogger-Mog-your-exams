@@ -28,6 +28,7 @@ Requirements:
 - If the user specifies a topic but not a quantity, generate between 10 to 20 questions.
 - Do **not** use markdown or code blocks.
 - Do **not** include the example questions in the actual output.
+- if a file was attached then avoid using words like "According to the documents" for questions 
 - Maintain proper numbering for each question.
 - Ensure the correct answer is included in the options and appears in the answer_key.
 User Prompt: ${prompt}

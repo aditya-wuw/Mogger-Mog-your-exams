@@ -1,4 +1,5 @@
 import { GoogleGenAI, createUserContent, createPartFromUri } from "@google/genai";
+import os from "os";
 import fs from 'fs/promises'
 import path from 'path'
 const ai = new GoogleGenAI({
@@ -6,7 +7,7 @@ const ai = new GoogleGenAI({
 });
 
 async function Gemini(prompt: string, filePath: string) {
-  if (!filePath) {
+  if (filePath === '') {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: prompt+"based on the instuction generate me questions",
@@ -38,10 +39,10 @@ async function downloadPDFtoLocal(url: string): Promise<string> {
   if (!res.ok) throw new Error("Failed to download file");
   const buffer = await res.arrayBuffer();
 
-  const uploadsDir = path.join(process.cwd(), "app", "api", "generatetest", "gen", "files");
+  const uploadsDir = path.join(os.tmpdir(), "pdf-uploads");
   await fs.mkdir(uploadsDir, { recursive: true });
 
-  const filePath = path.join(uploadsDir, crypto.randomUUID() + '.pdf');
+  const filePath = path.join(uploadsDir, crypto.randomUUID() + ".pdf");
 
   await fs.writeFile(filePath, Buffer.from(buffer));
 

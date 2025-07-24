@@ -40,12 +40,12 @@ const Page = () => {
       setHistoryData(res.data.message);
       setloader(false);
     }
-  },[])
+  },[setloader])
   
   useEffect(() => {
     setloader(true);
     setsidebar(true);
-  }, [setloader,user_details?.user_id,setsidebar,setloader]);
+  }, [setloader,user_details?.user_id,setsidebar]);
 
   useEffect(() => {
     if (user_details?.user_id !== undefined) {

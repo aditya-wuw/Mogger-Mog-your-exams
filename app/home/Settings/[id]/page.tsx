@@ -1,6 +1,6 @@
 "use client";
 import { MdDelete } from "react-icons/md";
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import { CreateContext } from "@/Context/ContextProvider";
@@ -10,11 +10,18 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import Mainbodynav from "@/components/home/BodyNav";
 import ProfileContainer from "@/components/home/profile/ProfileContainer";
 import { TbArrowBack } from "react-icons/tb";
+import ProfileSettings from "@/components/home/ProfileSettings";
+import Loader from "@/components/Loader";
+import Toast from "@/components/Toast";
 
 const Page = () => {
   const param = useParams();
-  const { Router, setloader } = CreateContext();
+  const { Router, user_details, setloader,loader,ToastMessage } = CreateContext();
   
+  useEffect(()=>{
+    setloader(true)
+  },[setloader])
+
   async function handleclick() {
     const c = confirm("Are you sure you want to delete this account ?");
     if (c) {
@@ -32,13 +39,18 @@ const Page = () => {
   function handleUserpage() {
     Router.push('/home/Profile')
   }
+  if(!loader) return  <div className="flex justify-center items-center w-screen h-screen"><Loader/></div>
   return (
     <div className="w-[100%] h-full flex">
       <Sidebar />
       <main className="w-full mx-5">
         <Mainbodynav />
+        <Toast message={ToastMessage} type_of="err"/>
         <h1 className="mt-5">The functions are still is not available right now, please wait untill it&apos;s added</h1>
         <section>
+          <div className="mb-5">
+            {user_details === undefined ? <div className="flex justify-start w-20 mt-5"><Loader/></div>:<ProfileSettings/>}
+          </div>
           <div className="flex gap-3  w-fit p-3 rounded bg-green-200 items-center mt-2 cursor-pointer" onClick={handleUserpage}>
             <TbArrowBack className="w-5 h-5"/>
             <span>

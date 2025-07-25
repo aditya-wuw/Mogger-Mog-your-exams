@@ -1,6 +1,4 @@
 "use client";
-import Mainbodynav from "@/components/home/BodyNav";
-import Sidebar from "@/components/home/Sidebar";
 import { CreateContext } from "@/Context/ContextProvider";
 import { FaRegUser, FaEdit } from "react-icons/fa";
 import Image from "next/image";

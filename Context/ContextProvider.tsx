@@ -13,7 +13,7 @@ import {
 const Context = createContext<null | any>(null);
 
 export const ContextProvider = ({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) => {
@@ -39,7 +39,7 @@ export const ContextProvider = ({
   const [ToastMount, setToastMount] = useState(false);
   const [filepath, setfilepath] = useState("");
   const [ToastMessage, setToastMessage] = useState("");
-
+  const [isEditing,setisEditing] = useState<boolean| undefined>(false)
   const GetUser = useCallback(async (): Promise<void> => {
     if (userLoaded) return;
     setUserLoaded(true);
@@ -112,6 +112,9 @@ export const ContextProvider = ({
     filepath,
     setfilepath,
     ToastMessage,setToastMessage
+    ,isEditing,
+    setisEditing
+
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

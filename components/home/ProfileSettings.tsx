@@ -3,16 +3,20 @@ import { CreateContext } from "@/Context/ContextProvider";
 import { FaRegUser, FaEdit } from "react-icons/fa";
 import Image from "next/image";
 import React from "react";
+import UpdateForm from "../ProfileUpdateForm/UpdateForm";
 
 const ProfileSettings = () => {
-  const { user_details } = CreateContext();
+  const { user_details,isEditing,setisEditing } = CreateContext();
   function handleEdit() {
-    //give a from to edit the user name and password
+    setisEditing(true)
   }
   return (
     <div className="w-[100%] h-full flex">
       <div className="Profile_container mt-10">
         <section className="profile">
+          <div>
+            <UpdateForm/>
+          </div>
           <div className="flex items-center gap-5">
             {user_details?.users?.profile_pic ? (
               <div className="rounded-full w-15 h-15 overflow-hidden">

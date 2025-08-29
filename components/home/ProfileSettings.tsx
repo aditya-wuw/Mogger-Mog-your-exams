@@ -6,7 +6,7 @@ import React from "react";
 import UpdateForm from "../ProfileUpdateForm/UpdateForm";
 
 const ProfileSettings = () => {
-  const { user_details,isEditing,setisEditing } = CreateContext();
+  const { user_details,setisEditing } = CreateContext();
   function handleEdit() {
     setisEditing(true)
   }

@@ -3,10 +3,10 @@ import { FaEye } from "react-icons/fa";
 import { IoIosEyeOff } from "react-icons/io";
 import { AnimatePresence, motion } from "motion/react";
 import { CreateContext } from "@/Context/ContextProvider";
-import { CandlestickChart } from "lucide-react";
 const UpdateForm = () => {
   const  {isEditing,setisEditing} = CreateContext();
   const [Visi, setVisi] = useState<boolean | undefined>(false); 
+
   return (
     <AnimatePresence>
       {
@@ -15,7 +15,7 @@ const UpdateForm = () => {
       className="flex items-center justify-center absolute 2xl:left-[40vw] left-[15vw]"
       animate={{ opacity: [0, 1] }}
       exit={{opacity:0}}
-      key={isEditing}
+      key="modal"
       transition={{ duration: 1, ease: "easeInOut" }}
       >
         <form className="w-full max-w-xs bg-white p-6 border rounded-2xl  shadow-lg space-y-4">

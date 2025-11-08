@@ -4,38 +4,52 @@ import Loader from "../Loader";
 import { CreateContext } from "@/Context/ContextProvider";
 import { useParams } from "next/navigation";
 
-const Timer = ({ duration}: { duration: number}) => {
-  const [timeleft, setTimeleft] = useState<number>(duration * 1000); 
+const Timer = ({ duration }: { duration: number }) => {
+  const [timeleft, setTimeleft] = useState<number>(duration * 1000);
+  const [isMounted, setIsMounted] = useState(false);
   const test_id = useParams();
-  const {handlesubmit,Answer} = CreateContext();
+  const { handlesubmit, Answer } = CreateContext();
   const Answerref = useRef(Answer);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   useEffect(() => {
     setTimeleft(duration * 1000);
   }, [duration]);
 
-  useEffect(()=>{Answerref.current = Answer},[Answer])
+  useEffect(() => {
+    Answerref.current = Answer;
+  }, [Answer]);
 
   useEffect(() => {
-    let endtime = Number(localStorage.getItem("endtime"));
-    if (!endtime || duration * 1000 !== (endtime - Date.now())) {
+    if (!isMounted) return; // Don't run this effect until component is mounted
+
+    let endtime: number;
+    const storedEndtime = localStorage.getItem("endtime");
+
+    if (!storedEndtime || duration * 1000 !== (Number(storedEndtime) - Date.now())) {
       endtime = Date.now() + duration * 1000;
       localStorage.setItem("endtime", endtime.toString());
+    } else {
+      endtime = Number(storedEndtime);
     }
 
     const interval = setInterval(() => {
       const remaining = endtime - Date.now();
       setTimeleft(remaining > 0 ? remaining : 0);
       if (remaining <= 0) {
-        setTimeout(()=>{
-          handlesubmit(test_id.id,Answerref.current);
-        },1000)
+        setTimeout(() => {
+          handlesubmit(test_id.id, Answerref.current);
+        }, 1000);
         localStorage.removeItem("endtime");
         clearInterval(interval);
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [duration,handlesubmit,test_id.id]);
+  }, [duration, handlesubmit, test_id.id, isMounted]);
 
   const hours = Math.floor(timeleft / 3600000);
   const minutes = Math.floor((timeleft % 3600000) / 60000);

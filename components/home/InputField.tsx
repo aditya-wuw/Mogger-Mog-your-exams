@@ -99,6 +99,7 @@ const InputField = () => {
     setselectedfile(del);
     await axios.delete('/api/auth/uploads/del',{data : { user_id: user_details?.user_id,file_name:file[index].name}})
   }
+  
   return (
     <div className="flex justify-center items-center relative">
       <div>{error} </div>

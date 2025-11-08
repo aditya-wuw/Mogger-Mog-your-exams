@@ -17,11 +17,11 @@ const Mainbodynav = () => {
     <div className="w-full flex justify-between  mt-3">
       <div className="Sidebar flex gap-2 items-center">
         <div>
-          {isSidebar && (
-            <div className="flex items-center gap-2" >
+          {!isSidebar && (
+            <div className="flex items-center gap-2 relative z-20" >
               <GiHamburgerMenu
                 className="drop-shadow-2xl cursor-pointer size-7"
-                onClick={() => setsidebar(!Sidebar)}
+                onClick={() => setsidebar(true)}
               />
               <Mogger/>
             </div>

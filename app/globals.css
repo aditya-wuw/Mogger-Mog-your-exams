@@ -5,9 +5,11 @@
 @custom-variant dark (&:is(.dark *));
 
 body{
-  font-family: "Montserrat", sans-serif;
+  font-family: "sans-serif", sans-serif;
 }
+
 .input_text::-webkit-scrollbar{
  display: none;
 }
+
 

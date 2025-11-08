@@ -112,29 +112,13 @@
         </div>
       );
     return (
-      <div className="relative min-h-screen">
-        <nav className="lg:p-4 pr-5 lg:px-5 flex justify-between items-center pt-3">
-          <div className="flex gap-2 lg:scale-100 md:scale-90 scale-80">
-            <Mogger />
-            <div
-              className="bg-green-400 text-green-900 rounded-2xl p-3 cursor-pointer"
-              onClick={handleHome}
-            >
-              <span className="flex gap-2 items-center">
-                <FaHome /> go home
-              </span>
-            </div>
-          </div>
-          <div>
-            <ProfileContainer />
-          </div>
-        </nav>
+      <div className="relative min-h-screen mt-5">
         <main className="mx-3 lg:flex-row flex flex-col gap-2">
-          <div className="lg:w-[100%] md:h-120   p-2  select-none">
+          <div className="lg:w-full md:h-120   p-2  select-none">
             <h1 className="md:text-5xl text-3xl mb-3 select-none ">
               Answer the following questions
             </h1>
-            <section className="questions relative overflow-hidden break-words h-[89%] rounded-md border border-green-900">
+            <section className="questions relative overflow-hidden warp-break-words h-[89%] rounded-md border border-green-900">
               <h1 className="text-2xl mb-5 bg-green-200 p-2">
                 {TestObject[count]?.question}
               </h1>

@@ -34,7 +34,7 @@ const TimerField = () => {
         onChange={(e) =>
           setMode(e.target.value as "minute" | "hour" | "custom")
         }
-        className="p-2 bg-gray-100 outline-0 cursor-pointer"
+        className="p-2 bg-blue-100 outline-0 cursor-pointer"
       >
         <option value="minute">Minute</option>
         <option value="hour">Hour</option>

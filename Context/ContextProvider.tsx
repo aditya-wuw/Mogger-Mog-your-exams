@@ -6,6 +6,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -40,6 +41,7 @@ export const ContextProvider = ({
   const [filepath, setfilepath] = useState("");
   const [ToastMessage, setToastMessage] = useState("");
   const [isEditing, setisEditing] = useState<boolean | undefined>(false);
+
   const GetUser = useCallback(async (): Promise<void> => {
     if (userLoaded) return;
     setUserLoaded(true);

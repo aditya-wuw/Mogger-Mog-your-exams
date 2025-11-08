@@ -53,7 +53,7 @@ const Uploadfile = () => {
     }
   };
   return (
-    <div className="w-fit p-3 bg-green-400 rounded-xl text-white">
+    <div className="w-fit p-3 bg-green-500 rounded-xl text-white">
       <span className="flex items-center gap-2">
         <IoCloudUpload />
         <input

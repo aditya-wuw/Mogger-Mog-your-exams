@@ -62,33 +62,29 @@ const Page = () => {
     );
 
   return (
-    <div className="w-full h-screen flex">
-      <Sidebar />
-      <main className="w-full px-4 overflow-hidden mb-5">
-        <Mainbodynav />
-        <div className="mt-5">
-          <strong className="text-2xl">History</strong>
+        <div className="mt-5 relative">
+          <strong className="text-2xl rounded-2xl bg-green-700 text-white p-2 select-none">History</strong>
           {historyData.length === 0 ? (
             <div className="w-full h-fit flex justify-center">
               no history found
             </div>
           ) : (
-            <div className="md:h-[43vw]  h-screen overflow-y-scroll">
+            <div className="h-full mt-3 overflow-y-auto md:w-120 p-2 py-2 pb-3 rounded-2xl bg-gray-300">
               {historyData.map((i, index) => (
                 <div
                   key={i.id}
-                  className="flex w-full justify-between md:px-10 px-2 mt-5 items-center"
+                  className="flex w-full justify-between md:px-6 px-2 mt-3 items-center"
                 >
                   <div className="flex gap-2 md:w-[70%] mr-1">
                     <span>{index + 1})</span>
-                    <span className="w-40 md:w-[100vw] text-nowrap truncate font-bold">
+                    <span className="w-40 md:w-screen text-nowrap truncate font-bold">
                       {i.title}
                     </span>
                   </div>
                   <div className="flex gap-2">
-                    {retakeMap[i.id] ? (
-                      <div className="relative w-full ">
-                        <div className="absolute w-60 md:left-[-170px] left-[-190px] top-[-5] bg-green-400 rounded-2xl p-3">
+                    {retakeMap[i.id] && (
+                      <div className="w-full ">
+                        <div className="absolute z-10 w-60 md:left-125 left-23 top-11 bg-green-400 rounded-2xl p-3">
                           <TimerField />
                           <div className="flex gap-2 mt-2 mx-auto">
                             <button
@@ -112,9 +108,10 @@ const Page = () => {
                           </div>
                         </div>
                       </div>
-                    ) : (
+                    )}
                       <button
-                        className="p-2 rounded bg-green-400 cursor-pointer hover:bg-green-500/50"
+                        className={`p-2 ${retakeMap[i.id] ? "bg-green-700 text-green-200" : "bg-green-500 text-green-900"} bg-green-500 cursor-pointer hover:bg-green-500/50 rounded-xl `}
+                        disabled={retakeMap[i.id]}
                         onClick={() => {
                           setRetakeMap((prev) => ({
                             ...prev,
@@ -124,7 +121,6 @@ const Page = () => {
                       >
                         Retake
                       </button>
-                    )}
 
                     <button
                       type="button"
@@ -139,8 +135,6 @@ const Page = () => {
             </div>
           )}
         </div>
-      </main>
-    </div>
   );
 };
 

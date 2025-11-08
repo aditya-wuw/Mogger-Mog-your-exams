@@ -44,12 +44,7 @@ const Page = () => {
 
   if(!result) return <div className="flex justify-center items-center w-full h-screen"><Loader/></div>
   return (
-    <>
-      <nav className="absolute w-[98%] top-0 left-0 flex ml-[1%] md:px-2 px-3">
-        <Mainbodynav />
-      </nav>
-      <main className="flex">
-        <Sidebar />
+    <div>
         <div className="mt-18 px-2 w-full md:h-[90vh] md:overflow-y-scroll scroll-smooth scroll-me-1" onClick={()=>setsidebar(true)}>
           <section className="result_bord select-none bg-green-500 rounded-2xl p-2 mb-3 md:w-[30%] mx-auto text-white">
             <div className="score_card p-2">
@@ -79,8 +74,7 @@ const Page = () => {
             <Link href={'/home'} className="flex gap-2 justify-center items-center bg-green-500 p-3 rounded-2xl hover:scale-120 cursor-pointer hover:bg-green-700 transition-all duration-200 ease-in-out"><IoMdArrowBack className="w-5 h-5"/> Go back </Link >
           </section>
         </div>
-      </main>
-    </>
+    </div>
   );
 };
 

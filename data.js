@@ -6,7 +6,7 @@ export const data = {
         des: "No more manual prep. Upload content and let AI handle the test creation with built-in time management.Transform any document into a focused mock exam with smart question generation and flexible timer options"
     },
     tutorial_section : {
-        header: "Mogging is just a click away"
+        header: "is just a click away"
     },
     footer: { text : "© Mogger.AI all rights reserved. ", terms : "terms and conditions" }
 }

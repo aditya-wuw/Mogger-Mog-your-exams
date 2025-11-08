@@ -103,12 +103,12 @@ const InputField = () => {
   return (
     <div className="flex justify-center items-center relative">
       <div>{error} </div>
-      <h1 className="fixed select-none top-[40%] text-3xl md:text-4xl font-bold  z-[-10] text-center mx-10">
+      <h1 className="fixed select-none top-[40%] text-3xl md:text-4xl font-bold  -z-10 text-center mx-10">
         Ready to{" "}
         <span className="px-6 p-1 bg-green-700 text-white rounded-xl">Mog</span>{" "}
         your exam ?
       </h1>
-      <div className="text_input fixed top-[50%] md:mt-8 mt-5 bg-green-200 p-4 rounded-xl flex flex-col items-center gap-2 z-[5]">
+      <div className="text_input fixed top-[50%] md:mt-8 mt-5 bg-green-200 p-4 rounded-xl flex flex-col items-center gap-2 z-5">
         <div className="grid place-items-center gap-2 justify-center w-fit grid-cols-3">
           {file.map((i:File, index: number) => (
             <div
@@ -166,7 +166,7 @@ const InputField = () => {
               }}
             />
             <div
-              className={`${uploader ? "block" : "hidden"} absolute left-[-100] bottom-8 w-40`}
+              className={`${uploader ? "block" : "hidden"} absolute left-[-75] bottom-8 w-40`}
             >
               <Uploadfile />
             </div>

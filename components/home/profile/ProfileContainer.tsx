@@ -3,9 +3,8 @@ import Image from "next/image";
 import React from "react";
 import { FaRegUser } from "react-icons/fa";
 
-
 const ProfileContainer = () => {
-  const { ProfileIconRef, profile} = CreateContext();  
+  const { ProfileIconRef, profile } = CreateContext();
   return (
     <div
       ref={ProfileIconRef}

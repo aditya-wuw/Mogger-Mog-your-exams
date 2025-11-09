@@ -2,22 +2,12 @@
 import { resulttype, users_details_ } from "@/Types/others/types";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useCallback, useContext, useRef, useState } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Context = createContext<null | any>(null);
 
-export const ContextProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const Router = useRouter();
   const [count, setcount] = useState(0);
   const [isSidebar, setsidebar] = useState(true);
@@ -55,7 +45,7 @@ export const ContextProvider = ({
     setAnswer(Ans);
   }
 
-  async function handlesubmit(test_id: string, Ans: Array<String>) {
+  async function handlesubmit(test_id: string, Ans: Array<string>) {
     try {
       if (typeof window !== "undefined") {
         localStorage.removeItem("endtime");

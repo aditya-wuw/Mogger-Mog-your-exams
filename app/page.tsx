@@ -5,7 +5,7 @@ import NavBar from "@/components/NavBar";
 import { data } from "@/data.js";
 import axios from "axios";
 import { Heart } from "lucide-react";
-import { color, easeInOut, motion, Variants } from "motion/react";
+import { easeInOut, motion, Variants } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

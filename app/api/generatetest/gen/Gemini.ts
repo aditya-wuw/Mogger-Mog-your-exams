@@ -1,16 +1,16 @@
 import { GoogleGenAI, createUserContent, createPartFromUri } from "@google/genai";
 import os from "os";
-import fs from 'fs/promises'
-import path from 'path'
+import fs from "fs/promises";
+import path from "path";
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API
 });
 
 async function Gemini(prompt: string, filePath: string) {
-  if (filePath === '') {
+  if (filePath === "") {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      contents: prompt+"based on the instuction generate me questions",
+      contents: prompt + "based on the instuction generate me questions",
     });
     const res = response.text;
     return res;

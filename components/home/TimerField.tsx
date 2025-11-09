@@ -1,5 +1,6 @@
 import { CreateContext } from "@/Context/ContextProvider";
 import { formatTime } from "@/utils/util";
+import { Timer } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 const TimerField = () => {
@@ -9,12 +10,12 @@ const TimerField = () => {
   const [customMinute, setCustomMinute] = useState<number>(0);
   const [customHour, setCustomHour] = useState<number>(0);
   const { TimerUser, setTimer } = CreateContext();
-  
+
   useEffect(() => {
     if (TimerUser === 0) {
       setTimer(1800);
     }
-  }, [setTimer,TimerUser]);
+  }, [setTimer, TimerUser]);
 
   useEffect(() => {
     if (mode === "minute") {
@@ -31,9 +32,7 @@ const TimerField = () => {
       <h1 className="text-xl font-semibold">Set Timer</h1>
       <select
         value={mode}
-        onChange={(e) =>
-          setMode(e.target.value as "minute" | "hour" | "custom")
-        }
+        onChange={(e) => setMode(e.target.value as "minute" | "hour" | "custom")}
         className="p-2 bg-blue-100 outline-0 cursor-pointer"
       >
         <option value="minute">Minute</option>
@@ -58,7 +57,7 @@ const TimerField = () => {
         <select
           value={hour}
           onChange={(e) => setHour(parseInt(e.target.value))}
-          className="p-2 bg-yellow-100 outline-0 cursor-pointer"
+          className="p-2 bg-green-100 outline-0 cursor-pointer"
         >
           {[0, 1, 2, 3, 4].map((h) => (
             <option key={h} value={h}>
@@ -83,9 +82,11 @@ const TimerField = () => {
           />
         </div>
       )}
-      <p className="text-sm text-gray-700">
-        ⏱️ Timer set to:
-        <strong className="text-white">
+      <p className="text-sm text-gray-700 flex gap-1 items-center">
+        <span className="flex gap-1 items-center">
+          <Timer /> Timer set to 
+        </span>
+        <strong className="p-1 px-2 bg-green-600 text-gray-900 rounded-xl text-xs">
           {TimerUser === 0
             ? "00h: 30m"
             : `${formatTime(TimerUser).split(":").slice(0, 2).join("h: ")}m`}

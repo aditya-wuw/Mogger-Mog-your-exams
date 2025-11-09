@@ -29,7 +29,7 @@ const Timer = ({ duration }: { duration: number }) => {
     let endtime: number;
     const storedEndtime = localStorage.getItem("endtime");
 
-    if (!storedEndtime || duration * 1000 !== (Number(storedEndtime) - Date.now())) {
+    if (!storedEndtime || duration * 1000 !== Number(storedEndtime) - Date.now()) {
       endtime = Date.now() + duration * 1000;
       localStorage.setItem("endtime", endtime.toString());
     } else {
@@ -55,7 +55,12 @@ const Timer = ({ duration }: { duration: number }) => {
   const minutes = Math.floor((timeleft % 3600000) / 60000);
   const seconds = Math.floor((timeleft % 60000) / 1000);
 
-  if (timeleft === duration * 1000) return <div className="scale-50"><Loader /></div>;
+  if (timeleft === duration * 1000)
+    return (
+      <div className="scale-50">
+        <Loader />
+      </div>
+    );
 
   return (
     <div
@@ -63,12 +68,11 @@ const Timer = ({ duration }: { duration: number }) => {
         timeleft < duration * 0.1 * 1000
           ? "bg-red-500"
           : timeleft < duration * 0.5 * 1000
-          ? "bg-yellow-400 text-yellow-950"
-          : "bg-green-700"
+            ? "bg-yellow-400 text-yellow-950"
+            : "bg-green-700"
       } rounded-2xl`}
     >
-      {String(hours).padStart(2, "0")}:
-      {String(minutes).padStart(2, "0")}:
+      {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}:
       {String(seconds).padStart(2, "0")}
     </div>
   );

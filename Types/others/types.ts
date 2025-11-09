@@ -1,3 +1,5 @@
+import { ReactElement } from "react";
+
 export type OptionType = {
   item: string;
   link: string;
@@ -5,6 +7,7 @@ export type OptionType = {
 };
 
 export type SidebarTypes = {
+  icon: ReactElement,
   item: string;
   link: string;
 };

@@ -14,8 +14,10 @@ import Mogger from "@/components/Mogger";
 const Form = () => {
   const [Visi, setVisi] = useState(false);
   const Router = useRouter();
-  const {loader,setloader} = CreateContext();
-  useEffect(()=>{setloader(false)},[setloader]);
+  const { loader, setloader } = CreateContext();
+  useEffect(() => {
+    setloader(false);
+  }, [setloader]);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -31,13 +33,11 @@ const Form = () => {
       password: "",
     };
     if (!formData.email.includes("@")) newErrors.email = "Invalid email";
-    if (formData.password.length < 6)
-      newErrors.password = "Password must be at least 6 characters";
+    if (formData.password.length < 6) newErrors.password = "Password must be at least 6 characters";
     setErrors(newErrors);
     return Object.values(newErrors).every((e) => !e);
   };
 
-  
   const login = async (data: object) => {
     setloader(true);
     try {
@@ -45,23 +45,19 @@ const Form = () => {
       if (res.data.success) {
         Router.push("/home");
       }
-    } 
-    catch ( /* eslint-disable-line @typescript-eslint/no-explicit-any */ error : any ) {
-    if (error.status === 300) {
-      setErrors({email:error.response.data.message , password:""});
-    } 
-    else if(error.status === 500) {
-      Router.push("/auth_/login");
-      //set a toast error message no internet connection or server time out
+    } catch (/* eslint-disable-line @typescript-eslint/no-explicit-any */ error: any) {
+      if (error.status === 300) {
+        setErrors({ email: error.response.data.message, password: "" });
+      } else if (error.status === 500) {
+        Router.push("/auth_/login");
+        //set a toast error message no internet connection or server time out
+      } else if (error.response) {
+        setErrors({ email: error.response.data.message, password: "" });
+      } else {
+        console.error(error);
+      }
     }
-    else if(error.response){
-      setErrors({email:error.response.data.message , password:""});
-    }
-    else {
-      console.error(error);
-    }
-  }
-};
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,19 +65,23 @@ const Form = () => {
       login(formData);
     }
   };
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  
-  if(loader) return <div><Loader/></div>
+
+  if (loader)
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-5 p-6 bg-gradient-to-br from-green-800/30 to-green-200 backdrop-blur-md shadow-md rounded space-y-4 w-full text-green-800"
+      className="max-w-md mx-5 p-6 bg-linear-to-br from-green-800/30 to-green-200 backdrop-blur-md shadow-md rounded space-y-4 w-full text-green-800"
     >
-      
-      <Mogger/>
+      <Mogger />
       <h2 className="text-2xl font-bold mt-3 ml-3">Login</h2>
       <div>
         <label className="block mb-1 font-medium">Email</label>
@@ -93,9 +93,7 @@ const Form = () => {
           onChange={handleChange}
           placeholder="johnbravo@example.com"
         />
-        {errors.email && (
-          <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-        )}
+        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
       </div>
 
       <div className="relative">
@@ -120,9 +118,7 @@ const Form = () => {
           />
         )}
       </div>
-      {errors.password && (
-        <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-      )}
+      {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
 
       <button
         type="submit"
@@ -130,7 +126,11 @@ const Form = () => {
       >
         Login
       </button>
-      <button type="button" onClick={SignIn_goolge} className="w-full hover:cursor-pointer bg-green-500 hover:bg-green-400 text-white font-semibold py-2 px-4 rounded transition flex justify-center items-center">
+      <button
+        type="button"
+        onClick={SignIn_goolge}
+        className="w-full hover:cursor-pointer bg-green-500 hover:bg-green-400 text-white font-semibold py-2 px-4 rounded transition flex justify-center items-center"
+      >
         <FcGoogle className="w-5 h-5" />
         oogle
       </button>

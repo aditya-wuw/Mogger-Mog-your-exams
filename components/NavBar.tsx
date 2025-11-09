@@ -1,4 +1,4 @@
-import { ListStart, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { FaClipboardCheck, FaGithub } from "react-icons/fa";

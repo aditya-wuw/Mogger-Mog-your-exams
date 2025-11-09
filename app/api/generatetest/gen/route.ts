@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server"
+import { NextResponse } from "next/server";
 import Gemini from "./Gemini";
 
 export async function POST(req: Request) {
     try {
         const cookie = await cookies();
-        if (!cookie.get('session_token')) {
+        if (!cookie.get("session_token")) {
             return NextResponse.json({ success: false, message: "unauthorized ! Please login" }, { status: 304 });
         }
         else {
@@ -32,19 +32,20 @@ Requirements:
 - Maintain proper numbering for each question.
 - Ensure the correct answer is included in the options and appears in the answer_key.
 User Prompt: ${prompt}
-`            
+`;
             let res;
             if (!filepath) {
-                 res = await Gemini(instrustion,'');
+                res = await Gemini(instrustion, "");
 
             } else {
-                 res = await Gemini(instrustion, filepath);
-                
+                console.log(filepath);
+                res = await Gemini(instrustion, filepath);
+                    
             }
             return NextResponse.json({ success: true, message: res }, { status: 201 });
         }
     } catch (error) {
-        console.log(error)
+        console.log(error);
         return NextResponse.json({ success: false }, { status: 504 });
     }
 

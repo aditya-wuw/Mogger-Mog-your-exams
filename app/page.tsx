@@ -1,9 +1,11 @@
 "use client";
 import GreenBlob from "@/components/GreenBlob";
+import Logo from "@/components/logo";
 import NavBar from "@/components/NavBar";
 import { data } from "@/data.js";
 import axios from "axios";
-import { easeInOut, motion } from "motion/react";
+import { Heart } from "lucide-react";
+import { easeInOut, motion, Variants } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -20,6 +22,57 @@ export default function Home() {
     session();
   }, [Router]);
 
+  const hueShiftVariant: Variants = {
+    cycle: {
+      borderColor: ["#10B981", "#3B82F6", "#EF4444", "#10B981"],
+      transition: {
+        duration: 5,
+        ease: "easeIn",
+        repeat: Infinity,
+      },
+    },
+
+    hover: {
+      filter: "hue-rotate(0deg)",
+      backgroundColor: "#34D399",
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut",
+      },
+    },
+  };
+
+  const hueShiftBG: Variants = {
+    cycle: {
+      filter: [
+        "hue-rotate(0deg)",
+        "hue-rotate(45deg)",
+        "hue-rotate(90deg)",
+        "hue-rotate(45deg)",
+        "hue-rotate(360deg)",
+      ],
+      transition: {
+        duration: 5,
+        ease: "easeIn",
+        repeat: Infinity,
+      },
+    },
+    hover: {
+      filter: "hue-rotate(0deg)",
+    },
+  };
+
+  const SuddenJump: Variants = {
+    reset: {
+      translateY: [0,-30, 0],
+      transition: {
+        duration: 3,
+        ease: "easeInOut",
+        repeat: Infinity,
+        repeatDelay:2
+      },
+    },
+  };
   return (
     <>
       <div className="relative w-full min-h-screen">
@@ -29,15 +82,19 @@ export default function Home() {
             <NavBar />
           </div>
           <main className="flex flex-col justify-center items-center h-full">
-            <section className="min-h-[30vh] px-5">
+            <section className="min-h-[30vh] px-5 mt-5">
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, ease: easeInOut }}
                 className="md:text-4xl text-2xl text-center font-bold md:mt-10 mt-5"
               >
-                <h1>{data.Hero.title.t1}</h1>
-                <h1>{data.Hero.title.t2}</h1>
+                <div className="flex gap-2 justify-center items-center">
+                  <h1>{data.Hero.title.t1}</h1>
+                  <motion.h1 variants={SuddenJump} animate="reset">
+                    {data.Hero.title.t2}
+                  </motion.h1>
+                </div>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -48,15 +105,16 @@ export default function Home() {
                 <h1 className="md:mx-50 mx-2">{data.Hero.des}</h1>
               </motion.div>
             </section>
-            <motion.p
-              className="text-2xl mt-10 mb-5"
+            <motion.div
+              className="md:text-2xl text-xl mt-10 mb-5 flex gap-2"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: easeInOut }}
             >
+              <Logo />
               {data.tutorial_section.header}
-            </motion.p>
-            <section className="md:mt-0 mt-10 md:flex md:flex-row flex flex-col gap-2">
+            </motion.div>
+            <section className="md:mt-20 mt-10 md:flex md:flex-row flex flex-col gap-2">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -64,7 +122,7 @@ export default function Home() {
               >
                 <Link
                   href={"/GettingStarted"}
-                  className="p-4  bg-gradient-to-br from-green-500/70 to-green-300 hover:to-green-100 backdrop-blur-md rounded-2xl w-50 text-green-900 hover:text-white text-2xl hover:from-green-500/50 transition-all hover:cursor-pointer gap-2 flex justify-center"
+                  className="p-4  bg-linear-to-br from-green-500/70 to-green-300 hover:to-green-100 backdrop-blur-md rounded-2xl w-50 text-green-900 hover:text-white text-2xl hover:from-green-500/50 transition-all hover:cursor-pointer gap-2 flex justify-center"
                 >
                   Get started
                 </Link>
@@ -76,7 +134,7 @@ export default function Home() {
               >
                 <Link
                   href={"/auth_/login"}
-                  className="p-4 group bg-gradient-to-br from-green-500/70 to-green-300 hover:to-green-100 backdrop-blur-md rounded-2xl w-50 text-green-900 hover:text-white text-2xl hover:from-green-500/50 transition-all hover:cursor-pointer gap-2 flex"
+                  className="p-4 group bg-linear-to-br from-green-500/70 to-green-300 hover:to-green-100 backdrop-blur-md rounded-2xl w-50 text-green-900 hover:text-white text-2xl hover:from-green-500/50 transition-all hover:cursor-pointer gap-2 flex"
                 >
                   Try out
                   <span className="text-white group-hover:text-green-900 transition-colors duration-200 group">
@@ -85,39 +143,38 @@ export default function Home() {
                 </Link>
               </motion.div>
             </section>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 2 }}
-            ></motion.div>
-            <section className="min-h-[20vh] md:flex gap-10">
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 2 }}
-                className="bg-gradient-to-bl  h-76/2 mt-10 mb-10 md:mb-0 backdrop-blur-md from-green-200 text-green-900 md:w-140 to-transparent rounded-2xl p-2 mx-2"
-              >
-                <p className="mt-2 text-center">
-                  Created by{" "}
-                  <a
-                    className="text-green-600"
-                    href="https://nullfaceddev.xyz"
-                    target="_blank"
-                  >
-                    @NullFacedDev
-                  </a>{" "}
-                  <br /> with 💖 and コーヒー
-                </p>
-              </motion.div>
-            </section>
           </main>
-          <footer className=" text-green-700 text-sm w-full text-center p-2 bg-green-400/50 absolute bottom-0">
+          <section className="flex justify-between items-end mx-5 mt-3 h-60 max-md:pb-10">
+            <div />
+            <motion.div
+              className="p-2 rounded-xl bg-green-600 broder border border-green-900 w-fit h-fit text-white max-md:text-xs flex items-center gap-2"
+              variants={hueShiftVariant}
+              whileHover="hover"
+              animate="cycle"
+            >
+              developed by
+              <motion.a
+                className="text-green-300 hover:text-blue-500"
+                href="https://nullfaceddev.xyz"
+                target="_blank"
+                variants={hueShiftBG}
+                animate="cycle"
+                whileHover="hover"
+              >
+                @NullFacedDev
+              </motion.a>
+              with <Heart size={14} />
+              and コーヒー
+            </motion.div>
+          </section>
+          <footer className=" text-green-700 text-sm w-full text-center p-1 bg-green-400/50 absolute bottom-0">
             {data.footer.text}
-            <span>
-              <a href="" className="hover:text-green-900 hover:underline">
-                {data.footer.terms}
-              </a>
-            </span>
+            <Link
+              href={"/tos"}
+              className="hover:text-green-900 hover:underline"
+            >
+              {data.footer.terms}
+            </Link>
           </footer>
         </div>
       </div>

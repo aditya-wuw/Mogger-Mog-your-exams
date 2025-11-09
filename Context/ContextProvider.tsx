@@ -2,21 +2,12 @@
 import { resulttype, users_details_ } from "@/Types/others/types";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useCallback, useContext, useRef, useState } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Context = createContext<null | any>(null);
 
-export const ContextProvider = ({
-  children
-}: {
-  children: React.ReactNode;
-}) => {
+export const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const Router = useRouter();
   const [count, setcount] = useState(0);
   const [isSidebar, setsidebar] = useState(true);
@@ -39,7 +30,8 @@ export const ContextProvider = ({
   const [ToastMount, setToastMount] = useState(false);
   const [filepath, setfilepath] = useState("");
   const [ToastMessage, setToastMessage] = useState("");
-  const [isEditing,setisEditing] = useState<boolean| undefined>(false)
+  const [isEditing, setisEditing] = useState<boolean | undefined>(false);
+
   const GetUser = useCallback(async (): Promise<void> => {
     if (userLoaded) return;
     setUserLoaded(true);
@@ -53,20 +45,31 @@ export const ContextProvider = ({
     setAnswer(Ans);
   }
 
-  async function handlesubmit(test_id: string, Ans: Array<String>) {
-    localStorage.removeItem("endtime");
-    sessionStorage.removeItem("duration");
-    const res = await axios.post("/api/validate", {
-      id: test_id,
-      userid: user_details?.user_id,
-      submitted_answers: Ans,
-    });
-    if (res.data.success) {
-      localStorage.removeItem("endtime");
-      sessionStorage.removeItem("duration");
-      setresult(res.data.message);
-      Router.push(`/home/result/${test_id}`);
-    } else {
+  async function handlesubmit(test_id: string, Ans: Array<string>) {
+    try {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("endtime");
+        sessionStorage.removeItem("duration");
+      }
+
+      const res = await axios.post("/api/validate", {
+        id: test_id,
+        userid: user_details?.user_id,
+        submitted_answers: Ans,
+      });
+
+      if (res.data.success) {
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("endtime");
+          sessionStorage.removeItem("duration");
+        }
+        setresult(res.data.message);
+        Router.push(`/home/result/${test_id}`);
+      } else {
+        Router.push("/error");
+      }
+    } catch (error) {
+      console.error("Submit error:", error);
       Router.push("/error");
     }
   }
@@ -111,10 +114,10 @@ export const ContextProvider = ({
     setToastMount,
     filepath,
     setfilepath,
-    ToastMessage,setToastMessage
-    ,isEditing,
-    setisEditing
-
+    ToastMessage,
+    setToastMessage,
+    isEditing,
+    setisEditing,
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

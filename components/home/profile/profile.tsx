@@ -2,12 +2,12 @@
 import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { IoPersonCircle } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
 import { OptionType } from "@/Types/others/types";
 import { CreateContext } from "@/Context/ContextProvider";
-import { FaCopy } from "react-icons/fa";
 import Link from "next/link";
+import { LogIn, UserCircle } from "lucide-react";
+
 const Profile = () => {
   const Router = useRouter();
   const {
@@ -47,21 +47,30 @@ const Profile = () => {
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
-  }, [ProfileIconRef,setOpenProfile,GetUser]);
+  }, [ProfileIconRef, setOpenProfile, GetUser]);
 
   useEffect(() => {
     if (user_details?.users?.profile_pic) {
       setprofile(user_details.users.profile_pic);
     }
-  }, [user_details?.users?.profile_pic,setprofile,GetUser]);
-
-  const handleCopy = async (data: string) => {
-    navigator.clipboard.writeText(data);
-  };
+  }, [user_details?.users?.profile_pic, setprofile, GetUser]);
 
   const Options: Array<OptionType> = [
-    { item: "User Profile", link: "/home/Profile", icon: <IoPersonCircle /> },
-    { item: "Settings", link: `/home/Settings/${user_details?.user_id}`, icon: <IoMdSettings /> },
+    {
+      item: user_details?.users?.email ?? "username",
+      link: "none",
+      icon: <LogIn size={18} className="shrink-0" />,
+    },
+    {
+      item: "User Profile",
+      link: "/home/Profile",
+      icon: <UserCircle size={18} className="shrink-0" />,
+    },
+    {
+      item: "Settings",
+      link: `/home/Settings/${user_details?.user_id}`,
+      icon: <IoMdSettings size={18} className="shrink-0" />,
+    },
   ];
 
   if (OpenProfile)
@@ -71,30 +80,20 @@ const Profile = () => {
         className="absolute z-10 top-13 right-0 w-50 bg-green-200 rounded-xl p-1 "
       >
         <section className="p-1 w-full justify-center flex-col flex">
-          <p className="mx-2">{user_details?.users?.username}</p>
-          <div className="flex items-center mx-2 ">
-            <FaCopy
-              className="hover:text-green-700 cursor-pointer"
-              onClick={() => handleCopy(user_details?.users?.email)}
-            />
-            <p className="username select-text overflow-hidden text-ellipsis p-2 w-[90%]">
-              @{user_details?.users?.email}+{user_details?.user_id}
-            </p>
-          </div>
           <div>
             {Options.map((i, index) => (
               <Link
-                href={i.link}
-                className="cursor-pointer select-none rounded-2xl hover:bg-white p-2 mb-2 flex gap-2 items-center"
+                href={i.link && i.link !== "none" ? i.link : ""}
+                className={`select-none rounded-2xl cursor-default ${i.link !== "none" && "hover:bg-white cursor-pointer"} p-1 px-2 flex gap-2 items-center mb-1`}
                 key={index}
               >
                 {i.icon}
-                <p>{i.item}</p>
+                <p className="truncate">{i.item}</p>
               </Link>
             ))}
           </div>
           <button
-            className="bg-red-500 select-none p-2 rounded-2xl cursor-pointer hover:text-white transition-all"
+            className="mt-1 bg-green-700 select-none p-1 rounded-2xl text-white cursor-pointer hover:bg-green-800 transition-all"
             onClick={handleSignOut}
           >
             Log out

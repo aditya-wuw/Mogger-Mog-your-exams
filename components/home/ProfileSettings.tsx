@@ -6,16 +6,16 @@ import React from "react";
 import UpdateForm from "../ProfileUpdateForm/UpdateForm";
 
 const ProfileSettings = () => {
-  const { user_details,setisEditing } = CreateContext();
+  const { user_details, setisEditing } = CreateContext();
   function handleEdit() {
-    setisEditing(true)
+    setisEditing(true);
   }
   return (
-    <div className="w-[100%] h-full flex">
+    <div className="w-full h-full flex">
       <div className="Profile_container mt-10">
         <section className="profile">
           <div>
-            <UpdateForm/>
+            <UpdateForm />
           </div>
           <div className="flex items-center gap-5">
             {user_details?.users?.profile_pic ? (

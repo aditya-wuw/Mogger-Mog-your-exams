@@ -1,7 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { IoSend } from "react-icons/io5";
-import { FaRegPlusSquare } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { uid } from "uid";
 import axios from "axios";
@@ -11,32 +10,36 @@ import TimerField from "./TimerField";
 import { MdTimer } from "react-icons/md";
 import Uploadfile from "./Uploadfile";
 import { FaFilePdf } from "react-icons/fa6";
-import { CiSquareRemove } from "react-icons/ci";
+import { AiFillCloseSquare } from "react-icons/ai";
+import { UploadCloudIcon } from "lucide-react";
+
 const InputField = () => {
   const Router = useRouter();
   const [input, setinput] = useState<string>("");
   const [error, seterror] = useState<string>();
   const textarea = useRef<HTMLTextAreaElement | null>(null);
-  const { TimerSlider, SetTimerSlider, setTimer, uploader, setuploader, file, setselectedfile, filepath} =
-    CreateContext();
-
   const {
-    setquestions,
-    SETloadermessAGE,
-    setloader,
-    user_details,
-    GetUser,
-    TimerUser,
+    TimerSlider,
+    SetTimerSlider,
+    setTimer,
+    uploader,
+    setuploader,
+    file,
+    setselectedfile,
+    filepath,
   } = CreateContext();
 
-  const delete_cache = useCallback(async () =>{
-    if(user_details){
+  const { setquestions, SETloadermessAGE, setloader, user_details, GetUser, TimerUser } =
+    CreateContext();
+
+  const delete_cache = useCallback(async () => {
+    if (user_details) {
       const res = await axios.delete(`/api/auth/uploads/del_cache?user_id=${user_details.user_id}`);
-      if(!res.data.success){
-        console.log("failed to clear upload cache")
+      if (!res.data.success) {
+        console.log("failed to clear upload cache");
       }
     }
-  },[user_details]);
+  }, [user_details]);
 
   useEffect(() => {
     SetTimerSlider(false);
@@ -44,33 +47,33 @@ const InputField = () => {
     setloader(false);
     seterror("");
     delete_cache();
-  }, [SetTimerSlider, setTimer, seterror,setloader,delete_cache]);
+  }, [SetTimerSlider, setTimer, seterror, setloader, delete_cache]);
 
   const handleClick = async () => {
     setinput("");
     setloader(true);
     const id = uid();
     try {
-      SETloadermessAGE("generating Mock test, might take a while ...")
-      let res
-      if(filepath){
-        res = await axios.post("/api/generatetest/gen", { prompt: input, filepath : filepath  });
-        const usedflag:flag = {
-          user_id : user_details.user_id,
-          path : filepath.split('notes/')[1].replaceAll('%20',' '),
-          value : true
-        } 
-        const result = await axios.put('api/auth/uploads/used',usedflag)
-        if(!result.data.success){
+      SETloadermessAGE("generating Mock test, might take a while ...");
+      let res;
+      if (filepath) {
+        res = await axios.post("/api/generatetest/gen", { prompt: input, filepath: filepath });
+        const usedflag: flag = {
+          user_id: user_details.user_id,
+          path: filepath.split("notes/")[1].replaceAll("%20", " "),
+          value: true,
+        };
+        const result = await axios.put("api/auth/uploads/used", usedflag);
+        if (!result.data.success) {
           console.log(result.data.error);
-          return
+          return;
         }
-      }
-      else{
+      } else {
         res = await axios.post("/api/generatetest/gen", { prompt: input });
       }
 
       const data = JSON.parse(res.data.message);
+
       setquestions(data.questions_key);
       const savedata: testQuestionSaveObject = {
         id: id,
@@ -90,36 +93,37 @@ const InputField = () => {
         GetUser();
       }
     } catch (error) {
+      setloader(false);
+      alert("generation failed");
       console.log(error);
     }
-  }
+  };
 
-  const handledelete = async (index:number) =>{
-    const del = file.filter((_:string,i:number) => i !== index );
+  const handledelete = async (index: number) => {
+    const del = file.filter((_: string, i: number) => i !== index);
     setselectedfile(del);
-    await axios.delete('/api/auth/uploads/del',{data : { user_id: user_details?.user_id,file_name:file[index].name}})
-  }
+    await axios.delete("/api/auth/uploads/del", {
+      data: { user_id: user_details?.user_id, file_name: file[index].name },
+    });
+  };
+
   return (
     <div className="flex justify-center items-center relative">
       <div>{error} </div>
-      <h1 className="fixed select-none top-[40%] text-3xl md:text-4xl font-bold  z-[-10] text-center mx-10">
-        Ready to{" "}
-        <span className="px-6 p-1 bg-green-700 text-white rounded-xl">Mog</span>{" "}
-        your exam ?
+      <h1 className="fixed select-none top-[40%] text-3xl md:text-4xl font-bold  -z-10 text-center mx-10">
+        Ready to <span className="px-6 p-1 bg-green-700 text-white rounded-xl">Mog</span> your exam
+        ?
       </h1>
-      <div className="text_input fixed top-[50%] md:mt-8 mt-5 bg-green-200 p-4 rounded-xl flex flex-col items-center gap-2 z-[5]">
-        <div className="grid place-items-center gap-2 justify-center w-fit grid-cols-3">
-          {file.map((i:File, index: number) => (
-            <div
-              key={index}
-              className="bg-green-500 p-2 rounded-2xl text-white flex w-fit"
-            >
-              <div>
+      <div className="text_input fixed top-[50%] md:mt-8 mt-5 bg-green-200 p-4 rounded-xl flex flex-col items-center gap-2 z-5">
+        <div className="w-full">
+          {file.map((i: File, index: number) => (
+            <div key={index} className="bg-green-600 p-2 rounded-2xl text-white flex w-fit">
+              <div className="flex items-center gap-1">
                 <FaFilePdf />
                 <h1 className="max-w-15 md:max-w-30 lg:max-w-35 truncate">{i?.name}</h1>
               </div>
-              <button onClick={()=>handledelete(index)}>
-                <CiSquareRemove className="text-red-600 cursor-pointer" />
+              <button onClick={() => handledelete(index)}>
+                <AiFillCloseSquare className="text-green-800 cursor-pointer ml-2" size={20} />
               </button>
             </div>
           ))}
@@ -157,16 +161,14 @@ const InputField = () => {
             </div>
           </div>
           <div className="relative">
-            <FaRegPlusSquare
+            <UploadCloudIcon
               className="upload_file w-5 h-5 cursor-pointer"
               onClick={() => {
                 setuploader(!uploader);
                 SetTimerSlider(false);
               }}
             />
-            <div
-              className={`${uploader ? "block" : "hidden"} absolute left-[-100] bottom-8 w-40`}
-            >
+            <div className={`${uploader ? "block" : "hidden"} absolute left-[-75] bottom-8 w-40`}>
               <Uploadfile />
             </div>
           </div>

@@ -11,24 +11,21 @@ export default function GettingStarted() {
           Getting Started with <span className="text-green-500">Mogger AI</span>
         </h2>
         <p className="text-lg text-gray-600 mb-12">
-          Follow these simple steps to start practicing smarter with
-          AI-generated mock tests.
+          Follow these simple steps to start practicing smarter with AI-generated mock tests.
         </p>
         <div className="grid sm:grid-cols-2 gap-6">
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              className="transition hover:shadow-xl cursor-pointer rounded-2xl bg-gradient-to-r to-green-500/20 backdrop-blur-2xl"
-              initial={{ opacity: 0}}
-              animate={{ opacity: 1}}
-              transition={{ duration: 0.5+index, ease:"easeInOut" }}
+              className="transition hover:shadow-xl cursor-pointer rounded-2xl bg-linear-to-r to-green-500/20 backdrop-blur-2xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 + index, ease: "easeInOut" }}
             >
               <div className="flex items-start gap-4 p-6">
                 <div className="shrink-0">{step.icon}</div>
                 <div className="text-left">
-                  <h3 className="text-xl font-semibold text-gray-800">
-                    {step.title}
-                  </h3>
+                  <h3 className="text-xl font-semibold text-gray-800">{step.title}</h3>
                   <p className="text-gray-600">{step.description}</p>
                 </div>
               </div>
